@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        let currentLevel = 0;
+        const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+
+        async function getWords() {
+            let response = await fetch("words.json");
+            const words = await response.json();
+            response = await fetch("levels.json");
+            let levels = await response.json();
+            init(words, levels)
+        }
+        function init(words, levels) {
+            levels[currentLevel]["to"].split("").forEach(element => {
+
+                let lettersLeft = alphabet.filter((letter) => letter != element.toUpperCase())
+                console.log(lettersLeft)
+                let allOptions = [element.toUpperCase(), ...lettersLeft].map((el) => $("<option/>", { html: el }))
+                console.log(allOptions)
+                let sel = $("<select/>").append(allOptions)
+                $("body").append(sel)
+
+            });
+
+            $('select').on("change", () => 
+            {
+            let newWord=   $('select').map((i)=>$(i).val())
+           // console.log(newWord)
+          //  $('select').each((i, j) => console.log(i, $(j).val()))
+            })
+        }
+        $(function () {
+            getWords()
+        });
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
