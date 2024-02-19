@@ -30,21 +30,53 @@
 
             });
 
-            $('select').on("change", () => 
-            {
-            let newWord=   $('select').map((i)=>$(i).val())
-           // console.log(newWord)
-          //  $('select').each((i, j) => console.log(i, $(j).val()))
+            $('select').on("change", (selectObject) => {
+                let accum = ""
+                let newWord = $('select').each((i, obj) => console.log(accum += $(obj).val()))
+                if (words.includes(accum.toLowerCase())) {
+                    document.querySelector("#history").innerHTML += accum + "<br/>"
+                    return true
+                } else {
+                    
+                    document.querySelector("#history").innerHTML += "<span class='myred'>" + accum + " is not a word in the dictionary.</span><br/>"
+                    return false
+                }
+                //  $('select').each((i, j) => console.log(i, $(j).val()))
             })
         }
         $(function () {
             getWords()
         });
+
+        function populate(word) {
+            let selections = $('select')
+            let letters = word.split("").forEach((element,i) => {
+                let allOptions = [element.toUpperCase(), ...lettersLeft].map((el) => $("<option/>", { html: el }))
+                $($('select')[i]).empty().append(allOptions)
+            }
+
+   
+
+
+
+
+    }
+
     </script>
+
+    <style>
+        myred {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
 
 </body>
+
+<div id="history"></div>
+
+<div id="bodydiv"></div>
 
 </html>
