@@ -25,22 +25,28 @@
                 console.log(lettersLeft)
                 let allOptions = [element.toUpperCase(), ...lettersLeft].map((el) => $("<option/>", { html: el }))
                 console.log(allOptions)
-                let sel = $("<select/>").append(allOptions)
+                let sel = $("<select/>")
                 $("body").append(sel)
-
+               
             });
-
+            populate( levels[currentLevel]["to"])
             $('select').on("change", (selectObject) => {
                 let accum = ""
-                let newWord = $('select').each((i, obj) => console.log(accum += $(obj).val()))
+                let message=""
+                let newWord = $('select').each((i, obj) => accum += $(obj).val())
                 if (words.includes(accum.toLowerCase())) {
-                    document.querySelector("#history").innerHTML += accum + "<br/>"
-                    return true
+                    document.querySelector("#history").innerHTML += `<span class='myred'>${accum} </span><br/>`
+                  
+                   
                 } else {
-                    
-                    document.querySelector("#history").innerHTML += "<span class='myred'>" + accum + " is not a word in the dictionary.</span><br/>"
-                    return false
+                    console.log($("#history span").toArray())
+                    let lastWord=$("#history span").toArray().reverse()[0]?.innerHTML ||levels[currentLevel]["to"]
+                    message="is not a word in the dictionary"
+                    populate(lastWord) 
+                
                 }
+   
+                document.querySelector("#message").innerHTML= `<span class='myred'>${accum} ${message} </span><br/>`
                 //  $('select').each((i, j) => console.log(i, $(j).val()))
             })
         }
@@ -50,17 +56,19 @@
 
         function populate(word) {
             let selections = $('select')
-            let letters = word.split("").forEach((element,i) => {
+            let letters = word.split("").forEach((element, i) => {
+                let lettersLeft = alphabet.filter((letter) => letter != element.toUpperCase())
                 let allOptions = [element.toUpperCase(), ...lettersLeft].map((el) => $("<option/>", { html: el }))
                 $($('select')[i]).empty().append(allOptions)
-            }
-
-   
-
+            })
+        }
 
 
 
-    }
+
+
+
+
 
     </script>
 
@@ -77,6 +85,6 @@
 
 <div id="history"></div>
 
-<div id="bodydiv"></div>
+<div id="message"></div>
 
 </html>
