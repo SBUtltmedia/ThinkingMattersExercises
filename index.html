@@ -41,12 +41,13 @@
                 } else {
                     console.log($("#history span").toArray())
                     let lastWord=$("#history span").toArray().reverse()[0]?.innerHTML ||levels[currentLevel]["to"]
-                    message="is not a word in the dictionary"
-                    populate(lastWord) 
+               
+                    document.querySelector("#message").innerHTML= `<span class='myred'>${accum} is not a word in the dictionary </span><br/>`
+                    setTimeout(()=> populate(lastWord),1000) 
                 
                 }
    
-                document.querySelector("#message").innerHTML= `<span class='myred'>${accum} ${message} </span><br/>`
+              
                 //  $('select').each((i, j) => console.log(i, $(j).val()))
             })
         }
