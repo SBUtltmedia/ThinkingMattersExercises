@@ -11,14 +11,19 @@
         let currentLevel = 0;
         const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
+
+        $(function () {
+            getWords()
+        });
+
         async function getWords() {
             let response = await fetch("words.json");
             const words = await response.json();
             response = await fetch("levels.json");
             let levels = await response.json();
-            init(words, levels)
+            init(words, levels,currentLevel)
         }
-        function init(words, levels) {
+        function init(words, levels,currentLevel) {
             levels[currentLevel]["to"].split("").forEach(element => {
 
                 let lettersLeft = alphabet.filter((letter) => letter != element.toUpperCase())
@@ -26,43 +31,43 @@
                 let allOptions = [element.toUpperCase(), ...lettersLeft].map((el) => $("<option/>", { html: el }))
                 console.log(allOptions)
                 let sel = $("<select/>")
-                $("body").append(sel)
-               
+                $("#picker").append(sel)
+
             });
-            populate( levels[currentLevel]["to"])
+            document.querySelector("#title").innerHTML =  levels[currentLevel]["title"]
+            populate(levels[currentLevel]["to"])
             $('select').on("change", (selectObject) => {
+                document.querySelector("#message").innerHTML=""
                 let accum = ""
-                let message=""
                 let newWord = $('select').each((i, obj) => accum += $(obj).val())
                 if (words.includes(accum.toLowerCase())) {
                     document.querySelector("#history").innerHTML += `<span class='myred'>${accum} </span><br/>`
-                  
-                   
+
+
                 } else {
                     console.log($("#history span").toArray())
-                    let lastWord=$("#history span").toArray().reverse()[0]?.innerHTML ||levels[currentLevel]["to"]
-               
-                    document.querySelector("#message").innerHTML= `<span class='myred'>${accum} is not a word in the dictionary </span><br/>`
-                    setTimeout(()=> populate(lastWord),1000) 
-                
-                }
-   
-              
-                //  $('select').each((i, j) => console.log(i, $(j).val()))
-            })
-        }
-        $(function () {
-            getWords()
-        });
+                    let lastWord = $("#history span").toArray().reverse()[0]?.innerHTML || levels[currentLevel]["to"]
 
-        function populate(word) {
-            let selections = $('select')
-            let letters = word.split("").forEach((element, i) => {
-                let lettersLeft = alphabet.filter((letter) => letter != element.toUpperCase())
-                let allOptions = [element.toUpperCase(), ...lettersLeft].map((el) => $("<option/>", { html: el }))
-                $($('select')[i]).empty().append(allOptions)
+                    document.querySelector("#message").innerHTML = `<span class='myred'>${accum} is not a word in the dictionary </span><br/>`
+                    setTimeout(() => populate(lastWord), 1000)
+
+                }
+
+
+                
             })
+            function populate(word) {
+                    let selections = $('select')
+                    let letters = word.split("").forEach((element, i) => {
+                        let lettersLeft = alphabet.filter((letter) => letter != element.toUpperCase())
+                        let allOptions = [element.toUpperCase(), ...lettersLeft].map((el) => $("<option/>", { html: el }))
+                        $($('select')[i]).empty().append(allOptions)
+                    })
+                }
         }
+
+
+
 
 
 
@@ -83,9 +88,9 @@
 <body>
 
 </body>
-
+<div id="title"></div>
 <div id="history"></div>
-
+<div id="picker"></div>
 <div id="message"></div>
 
 </html>
