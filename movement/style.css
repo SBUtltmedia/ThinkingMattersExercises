@@ -6,3 +6,12 @@
     top: 100px;
     background-color: red;
 }
+#stage {
+    position: absolute;
+    width: 100rem;
+    height: 100rem;
+
+}
+html{
+    font-size: 10px;
+}
