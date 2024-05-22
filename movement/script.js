@@ -33,11 +33,12 @@ function moveChar(e) {
     let style = lookup[e.key]['style']
     let charge = lookup[e.key]['charge']
     let column = lookup[e.key]['column']
-    player.style[style] = parseFloat(player.style[style]) + charge + '%';
+    player.style[style] =( (parseFloat(player.style[style]) + charge)+100) %100 + '%';
     $("#player").css({
         'background-position-x': `${frameWidth * currentFrame}%`,
         'background-position-y': `${frameHeight * column}%`
     });
+    console.log(  $("#player").css('background-position-x'))
     currentFrame++
     currentFrame %= frameNumber;
 
