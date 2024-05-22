@@ -20,7 +20,6 @@ move()
 function move() {
     requestAnimationFrame(() => {
         if (currentMovement) { moveChar(currentMovement) }
-        else { standing() }
         move()
     }
     )
@@ -35,25 +34,14 @@ function moveChar(moveData) {
     let charge = moveData['charge']
     let column = moveData['column']
     player.style[style] =( (parseFloat(player.style[style]) + charge)+100) %100 + '%';
-    x = frameWidth * currentFrame
-    y = frameHeight * column
-    setChar(x,y)
+    $("#player").css({
+        'background-position-x': `${frameWidth * currentFrame}%`,
+        'background-position-y': `${frameHeight * column}%`
+    });
 
     currentFrame++
     currentFrame %= frameNumber;
-}
 
-function setChar(x, y) {
-    $("#player").css({
-        'background-position-x': `${x}%`,
-        'background-position-y': `${y}%`
-    });
-}
-
-function standing() {
-    x = frameWidth * 7;
-    y = frameHeight * 3;
-    setChar(x,y)
 }
 
 window.addEventListener('keydown', e => { currentMovement = lookup[e.key] });
