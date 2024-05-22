@@ -1,13 +1,14 @@
 const player = document.getElementById('player');
 player.style.left = "0rem"
 player.style.top = "0rem"
-const movePlayer = 1.0;
+const movePlayer = .60;
+let currentMovement = null;
 let playerWidth = 0
 let playerHeight = 0
-let currentFrame;
+let currentFrame = 7;
 let frameNumber = 24;
-let frameWidth = 100/(frameNumber-1);
-let frameHeight = 100/3;
+let frameWidth = 100 / (frameNumber - 1);
+let frameHeight = 100 / 3;
 let lastE = null;
 lookup = {
     'w': { 'style': 'top', 'charge': -movePlayer, 'column': 2 },
@@ -15,13 +16,20 @@ lookup = {
     'a': { 'style': 'left', 'charge': -movePlayer, 'column': 1 },
     'd': { 'style': 'left', 'charge': movePlayer, 'column': 0 }
 }
-
-
-window.addEventListener('keydown', (e) => {
-
-    if (e.key != lastE) {
-        currentFrame = 7;
+move()
+function move() {
+    requestAnimationFrame(() => {
+        if (currentMovement) { moveChar(currentMovement) }
+        move()
     }
+    )
+}
+
+
+
+
+function moveChar(e) {
+    console.log(e)
     let style = lookup[e.key]['style']
     let charge = lookup[e.key]['charge']
     let column = lookup[e.key]['column']
@@ -30,9 +38,13 @@ window.addEventListener('keydown', (e) => {
         'background-position-x': `${frameWidth * currentFrame}%`,
         'background-position-y': `${frameHeight * column}%`
     });
-
-    lastE = e.key;
     currentFrame++
     currentFrame %= frameNumber;
 
+}
+
+window.addEventListener('keydown', e => { currentMovement = e });
+window.addEventListener('keyup', e => {
+    currentMovement = null;
+    currentFrame=7;
 });
