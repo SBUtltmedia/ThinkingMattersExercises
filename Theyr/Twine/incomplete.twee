@@ -1,0 +1,651 @@
+:: StoryTitle
+Wishing Wells
+
+
+:: StoryData
+{
+	"ifid": "5CAF53F2-B97C-45CA-9E53-CBD50086BDA5",
+	"format": "SugarCube",
+	"format-version": "2.30.0",
+	"start": "0_0",
+	"tag-colors": {
+		"Breaks": "blue",
+		"Change-Title": "yellow",
+		"Coding-Problem": "red",
+		"Done": "green",
+		"New-Passage": "purple",
+		"Text-to-be-updated-by-Ashley": "orange"
+	},
+	"zoom": 1 
+}
+
+
+
+
+:: Story Stylesheet [stylesheet]
+@import url('https://fonts.googleapis.com/css2?family=Langar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+@import url("https://unpkg.com/jquery.nice-number@2.1.0/dist/jquery.nice-number.min.css");
+@import url("//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css");
+@import url("static/styles.css");
+
+:: Story JavaScript [script]
+Config.passages.nobr = true;
+Window.SugarCubeState = State;
+var urlPrefix="static/"
+function setBackground(image) {
+    // image = image || "paper.jpg"
+    let { faction } = getUser();
+    let imageURL = `url('Twine/images/Borders/Observer.jpg')`
+    if (faction) {
+        imageURL = `url('Twine/images/Borders/${faction}.jpg')`
+    }
+
+    $(() => {
+        $('#story').css({
+            'background-image': imageURL,
+            'background-position': '30% 70%,0 0',
+            'background-size': '100% 100%'
+        })
+    })
+}
+
+importScripts([
+	'/socket.io/socket.io.js',
+	'https://unpkg.com/redux@latest/dist/redux.min.js',
+	'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js',
+	`${urlPrefix}Client.js`,
+		`${urlPrefix}resize.js`,
+	"https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.11/jquery.csv.min.js",
+	"https://unpkg.com/jquery.nice-number@2.1.0/dist/jquery.nice-number.min.js",
+	"https://code.jquery.com/ui/1.12.1/jquery-ui.js"	
+]);
+
+(function () {
+	"use strict";
+
+	$(document).on(":liveupdate", function () {
+		console.log("In liveupdate");
+		$(".macro-live").trigger(":liveupdateinternal");
+	});
+
+	Macro.add(['liveblock', 'lb'], {
+		tags: null,
+		handler: function handler() {
+			console.log("In liveblock");
+			try {
+				var content = this.payload[0].contents.trim();
+				if (content) {
+					var $el = $("<span></span>").addClass("macro-live macro-live-block").wiki(content).appendTo(this.output);
+					$el.on(":liveupdateinternal", this.createShadowWrapper(function (ev) {
+						$el.empty().wiki(content);
+					}));
+				}
+			} catch (ex) {
+				return this.error("bad evaluation: " + (_typeof(ex) === 'object' ? ex.message : ex));
+			}
+		}
+	});
+})();
+
+
+// Run when passage starts 
+$(document).one(":passagestart", () => {
+  
+  /*  let usersCheck = State.variables.users || {};
+	State.variables.users = usersCheck;
+	let users = State.variables.users;
+
+    // If client does not exist in Users, add them
+    if (!(userData.id in users)) {
+        users[userData.id] = {};
+    }  
+*/
+	// Sets userId in State and LocalStorage
+    localStorage.setItem('userId', userData.id);
+    State.variables.userId = userData.id;
+
+	// Story Init Code
+	State.variables.tiger_coins = 0;
+	State.variables.ox_coins = 0;
+	State.variables.rabbit_coins = 0;
+});
+function toHTMLEntities(str){
+return str
+return str.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+  return '&#' + i.charCodeAt(0) + ';';
+});
+}
+$(document).one(":passageend", () => {
+let name=window.location.search.split("nick=")[1].split("&")[0]
+let content=toHTMLEntities(`
+Your userId is: $userId 
+		<<if ndef $users>>		
+		<<set $users={}>>
+		<</if>>
+		<<if ndef $users[$userId]>>
+		<<set $users[$userId]={}>>
+		<<set $users[$userId]["name"]="${name}">>
+		<</if>>
+		<<liveblock>>
+		<<set _userIds=Object.keys($users)>>
+		<<for _i to 0; _i lt _userIds.length; _i++>>
+ _userIds[_i]  is  <<print $users[_userIds[_i]].name>>
+<</for>>
+	<</liveblock>>
+`)
+if(window.location.hash){
+content=decodeURI(window.location.hash.split("#")[1])
+}
+window.location.hash=content
+$('#codepen').val(content)
+
+	$('#submit').on("mouseup", (e) => {
+		$('#codepen_wiki').empty().wiki($('#codepen').val());
+		window.location.hash=$('#codepen').val()
+	}).trigger("mouseup");
+	console.log($('#codepen'));
+});
+
+::PassageHeader 
+<<print passage()>> 
+:: -5_-5
+[[east|-6_-5]]
+[[west|-4_-5]]
+[[north|-5_-6]]
+[[south|-5_-4]]
+:: -5_-4
+[[east|-6_-4]]
+[[west|-4_-4]]
+[[north|-5_-5]]
+[[south|-5_-3]]
+:: -5_-3
+[[east|-6_-3]]
+[[west|-4_-3]]
+[[north|-5_-4]]
+[[south|-5_-2]]
+:: -5_-2
+[[east|-6_-2]]
+[[west|-4_-2]]
+[[north|-5_-3]]
+[[south|-5_-1]]
+:: -5_-1
+[[east|-6_-1]]
+[[west|-4_-1]]
+[[north|-5_-2]]
+[[south|-5_0]]
+:: -5_0
+[[east|-6_0]]
+[[west|-4_0]]
+[[north|-5_-1]]
+[[south|-5_1]]
+:: -5_1
+[[east|-6_1]]
+[[west|-4_1]]
+[[north|-5_0]]
+[[south|-5_2]]
+:: -5_2
+[[east|-6_2]]
+[[west|-4_2]]
+[[north|-5_1]]
+[[south|-5_3]]
+:: -5_3
+[[east|-6_3]]
+[[west|-4_3]]
+[[north|-5_2]]
+[[south|-5_4]]
+:: -5_4
+[[east|-6_4]]
+[[west|-4_4]]
+[[north|-5_3]]
+[[south|-5_5]]
+:: -4_-5
+[[east|-5_-5]]
+[[west|-3_-5]]
+[[north|-4_-6]]
+[[south|-4_-4]]
+:: -4_-4
+[[east|-5_-4]]
+[[west|-3_-4]]
+[[north|-4_-5]]
+[[south|-4_-3]]
+:: -4_-3
+[[east|-5_-3]]
+[[west|-3_-3]]
+[[north|-4_-4]]
+[[south|-4_-2]]
+:: -4_-2
+[[east|-5_-2]]
+[[west|-3_-2]]
+[[north|-4_-3]]
+[[south|-4_-1]]
+:: -4_-1
+[[east|-5_-1]]
+[[west|-3_-1]]
+[[north|-4_-2]]
+[[south|-4_0]]
+:: -4_0
+[[east|-5_0]]
+[[west|-3_0]]
+[[north|-4_-1]]
+[[south|-4_1]]
+:: -4_1
+[[east|-5_1]]
+[[west|-3_1]]
+[[north|-4_0]]
+[[south|-4_2]]
+:: -4_2
+[[east|-5_2]]
+[[west|-3_2]]
+[[north|-4_1]]
+[[south|-4_3]]
+:: -4_3
+[[east|-5_3]]
+[[west|-3_3]]
+[[north|-4_2]]
+[[south|-4_4]]
+:: -4_4
+[[east|-5_4]]
+[[west|-3_4]]
+[[north|-4_3]]
+[[south|-4_5]]
+:: -3_-5
+[[east|-4_-5]]
+[[west|-2_-5]]
+[[north|-3_-6]]
+[[south|-3_-4]]
+:: -3_-4
+[[east|-4_-4]]
+[[west|-2_-4]]
+[[north|-3_-5]]
+[[south|-3_-3]]
+:: -3_-3
+[[east|-4_-3]]
+[[west|-2_-3]]
+[[north|-3_-4]]
+[[south|-3_-2]]
+:: -3_-2
+[[east|-4_-2]]
+[[west|-2_-2]]
+[[north|-3_-3]]
+[[south|-3_-1]]
+:: -3_-1
+[[east|-4_-1]]
+[[west|-2_-1]]
+[[north|-3_-2]]
+[[south|-3_0]]
+:: -3_0
+[[east|-4_0]]
+[[west|-2_0]]
+[[north|-3_-1]]
+[[south|-3_1]]
+:: -3_1
+[[east|-4_1]]
+[[west|-2_1]]
+[[north|-3_0]]
+[[south|-3_2]]
+:: -3_2
+[[east|-4_2]]
+[[west|-2_2]]
+[[north|-3_1]]
+[[south|-3_3]]
+:: -3_3
+[[east|-4_3]]
+[[west|-2_3]]
+[[north|-3_2]]
+[[south|-3_4]]
+:: -3_4
+[[east|-4_4]]
+[[west|-2_4]]
+[[north|-3_3]]
+[[south|-3_5]]
+:: -2_-5
+[[east|-3_-5]]
+[[west|-1_-5]]
+[[north|-2_-6]]
+[[south|-2_-4]]
+:: -2_-4
+[[east|-3_-4]]
+[[west|-1_-4]]
+[[north|-2_-5]]
+[[south|-2_-3]]
+:: -2_-3
+[[east|-3_-3]]
+[[west|-1_-3]]
+[[north|-2_-4]]
+[[south|-2_-2]]
+:: -2_-2
+[[east|-3_-2]]
+[[west|-1_-2]]
+[[north|-2_-3]]
+[[south|-2_-1]]
+:: -2_-1
+[[east|-3_-1]]
+[[west|-1_-1]]
+[[north|-2_-2]]
+[[south|-2_0]]
+:: -2_0
+[[east|-3_0]]
+[[west|-1_0]]
+[[north|-2_-1]]
+[[south|-2_1]]
+:: -2_1
+[[east|-3_1]]
+[[west|-1_1]]
+[[north|-2_0]]
+[[south|-2_2]]
+:: -2_2
+[[east|-3_2]]
+[[west|-1_2]]
+[[north|-2_1]]
+[[south|-2_3]]
+:: -2_3
+[[east|-3_3]]
+[[west|-1_3]]
+[[north|-2_2]]
+[[south|-2_4]]
+:: -2_4
+[[east|-3_4]]
+[[west|-1_4]]
+[[north|-2_3]]
+[[south|-2_5]]
+:: -1_-5
+[[east|-2_-5]]
+[[west|0_-5]]
+[[north|-1_-6]]
+[[south|-1_-4]]
+:: -1_-4
+[[east|-2_-4]]
+[[west|0_-4]]
+[[north|-1_-5]]
+[[south|-1_-3]]
+:: -1_-3
+[[east|-2_-3]]
+[[west|0_-3]]
+[[north|-1_-4]]
+[[south|-1_-2]]
+:: -1_-2
+[[east|-2_-2]]
+[[west|0_-2]]
+[[north|-1_-3]]
+[[south|-1_-1]]
+:: -1_-1
+[[east|-2_-1]]
+[[west|0_-1]]
+[[north|-1_-2]]
+[[south|-1_0]]
+:: -1_0
+[[east|-2_0]]
+[[west|0_0]]
+[[north|-1_-1]]
+[[south|-1_1]]
+:: -1_1
+[[east|-2_1]]
+[[west|0_1]]
+[[north|-1_0]]
+[[south|-1_2]]
+:: -1_2
+[[east|-2_2]]
+[[west|0_2]]
+[[north|-1_1]]
+[[south|-1_3]]
+:: -1_3
+[[east|-2_3]]
+[[west|0_3]]
+[[north|-1_2]]
+[[south|-1_4]]
+:: -1_4
+[[east|-2_4]]
+[[west|0_4]]
+[[north|-1_3]]
+[[south|-1_5]]
+:: 0_-5
+[[east|-1_-5]]
+[[west|1_-5]]
+[[north|0_-6]]
+[[south|0_-4]]
+:: 0_-4
+[[east|-1_-4]]
+[[west|1_-4]]
+[[north|0_-5]]
+[[south|0_-3]]
+:: 0_-3
+[[east|-1_-3]]
+[[west|1_-3]]
+[[north|0_-4]]
+[[south|0_-2]]
+:: 0_-2
+[[east|-1_-2]]
+[[west|1_-2]]
+[[north|0_-3]]
+[[south|0_-1]]
+:: 0_-1
+[[east|-1_-1]]
+[[west|1_-1]]
+[[north|0_-2]]
+[[south|0_0]]
+:: 0_0
+[[east|-1_0]]
+[[west|1_0]]
+[[north|0_-1]]
+[[south|0_1]]
+:: 0_1
+[[east|-1_1]]
+[[west|1_1]]
+[[north|0_0]]
+[[south|0_2]]
+:: 0_2
+[[east|-1_2]]
+[[west|1_2]]
+[[north|0_1]]
+[[south|0_3]]
+:: 0_3
+[[east|-1_3]]
+[[west|1_3]]
+[[north|0_2]]
+[[south|0_4]]
+:: 0_4
+[[east|-1_4]]
+[[west|1_4]]
+[[north|0_3]]
+[[south|0_5]]
+:: 1_-5
+[[east|0_-5]]
+[[west|2_-5]]
+[[north|1_-6]]
+[[south|1_-4]]
+:: 1_-4
+[[east|0_-4]]
+[[west|2_-4]]
+[[north|1_-5]]
+[[south|1_-3]]
+:: 1_-3
+[[east|0_-3]]
+[[west|2_-3]]
+[[north|1_-4]]
+[[south|1_-2]]
+:: 1_-2
+[[east|0_-2]]
+[[west|2_-2]]
+[[north|1_-3]]
+[[south|1_-1]]
+:: 1_-1
+[[east|0_-1]]
+[[west|2_-1]]
+[[north|1_-2]]
+[[south|1_0]]
+:: 1_0
+[[east|0_0]]
+[[west|2_0]]
+[[north|1_-1]]
+[[south|1_1]]
+:: 1_1
+[[east|0_1]]
+[[west|2_1]]
+[[north|1_0]]
+[[south|1_2]]
+:: 1_2
+[[east|0_2]]
+[[west|2_2]]
+[[north|1_1]]
+[[south|1_3]]
+:: 1_3
+[[east|0_3]]
+[[west|2_3]]
+[[north|1_2]]
+[[south|1_4]]
+:: 1_4
+[[east|0_4]]
+[[west|2_4]]
+[[north|1_3]]
+[[south|1_5]]
+:: 2_-5
+[[east|1_-5]]
+[[west|3_-5]]
+[[north|2_-6]]
+[[south|2_-4]]
+:: 2_-4
+[[east|1_-4]]
+[[west|3_-4]]
+[[north|2_-5]]
+[[south|2_-3]]
+:: 2_-3
+[[east|1_-3]]
+[[west|3_-3]]
+[[north|2_-4]]
+[[south|2_-2]]
+:: 2_-2
+[[east|1_-2]]
+[[west|3_-2]]
+[[north|2_-3]]
+[[south|2_-1]]
+:: 2_-1
+[[east|1_-1]]
+[[west|3_-1]]
+[[north|2_-2]]
+[[south|2_0]]
+:: 2_0
+[[east|1_0]]
+[[west|3_0]]
+[[north|2_-1]]
+[[south|2_1]]
+:: 2_1
+[[east|1_1]]
+[[west|3_1]]
+[[north|2_0]]
+[[south|2_2]]
+:: 2_2
+[[east|1_2]]
+[[west|3_2]]
+[[north|2_1]]
+[[south|2_3]]
+:: 2_3
+[[east|1_3]]
+[[west|3_3]]
+[[north|2_2]]
+[[south|2_4]]
+:: 2_4
+[[east|1_4]]
+[[west|3_4]]
+[[north|2_3]]
+[[south|2_5]]
+:: 3_-5
+[[east|2_-5]]
+[[west|4_-5]]
+[[north|3_-6]]
+[[south|3_-4]]
+:: 3_-4
+[[east|2_-4]]
+[[west|4_-4]]
+[[north|3_-5]]
+[[south|3_-3]]
+:: 3_-3
+[[east|2_-3]]
+[[west|4_-3]]
+[[north|3_-4]]
+[[south|3_-2]]
+:: 3_-2
+[[east|2_-2]]
+[[west|4_-2]]
+[[north|3_-3]]
+[[south|3_-1]]
+:: 3_-1
+[[east|2_-1]]
+[[west|4_-1]]
+[[north|3_-2]]
+[[south|3_0]]
+:: 3_0
+[[east|2_0]]
+[[west|4_0]]
+[[north|3_-1]]
+[[south|3_1]]
+:: 3_1
+[[east|2_1]]
+[[west|4_1]]
+[[north|3_0]]
+[[south|3_2]]
+:: 3_2
+[[east|2_2]]
+[[west|4_2]]
+[[north|3_1]]
+[[south|3_3]]
+:: 3_3
+[[east|2_3]]
+[[west|4_3]]
+[[north|3_2]]
+[[south|3_4]]
+:: 3_4
+[[east|2_4]]
+[[west|4_4]]
+[[north|3_3]]
+[[south|3_5]]
+:: 4_-5
+[[east|3_-5]]
+[[west|5_-5]]
+[[north|4_-6]]
+[[south|4_-4]]
+:: 4_-4
+[[east|3_-4]]
+[[west|5_-4]]
+[[north|4_-5]]
+[[south|4_-3]]
+:: 4_-3
+[[east|3_-3]]
+[[west|5_-3]]
+[[north|4_-4]]
+[[south|4_-2]]
+:: 4_-2
+[[east|3_-2]]
+[[west|5_-2]]
+[[north|4_-3]]
+[[south|4_-1]]
+:: 4_-1
+[[east|3_-1]]
+[[west|5_-1]]
+[[north|4_-2]]
+[[south|4_0]]
+:: 4_0
+[[east|3_0]]
+[[west|5_0]]
+[[north|4_-1]]
+[[south|4_1]]
+:: 4_1
+[[east|3_1]]
+[[west|5_1]]
+[[north|4_0]]
+[[south|4_2]]
+:: 4_2
+[[east|3_2]]
+[[west|5_2]]
+[[north|4_1]]
+[[south|4_3]]
+:: 4_3
+[[east|3_3]]
+[[west|5_3]]
+[[north|4_2]]
+[[south|4_4]]
+:: 4_4
+[[east|3_4]]
+[[west|5_4]]
+[[north|4_3]]
+[[south|4_5]]

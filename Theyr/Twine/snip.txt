@@ -1,0 +1,127 @@
+:: StoryTitle
+Wishing Wells
+
+
+:: StoryData
+{
+	"ifid": "5CAF53F2-B97C-45CA-9E53-CBD50086BDA5",
+	"format": "SugarCube",
+	"format-version": "2.30.0",
+	"start": "0,0",
+	"tag-colors": {
+		"Breaks": "blue",
+		"Change-Title": "yellow",
+		"Coding-Problem": "red",
+		"Done": "green",
+		"New-Passage": "purple",
+		"Text-to-be-updated-by-Ashley": "orange"
+	},
+	"zoom": 1 
+}
+
+
+:: Story Stylesheet [stylesheet]
+@import url("Twine/demo_style.css");
+
+
+:: Story JavaScript [script]
+Config.passages.nobr = true;
+Window.SugarCubeState = State;
+var urlPrefix="static/"
+
+importScripts([
+	'/socket.io/socket.io.js',
+	'https://unpkg.com/redux@latest/dist/redux.min.js',
+	'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js',
+	`${urlPrefix}Client.js`,
+	"https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.11/jquery.csv.min.js",
+	"https://unpkg.com/jquery.nice-number@2.1.0/dist/jquery.nice-number.min.js",
+	"https://code.jquery.com/ui/1.12.1/jquery-ui.js"	
+]);
+
+(function () {
+	"use strict";
+
+	$(document).on(":liveupdate", function () {
+		console.log("In liveupdate");
+		$(".macro-live").trigger(":liveupdateinternal");
+	});
+
+	Macro.add(['liveblock', 'lb'], {
+		tags: null,
+		handler: function handler() {
+			console.log("In liveblock");
+			try {
+				var content = this.payload[0].contents.trim();
+				if (content) {
+					var $el = $("<span></span>").addClass("macro-live macro-live-block").wiki(content).appendTo(this.output);
+					$el.on(":liveupdateinternal", this.createShadowWrapper(function (ev) {
+						$el.empty().wiki(content);
+					}));
+				}
+			} catch (ex) {
+				return this.error("bad evaluation: " + (_typeof(ex) === 'object' ? ex.message : ex));
+			}
+		}
+	});
+})();
+
+
+// Run when passage starts 
+$(document).one(":passagestart", () => {
+  
+  /*  let usersCheck = State.variables.users || {};
+	State.variables.users = usersCheck;
+	let users = State.variables.users;
+
+    // If client does not exist in Users, add them
+    if (!(userData.id in users)) {
+        users[userData.id] = {};
+    }  
+*/
+	// Sets userId in State and LocalStorage
+    localStorage.setItem('userId', userData.id);
+    State.variables.userId = userData.id;
+
+	// Story Init Code
+	State.variables.tiger_coins = 0;
+	State.variables.ox_coins = 0;
+	State.variables.rabbit_coins = 0;
+});
+function toHTMLEntities(str){
+return str
+return str.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+  return '&#' + i.charCodeAt(0) + ';';
+});
+}
+$(document).one(":passageend", () => {
+let name=window.location.search.split("nick=")[1].split("&")[0]
+let content=toHTMLEntities(`
+Your userId is: $userId 
+		<<if ndef $users>>		
+		<<set $users={}>>
+		<</if>>
+		<<if ndef $users[$userId]>>
+		<<set $users[$userId]={}>>
+		<<set $users[$userId]["name"]="${name}">>
+		<</if>>
+		<<liveblock>>
+		<<set _userIds=Object.keys($users)>>
+		<<for _i to 0; _i lt _userIds.length; _i++>>
+ _userIds[_i]  is  <<print $users[_userIds[_i]].name>>
+<</for>>
+	<</liveblock>>
+`)
+if(window.location.hash){
+content=decodeURI(window.location.hash.split("#")[1])
+}
+window.location.hash=content
+$('#codepen').val(content)
+
+	$('#submit').on("mouseup", (e) => {
+		$('#codepen_wiki').empty().wiki($('#codepen').val());
+		window.location.hash=$('#codepen').val()
+	}).trigger("mouseup");
+	console.log($('#codepen'));
+});
+
