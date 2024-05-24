@@ -32,19 +32,22 @@ constructor(startLevel=0){
      });
      document.querySelector("#title").innerHTML =  this.levels[this.currentLevel]["title"]
      this.populate(this.levels[this.currentLevel]["to"])
+     document.querySelector("#history").innerHTML += `<span>${this.levels[this.currentLevel]["to"].toUpperCase()} </span><br/>`
      $('select').on("change", (selectObject) => {
          document.querySelector("#message").innerHTML=""
          let accum = ""
          let newWord = $('select').each((i, obj) => accum += $(obj).val())
-         console.log(accum)
          if (Object.keys(this.words).includes(accum.toLowerCase())) {
-             document.querySelector("#history").innerHTML += `<span>${accum} </span><br>${this.words[accum.toLowerCase()]}<br/>`
-             $("#right").append(accum)
+            let definit = this.words[accum.toLowerCase()];
+            document.querySelector("#history").innerHTML += `<span>${accum} </span><br/>`
+            document.querySelector("#message").innerHTML = `<br><span>${definit}</span><br/>`
+            // (accum == this.curr)
+
+
          } else {
          
              let lastWord = $("#history span").toArray().reverse()[0]?.innerHTML || this.levels[this.currentLevel]["to"]
-
-             document.querySelector("#message").innerHTML = `<span class='myred'>${accum} is not a word in the dictionary </span><br/>`
+             document.querySelector("#message").innerHTML = `<br><span class='myred'>${accum} is not a word in the dictionary </span><br/>`
              setTimeout(() => this.populate(lastWord), 1000)
 
          }

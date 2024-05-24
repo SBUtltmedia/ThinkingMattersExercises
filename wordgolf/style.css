@@ -78,3 +78,23 @@ border-radius: 0;
 .list-choice:hover .list-choice-objects {
 max-height: 540px;
 }
+
+#message {
+  font-size: 0.3rem;
+}
+
+#history {
+  letter-spacing: 1.55rem;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.flex-item {
+  flex: 1;
+  padding:1rem;
+  text-align:center;
+}
