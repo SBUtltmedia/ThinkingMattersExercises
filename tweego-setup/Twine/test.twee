@@ -11,22 +11,41 @@ testgd
 	"zoom": 1
 }
 
+:: StoryInit 
 
 :: Story Stylesheet [stylesheet]
 @import url('style.css');
 
 
 :: Story JavaScript [script]
+SaveSystem.purge()
+Config.passages.nobr = true;
+
 importScripts([
-	'resize.js',
+	'resize.js', 
   'script.js'])
 
 :: PassageHeader {"position":"100,100","size":"100,100"}
 <div id="stage" class="screen">
 <div id="player"></div>
 
-
 </div>
+:: PassageFooter
+<script>
+
+player = document.getElementById('player');
+console.log("player", player.style);
+player.style.left = "5%";
+    resizeWindow();
+player.style.top = "5%";
+document.getElementsByTagName("body")[0].append(Object.assign(document.createElement('div'),{"id":"box1","className":"collidable"}))
+</script>
+
+<<print passage()>>
+<script>
+
+$('#stage').addClass("fade-in");
+</script>
 :: -5_-5
 :: -5_-4
 :: -5_-3

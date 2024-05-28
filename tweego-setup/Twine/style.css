@@ -12,12 +12,16 @@
     width: 100%;
     height: 100%;
     background-color: beige;
-
+   opacity:0;
 }
 html{
     font-size: 10px;
 }
-
+.fade-in{ animation: fadeIn 5s forwards; }
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
 .collidable{
     width: 5%;
     height: 5%;

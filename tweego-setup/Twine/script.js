@@ -9,14 +9,14 @@ let frameHeight = 100 / 3;
 let lastE = null;
 const movePlayer = .60;
 let lookup = {
-    'w': { 'style': 'top', 'charge': -movePlayer, 'column': 2 },
-    's': { 'style': 'top', 'charge': movePlayer, 'column': 3 },
-    'a': { 'style': 'left', 'charge': -movePlayer, 'column': 1 },
-    'd': { 'style': 'left', 'charge': movePlayer, 'column': 0 }
+    'w': { 'style': 'top', 'charge': -movePlayer, 'row': 2 },
+    's': { 'style': 'top', 'charge': movePlayer, 'row': 3 },
+    'a': { 'style': 'left', 'charge': -movePlayer, 'row': 1 },
+    'd': { 'style': 'left', 'charge': movePlayer, 'row': 0 }
 }
 
 let collisionCallbacks = {
-    "box1": () => { console.log(1); },
+    "box1": () => { SugarCube.Engine.play("2_2") },
     "box2": () => { console.log(2) },
     "box3": () => { console.log(3) },
     "box4": () => { console.log(4) },
@@ -27,11 +27,13 @@ $(setTimeout(init,1000))
 
 function init(){
     resizeWindow();
-player = document.getElementById('player');
-player.style.left = "5%"
-player.style.top = "5%"
+// player = document.getElementById('player');
+// player.style.left = "5%"
+// player.style.top = "5%"
 
 
+//     'display': 'block'
+// })
 
 move()
 function move() {
@@ -68,17 +70,19 @@ function overlaps(a, b) {
 
 
 function moveChar(moveData) {
-    collidables.forEach((el, id) => { if (overlaps(player, el)) { collisionCallbacks[el.id]() } })
+    collidables.forEach(
+        (el, id) => { 
+            if (overlaps(player, el)) { 
+                collisionCallbacks[el.id]() 
+            } 
+        })
 
     let style = moveData['style']
     let charge = moveData['charge']
-    let column = moveData['column']
+    let row = moveData['row']
     player.style[style] =( (parseFloat(player.style[style]) + charge)+100) %100 + '%';
-    let discharge = (parseFloat(player.style[style]) + charge +100) %100 + '%';
-    console.log(discharge)
-    console.log(player.style[style])
     x = frameWidth * currentFrame
-    y = frameHeight * column
+    y = frameHeight * row
     setChar(x,y)
 
     currentFrame++
