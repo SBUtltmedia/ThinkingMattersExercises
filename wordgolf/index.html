@@ -8,14 +8,28 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="script.js"></script>
+    <script src="resize.js"></script>
 </head>
 
 <body>
+    <div class="screen">
+        <div class="flex-container">
+            <div id="title"></div>
+            <div id="score-container">
+                <div id="par"></div>
+                <div id="player-score">Your Score: 0</div>
+            </div>
+        </div>
+        <div id="history"></div>
+        <div id="picker"></div>
+        <div id="message"></div>
+        <div id="correct"></div>
 
+        <dialog>
+            <p>You win!</p>
+            <button>Next Level</button>
+        </dialog>
+    </div>
 </body>
-<div id="title"></div>
-<div id="history"></div>
-<div id="picker"></div>
-<div id="message"></div>
-<div id="correct"></div>
+
 </html>

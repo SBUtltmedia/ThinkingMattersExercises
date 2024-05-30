@@ -2,6 +2,9 @@
 body{
   font-family: 'Raleway', sans-serif;
   background:#9ce8aa;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
 }
 .list-choice{
   width:300px;
@@ -80,7 +83,7 @@ max-height: 540px;
 }
 
 #message {
-  font-size: 0.3rem;
+  font-size: 1rem;
 }
 
 #history {
@@ -97,4 +100,25 @@ max-height: 540px;
   flex: 1;
   padding:1rem;
   text-align:center;
+}
+
+#next {
+  display: none;
+}
+
+#par {
+  font-size: 1rem;
+  text-align: end;
+}
+
+.screen {
+  margin: 0;
+  padding: 0;;
+  background-color: aqua;
+}
+
+select {
+  border: 0px none;
+  width: 8%;
+  height: 5%;
 }

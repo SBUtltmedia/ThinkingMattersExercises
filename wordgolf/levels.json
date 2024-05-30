@@ -1,1 +1,5 @@
-[{"to":"hate","from":"love","title":"Make LOVE out of HATE"}]
+[{"from":"hate","to":"love","title":"Make LOVE out of HATE", "par": 4},
+{"from":"cold","to":"warm","title":"Turn COLD into WARM", "par": 4},
+{"from":"wheat","to":"bread","title":"Make WHEAT into BREAD", "par": 4}
+
+]
