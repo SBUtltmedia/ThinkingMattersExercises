@@ -1,10 +1,23 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway);
 body{
   font-family: 'Raleway', sans-serif;
-  background:#9ce8aa;
-  font-size: 1rem;
-  margin: 0;
-  padding: 0;
+  background:var(--second);
+
+  color:var(--fifth);
+}
+:root {
+  --first:#173803;
+  --second:#416100;
+  --third:#709a08;
+  --fourth:#83c702;
+  --fifth:#bce000;
+  --fifth:#EEEEEE;
+}
+#title,#score-container{
+
+ padding:.2rem;
+  border-radius:5%;
+  background-color:var(--first);
 }
 .list-choice{
   width:300px;
@@ -20,30 +33,16 @@ body{
 .list-choice-title {
 width: 100%;
 display: block;
-background: #D8D8D8;
+
 text-align: center;
 padding: 0.55em 1em;
 box-sizing: border-box;
-color: #FFF;
+color: var(--fifth);
 text-shadow: 0 1px 0 #CACACA;
 border-radius: 0.2em;
 }
-.list-choice:hover .list-choice-title {
-border-radius:0.2em 0.2em 0 0;
-}
-.list-choice-objects label:nth-last-of-type(1) span{
-  border-radius:0 0 0.2em 0.2em;
-}
-.list-choice input[type="radio"] + span {
-color: #FFF;
-background: #D8D8D8;
-padding: 0.55em 1em;
-display: block;
-text-align: center;
-box-sizing: border-box;
-cursor: pointer;
-width: 100%;
-}
+
+
 .list-choice-objects {
 position: absolute;
 top: 0;
@@ -54,29 +53,17 @@ overflow: hidden;
 max-height: 0;
 transition: all 250ms ease;
 }
-.list-choice:hover .list-choice-objects  input[type="radio"] + span {
-position: relative;
-top: 0;
-transition: all 250ms ease-in-out;
+
+#score-container{
+  left:70%;
+  position:absolute;
 }
-.list-choice:hover input[type="radio"] + span:hover {
-background:#BBB;
+
+#score-container div{
+text-align:left;
+
 }
-.list-choice:hover input[type="radio"]:checked + span:hover {
-background:#74D68E;
-}
-.list-choice input[type="radio"]:checked + span {
-background: #74D68E;
-position: absolute;
-top: 0em;
-border-radius: 0.2em;
-}
-.list-choice:hover input[type="radio"]:checked + span {
-border-radius: 0;
-}
-.list-choice:hover .list-choice-objects label:nth-last-of-type(1) input[type="radio"]:checked + span{
-  border-radius:0 0 0.2em 0.2em;
-}
+
 
 .list-choice:hover .list-choice-objects {
 max-height: 540px;
@@ -114,11 +101,72 @@ max-height: 540px;
 .screen {
   margin: 0;
   padding: 0;;
-  background-color: aqua;
+
 }
 
 select {
+  appearance: none;
   border: 0px none;
-  width: 8%;
+  flex-shrink: 0;
+  overflow-y: auto;
+  width: 8.4%;
   height: 5%;
+  font-size: 1rem;
+}
+
+/* option {
+  font-size: 1rem;
+} */
+
+/*   Open state of the dialog  */
+dialog[open] {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/*   Closed state of the dialog   */
+dialog {
+  opacity: 0;
+  transform: scaleY(0);
+  transition:
+    opacity 0.7s ease-out,
+    transform 0.7s ease-out,
+    overlay 0.7s ease-out allow-discrete,
+    display 0.7s ease-out allow-discrete;
+  /* Equivalent to
+  transition: all 0.7s allow-discrete; */
+}
+
+/*   Before-open state  */
+/* Needs to be after the previous dialog[open] rule to take effect,
+    as the specificity is the same */
+@starting-style {
+  dialog[open] {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+}
+
+/* Transition the :backdrop when the dialog modal is promoted to the top layer */
+dialog::backdrop {
+  background-color: rgb(0 0 0 / 0%);
+  transition:
+    display 0.7s allow-discrete,
+    overlay 0.7s allow-discrete,
+    background-color 0.7s;
+  /* Equivalent to
+  transition: all 0.7s allow-discrete; */
+}
+
+dialog[open]::backdrop {
+  background-color: rgb(0 0 0 / 25%);
+}
+
+/* This starting-style rule cannot be nested inside the above selector
+because the nesting selector cannot represent pseudo-elements. */
+
+@starting-style {
+  dialog[open]::backdrop {
+    background-color: rgb(0 0 0 / 0%);
+  }
 }

@@ -111,8 +111,8 @@ function resizeWindow() {
     $("html").css("font-size", (stageHeight / 20) + "px");
 
     // $("select").css({
-    //     "width": stageWidth/15,
-    //     "height": stageHeight/15,
+    //     "width": stageWidth/25,
+    //     "height": stageHeight/20,
     //     "font-size": (stageHeight / 25) + "px"
     // })
 
