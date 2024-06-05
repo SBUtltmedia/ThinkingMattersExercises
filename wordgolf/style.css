@@ -1,9 +1,17 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway);
-body{
-  font-family: 'Raleway', sans-serif;
-  background:var(--second);
 
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+body{
+  background:var(--second);
   color:var(--fifth);
+  padding: 1rem 1rem;
+}
+
+body, select{
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 600;
+  
 }
 :root {
   --first:#173803;
@@ -11,13 +19,18 @@ body{
   --third:#709a08;
   --fourth:#83c702;
   --fifth:#bce000;
-  --fifth:#EEEEEE;
+  --fifth:#e7ed7fbe;
 }
-#title,#score-container{
 
- padding:.2rem;
+#title,#score-container, .definition{
+
+  padding:.2rem;
   border-radius:5%;
   background-color:var(--first);
+}
+
+#title {
+  margin-bottom: 0.5rem;
 }
 .list-choice{
   width:300px;
@@ -107,11 +120,24 @@ max-height: 540px;
 select {
   appearance: none;
   border: 0px none;
-  flex-shrink: 0;
   overflow-y: auto;
-  width: 8.4%;
+  width: 8.07%;
   height: 5%;
   font-size: 1rem;
+  background-color: var(--third);
+}
+
+.hover {
+  background-color: var(--third);
+}
+
+.definition {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.35rem;
+  width: 30%;
+  position: absolute;
+  /* background-color: purple; */
+  letter-spacing: normal;
 }
 
 /* option {
