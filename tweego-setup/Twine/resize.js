@@ -2,7 +2,17 @@
 $(window).resize(function () {
     resizeWindow();
 });
+tryResize();
 
+function tryResize() {
+    if (document.getElementById("player")){
+        console.log('screen found');
+        resizeWindow();
+    } else {
+        console.log('screen not found');
+        setTimeout(tryResize, 100);
+    }
+}
 // Resize the window
 function resizeWindow() {
 

@@ -23,13 +23,26 @@ let collisionCallbacks = {
     "box5": () => { console.log(5) },
 }
 
-$(setTimeout(init,1000))
+// $(setTimeout(init,1000))
+// $(document).on(':passagestart', (ev) => {
+//     init();
+//     //fade($("#passages"), 1);
+// })
+init();
 
 function init(){
-    resizeWindow();
-// player = document.getElementById('player');
-// player.style.left = "5%"
-// player.style.top = "5%"
+    // $(document).on(':passagedisplay', function (ev) {
+    //     console.log('passage start');
+    //     resizeWindow();
+    // });
+    player = document.getElementById('player');
+    if(!player) {
+        setTimeout(init, 100);
+        return;
+    }
+    player.style.left = "5%"
+    player.style.top = "5%"
+    SugarCube.Engine.play('0_0');
 
 
 //     'display': 'block'
