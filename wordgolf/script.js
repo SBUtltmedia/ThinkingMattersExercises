@@ -1,5 +1,5 @@
 $(function () {
-    new WordGolf(startLevel = 0)
+    new WordGolf()
 });
 class WordGolf {
     constructor(startLevel = 0) {
@@ -9,8 +9,15 @@ class WordGolf {
         this.totalScore = 0;
         this.callbacks = {
             "Play Again": () => {
-
-                this.init()
+                this.currentLevel = 0;
+                this.init();
+            },
+            "Try Level Again": () => {
+                this.init();
+            },
+            "Go To Next Level": () => {
+                this.currentLevel += 1;
+                this.init();
             }
         }
 
@@ -31,7 +38,8 @@ class WordGolf {
         console.log("current level: ", this.currentLevel);
         // Current level score
         this.curLevelScore = 0;
-        document.querySelectorAll("#history,#message,#correct,#picker", ).forEach(item => item.innerHTML = "")
+        console.log(document.querySelectorAll("#history,#message,#correct,#picker"));
+        document.querySelectorAll("#history,#message,#correct,#picker").forEach(item => item.innerHTML = "");
         document.querySelector("#player-score").innerHTML = "Attempts: 0";
         document.querySelector("#par").innerHTML = `Par: ${this.levels[this.currentLevel]["par"]}`
 
@@ -66,11 +74,12 @@ class WordGolf {
                 if (accum.toLowerCase() === this.levels[this.currentLevel]["to"]) {
                     console.log("win")
                     this.win();
+                } else {
+                    let definit = this.words[accum.toLowerCase()];
+                    document.querySelector("#history").innerHTML += `<span class= "hover">${accum}</span></br>`
+                    this.createDefinitionCard(accum, definit);
                 }
-                let definit = this.words[accum.toLowerCase()];
-                document.querySelector("#history").innerHTML += `<span class= "hover">${accum}</span></br>`
-                this.createDefinitionCard(accum, definit);
-                // $(".hover").on("mouseout", (e) => {
+                    // $(".hover").on("mouseout", (e) => {
                 //     let selectedWord = e.currentTarget.innerText;
                 //     document.querySelector("#"+ selectedWord).style.visibility = "hidden";
                 // })
@@ -88,11 +97,10 @@ class WordGolf {
 
             }
 
-            document.querySelector("#player-score").innerHTML = `Your Score: ${this.curLevelScore}`
+            document.querySelector("#player-score").innerHTML = `Attempts: ${this.curLevelScore}`
 
         })
         resizeWindow();
-        // this.win()
     }
     populate(word) {
         let selections = $("select")
@@ -114,9 +122,8 @@ class WordGolf {
             })
         })
 
-
         document.querySelector(".screen").append(dialog);
-        dialog.show()
+        dialog.show();
     }
     listen(e) {
         let callback = this.callbacks[e.currentTarget.innerHTML] || function () { };
@@ -125,29 +132,13 @@ class WordGolf {
 
     }
     win() {
-        this.makeModal({ div: ["Congrats!", `You did this level in ${this.curLevelScore}`], button: ["Play Again", "g"] })
-        // const dialog = document.querySelector("dialog");
-        // const nextButton = document.querySelector("button");
-
-        // dialog.showModal();
-
-        // // "Close" button closes the dialog
-        // nextButton.addEventListener("click", () => {
-        //     dialog.close();
-        //     console.log("next level running")
-        //     this.goToNextLevel();
-        // });
-    }
-
-    goToNextLevel() {
-        console.log("setting up next level")
-
-
-
-        if (this.levels.length < this.currentLevel) {
-            this.currentLevel += 1;
+        if(this.currentLevel === this.levels.length-1) {
+            this.makeModal({ div: ["Congrats!", `You completed this level in ${this.curLevelScore} attempts.`], button: ["Play Again", "g"] })
+        } else if(this.curLevelScore > this.levels[this.currentLevel]["par"]) {
+            this.makeModal({ div: [`You did not complete this level under par: ${this.levels[this.currentLevel]["par"]} attempts.`], button: ["Try Level Again"] })
+        } else {
+            this.makeModal({ div: ["Congrats!", `You completed this level in ${this.curLevelScore} attempts.`], button: ["Try Level Again", "Go To Next Level"] })
         }
-        this.init();
     }
 
     createDefinitionCard(accum, definit) {
