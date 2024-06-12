@@ -8,6 +8,24 @@ body{
   padding: 1rem 1rem;
 }
 
+@keyframes animateWrong {
+  0% {
+      background-color: var(--wrong);
+      transform: scale(1);
+  }
+
+  50% {
+      background-color: var(--wrong);
+      transform: scale(1.1);
+  }
+
+  100% {
+      background-color: var(--wrong);
+      transform: scale(1);
+  }
+
+}
+
 body, select{
   font-family: "JetBrains Mono", monospace;
   font-weight: 600;
@@ -161,12 +179,7 @@ dialog {
     display 0.7s ease-out allow-discrete;
   /* Equivalent to
   transition: all 0.7s allow-discrete; */
-  width: 10rem;
-  position: fixed;
-  top: 6rem;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.3);
 }
-
 
 /*   Before-open state  */
 /* Needs to be after the previous dialog[open] rule to take effect,
@@ -200,9 +213,4 @@ because the nesting selector cannot represent pseudo-elements. */
   dialog[open]::backdrop {
     background-color: rgb(0 0 0 / 0%);
   }
-}
-
-
-#dialog div {
-  text-align: center;
 }
