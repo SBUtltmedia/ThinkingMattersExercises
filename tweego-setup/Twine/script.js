@@ -9,14 +9,14 @@ let frameHeight = 100 / 3;
 let lastE = null;
 const movePlayer = .60;
 let lookup = {
-    'w': { 'style': 'top', 'charge': -movePlayer, 'row': 2 },
-    's': { 'style': 'top', 'charge': movePlayer, 'row': 3 },
-    'a': { 'style': 'left', 'charge': -movePlayer, 'row': 1 },
-    'd': { 'style': 'left', 'charge': movePlayer, 'row': 0 }
+    'w': { 'style': {'top': -1 , 'left': .3} , 'row': 2 },
+    's': { 'style': {'top': 1 , 'left': 0}, 'row': 3 },
+    'a': { 'style': {'top': -.3 , 'left': -1}, 'row': 1 },
+    'd': { 'style': {'top': 0 , 'left': 1}, 'row': 0 }
 }
 
 let collisionCallbacks = {
-    "box1": () => { SugarCube.Engine.play("2_2") },
+    "box1": () => {  SugarCube.Engine.play("2_2") },
     "box2": () => { console.log(2) },
     "box3": () => { console.log(3) },
     "box4": () => { console.log(4) },
@@ -31,14 +31,19 @@ let collisionCallbacks = {
 init();
 
 function init(){
+
     // $(document).on(':passagedisplay', function (ev) {
     //     console.log('passage start');
     //     resizeWindow();
     // });
-    player = document.getElementById('player');
+   player = document.getElementById('player');
     if(!player) {
+    
         setTimeout(init, 100);
         return;
+    }
+    else{
+  tryResize();
     }
     player.style.left = "5%"
     player.style.top = "5%"
@@ -90,12 +95,12 @@ function moveChar(moveData) {
             } 
         })
 
-    let style = moveData['style']
-    let charge = moveData['charge']
-    let row = moveData['row']
-    player.style[style] =( (parseFloat(player.style[style]) + charge)+100) %100 + '%';
+    for (i of ["left","top"])
+        {
+    player.style[i]=( (parseFloat(player.style[i])+moveData['style'][i] )+100) %100 + '%';
+        }
     x = frameWidth * currentFrame
-    y = frameHeight * row
+    y = frameHeight * moveData['row']
     setChar(x,y)
 
     currentFrame++

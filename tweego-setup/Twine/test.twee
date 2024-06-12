@@ -21,10 +21,14 @@ Save.clear();
 // SaveSystem.purge()
 Config.passages.nobr = true;
 importScripts(['script.js', 'resize.js']);	
-// setup.aScriptImport = importScripts("resize.js");
-// $(document).on(':passagestart', function (ev) {
-// 	resizeWindow();
-// });
+$(document).on(':passagestart', function (ev) {
+	setTimeout(tryResize,1000);
+
+});
+$(document).on(':passageinit', function (ev) {
+	
+	$('#story').hide();
+});
 
 :: UserScript[script]
 /*

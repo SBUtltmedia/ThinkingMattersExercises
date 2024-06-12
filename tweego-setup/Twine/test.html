@@ -103,10 +103,14 @@ Save.clear();
 // SaveSystem.purge()
 Config.passages.nobr = true;
 importScripts(['script.js', 'resize.js']);	
-// setup.aScriptImport = importScripts("resize.js");
-// $(document).on(':passagestart', function (ev) {
-// 	resizeWindow();
-// });
+$(document).on(':passagestart', function (ev) {
+	setTimeout(tryResize,1000);
+
+});
+$(document).on(':passageinit', function (ev) {
+	
+	$('#story').hide();
+});
 /* twine-user-script #2: "UserScript" */
 /*
     Prepend the content of the passage "New Header" to every passage.

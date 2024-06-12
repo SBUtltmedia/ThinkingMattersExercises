@@ -2,15 +2,17 @@
 $(window).resize(function () {
     resizeWindow();
 });
-tryResize();
 
+$(tryResize())
 function tryResize() {
-    if (document.getElementById("player")){
+    if (document.getElementById("player")?.style.left){
         console.log('screen found');
         resizeWindow();
+        $('#story').show();
     } else {
-        console.log('screen not found');
-        setTimeout(tryResize, 100);
+
+        
+        setTimeout(tryResize);
     }
 }
 // Resize the window
@@ -43,7 +45,7 @@ function resizeWindow() {
     }
 
     // Set "screen" object width and height to stageWidth and stageHeight, and center screen
-    $(".screen").css({
+    $("#stage").css({
         width: stageWidth + "px",
         height: stageHeight + "px",
         left: stageLeft + "px",
