@@ -16,7 +16,7 @@ let lookup = {
 }
 
 let collisionCallbacks = {
-    "box1": () => {  SugarCube.Engine.play("2_2") },
+    "box1": () => {  SugarCube.Engine.play("2_2"); },
     "box2": () => { console.log(2) },
     "box3": () => { console.log(3) },
     "box4": () => { console.log(4) },
@@ -30,6 +30,27 @@ let collisionCallbacks = {
 // })
 init();
 
+// $(document).mousemove(function(getCurrentPos){
+//     var xCord = getCurrentPos.pageX;
+//     var yCord = getCurrentPos.pageY;
+//     console.log(xCord+" "+yCord);
+// });
+
+$(document).click(function(e){
+    // Get the target
+    const target = e.target;
+    if(target.id === 'stage') {
+        // Get the bounding rectangle of target
+        const rect = target.getBoundingClientRect();
+
+        // Mouse position
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const xPercent = x / rect.width;
+        const yPercent = y / rect.height;
+        console.log({x, y, xPercent, yPercent});
+    }
+}); 
 function init(){
 
     // $(document).on(':passagedisplay', function (ev) {
