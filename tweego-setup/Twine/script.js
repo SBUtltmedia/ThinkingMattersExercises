@@ -4,15 +4,16 @@ let playerWidth = 0
 let playerHeight = 0
 let currentFrame = 7;
 let frameNumber = 24;
+let wasd_move = 0.5
 let frameWidth = 100 / (frameNumber - 1);
 let frameHeight = 100 / 3;
 let lastE = null;
 const movePlayer = .60;
 let lookup = {
-    'w': { 'style': {'top': -1 , 'left': .3} , 'row': 2 },
-    's': { 'style': {'top': 1 , 'left': 0}, 'row': 3 },
-    'a': { 'style': {'top': -.3 , 'left': -1}, 'row': 1 },
-    'd': { 'style': {'top': 0 , 'left': 1}, 'row': 0 }
+    'w': { 'style': {'top': -wasd_move , 'left': 0} , 'row': 2 },
+    's': { 'style': {'top': wasd_move , 'left': 0}, 'row': 3 },
+    'a': { 'style': {'top': 0, 'left': -wasd_move}, 'row': 1 },
+    'd': { 'style': {'top': 0 , 'left': wasd_move}, 'row': 0 }
 }
 
 let collisionCallbacks = {
@@ -30,27 +31,25 @@ let collisionCallbacks = {
 // })
 init();
 
-// $(document).mousemove(function(getCurrentPos){
-//     var xCord = getCurrentPos.pageX;
-//     var yCord = getCurrentPos.pageY;
-//     console.log(xCord+" "+yCord);
-// });
+function getAngle(x, y) {
+   return Math.floor(Math.atan2(y, x) * 0.5 * Math.PI);
+}
 
-$(document).click(function(e){
-    // Get the target
-    const target = e.target;
-    if(target.id === 'stage') {
-        // Get the bounding rectangle of target
-        const rect = target.getBoundingClientRect();
-
-        // Mouse position
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const xPercent = x / rect.width;
-        const yPercent = y / rect.height;
-        console.log({x, y, xPercent, yPercent});
+function getDirection(dx,dy) {
+    if (dx > 0 && dy > 0) {
+        return 0  
+    } else if (dx > 0 && dy < 0) {
+        return 0   
+    } else if (dx < 0 && dy > 0) {
+        return 1   
+    } else if (dx == 0 && dy > 0) {
+        return 3;    
+    } else if (dx == 0 && dy < 0) {
+        return 2;
+    } else {
+        return 1;
     }
-}); 
+}
 function init(){
 
     // $(document).on(':passagedisplay', function (ev) {
@@ -59,20 +58,14 @@ function init(){
     // });
    player = document.getElementById('player');
     if(!player) {
-    
         setTimeout(init, 100);
         return;
-    }
-    else{
-  tryResize();
+    } else {
+        tryResize();
     }
     player.style.left = "5%"
     player.style.top = "5%"
     SugarCube.Engine.play('0_0');
-
-
-//     'display': 'block'
-// })
 
 move()
 function move() {
@@ -107,19 +100,39 @@ function overlaps(a, b) {
     return isOverlapping;
 }
 
+function checkMovement(delta, playerStyle) {
+    collidables.forEach(
+        (el, id) => { 
+            if (overlaps(player, el)) { 
+                collisionCallbacks[el.id]() 
+                let returnVal = false;
+            } 
+        })
+        // if(playerStyle )
+}
 
 function moveChar(moveData) {
     collidables.forEach(
         (el, id) => { 
             if (overlaps(player, el)) { 
                 collisionCallbacks[el.id]() 
+                currentMovement = null;
             } 
         })
 
-    for (i of ["left","top"])
-        {
-    player.style[i]=( (parseFloat(player.style[i])+moveData['style'][i] )+100) %100 + '%';
+    for (i of ["left","top"]) {
+        player.style[i]=( (parseFloat(player.style[i])+(moveData['style'][i]))+100) %100 + '%';
+        /* For click functionality */
+        if('steps' in moveData) {
+            if (!moveData['steps']) {    
+                console.log('step end');
+                currentMovement = null;
+               
+            } 
+            moveData.steps = moveData.steps-0.5;
         }
+    }
+
     x = frameWidth * currentFrame
     y = frameHeight * moveData['row']
     setChar(x,y)
@@ -141,9 +154,38 @@ function standing() {
     setChar(x,y)
 }
 
+function getDistance(clickedX, clickedY) {
+    let distanceX = clickedX - parseFloat(player.style["left"]) ;
+    let distanceY = clickedY - parseFloat(player.style["top"]);
+    
+    return [distanceX, distanceY, 2 * Math.sqrt(((distanceX ) ** 2 + (distanceY) ** 2))];
+}
+
 window.addEventListener('keydown', e => { currentMovement = lookup[e.key] });
 window.addEventListener('keyup', e => {
     currentMovement = null;
     currentFrame=7;
+});
+document.addEventListener('click', e => {
+    // Get the target
+    const target = e.target;
+    if(target.id === 'stage') {
+        // Get the bounding rectangle of target
+        const rect = target.getBoundingClientRect();
+
+        // Mouse position
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const clickedX = x / rect.width * 100;
+        const clickedY = y / rect.height * 100;
+        console.log({x, y, clickedX, clickedY});
+
+        let [xDistance, yDistance, distance] = getDistance(clickedX, clickedY)
+
+        let deltaX = xDistance / distance;
+        let deltaY = yDistance / distance;
+        
+        currentMovement = {'style': {'top': deltaY, 'left': deltaX}, 'row': getDirection(deltaX, deltaY), "steps": Math.floor(distance)};
+    }
 });
 }

@@ -6,6 +6,7 @@
     height: 10.4%;
     background-image: url(sheet.svg) ;
     background-size: 2400%;
+    /* transition: left 6s ease, top 6s ease; */
 }
 #stage {
     position: absolute;
