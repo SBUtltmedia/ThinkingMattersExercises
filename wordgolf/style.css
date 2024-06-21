@@ -26,6 +26,33 @@ body{
 
 }
 
+.animateWrong {
+  animation: 0.5s forwards alternate animateWrong;
+}
+
+
+@keyframes animateRight {
+  0% {
+      background-color: var(--right);
+      transform: scale(1);
+  }
+
+  50% {
+      background-color: var(--right);
+      transform: scale(1.1);
+  }
+
+  100% {
+      background-color: var(--right);
+      transform: scale(1);
+  }
+
+}
+
+.animateRight {
+  animation: 0.5s forwards alternate animateRight;
+}
+
 body, select{
   font-family: "JetBrains Mono", monospace;
   font-weight: 600;
@@ -38,6 +65,8 @@ body, select{
   --fourth:#83c702;
   --fifth:#bce000;
   --fifth:#e7ed7fbe;
+  --wrong: #ba4646;
+  --right: #78b900;
 }
 
 #title,#score-container, .definition{

@@ -75,24 +75,18 @@ class WordGolf {
                     console.log("win")
                     this.win();
                 } else {
+                    this.animateAnswer("animateRight");
                     let definit = this.words[accum.toLowerCase()];
                     document.querySelector("#history").innerHTML += `<span class= "hover">${accum}</span></br>`
                     this.createDefinitionCard(accum, definit);
                 }
-                    // $(".hover").on("mouseout", (e) => {
-                //     let selectedWord = e.currentTarget.innerText;
-                //     document.querySelector("#"+ selectedWord).style.visibility = "hidden";
-                // })
-                // let def = Object.assign(document.createElement("div"), {"id": accum, "className": "definition", "textContent": definit});
-                // document.querySelector("#history").appendChild(def);
-                // document.querySelector("#message").innerHTML = `<br><span>${definit}</span><br/>`
-                // (accum == this.curr)
-
-
             } else {
 
                 let lastWord = $("#history span").toArray().reverse()[0]?.innerHTML || this.levels[this.currentLevel]["from"]
                 document.querySelector("#message").innerHTML = `<br><span class="myred">${accum} is not a word in the dictionary </span><br/>`
+                
+                /* Shows the input is wrong */ 
+                this.animateAnswer("animateWrong")
                 setTimeout(() => this.populate(lastWord), 1000)
 
             }
@@ -102,6 +96,17 @@ class WordGolf {
         })
         resizeWindow();
     }
+
+    animateAnswer(animation) {
+        /* Shows the input is wrong */ 
+        document.querySelectorAll("select").forEach((select) => {
+            select.classList.add(animation);
+            select.addEventListener("animationend", (event) => {
+                select.classList.remove(animation);
+            });
+        })
+    }
+
     populate(word) {
         let selections = $("select")
         let letters = word.split("").forEach((element, i) => {
