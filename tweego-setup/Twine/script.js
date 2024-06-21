@@ -35,20 +35,27 @@ function getAngle(x, y) {
    return Math.floor(Math.atan2(y, x) * 0.5 * Math.PI);
 }
 
-function getDirection(dx,dy) {
-    if (dx > 0 && dy > 0) {
-        return 0  
-    } else if (dx > 0 && dy < 0) {
-        return 0   
-    } else if (dx < 0 && dy > 0) {
-        return 1   
-    } else if (dx == 0 && dy > 0) {
-        return 3;    
-    } else if (dx == 0 && dy < 0) {
-        return 2;
-    } else {
-        return 1;
-    }
+function getDirection(angle) {
+    let currentDirection;
+    switch (true) {
+        case (angle <= 45 && angle > -45):
+            //east
+            currentDirection = 0;
+            break;
+        case (angle <= 135 && angle > 45): 
+            //south
+            currentDirection = 3;
+            break;
+        case (angle <= -135 || angle > 135):
+            //west
+            currentDirection = 1;
+            break;
+        case (angle <= -45 && angle > -135):
+            //north
+            currentDirection = 2;
+            break;
+      }
+      return currentDirection;
 }
 function init(){
 
@@ -182,10 +189,14 @@ document.addEventListener('click', e => {
 
         let [xDistance, yDistance, distance] = getDistance(clickedX, clickedY)
 
+        let angle = Math.atan2(yDistance, xDistance) * 180 / Math.PI;
+
+        console.log(angle);
+
         let deltaX = xDistance / distance;
         let deltaY = yDistance / distance;
         
-        currentMovement = {'style': {'top': deltaY, 'left': deltaX}, 'row': getDirection(deltaX, deltaY), "steps": Math.floor(distance)};
+        currentMovement = {'style': {'top': deltaY, 'left': deltaX}, 'row': getDirection(angle), "steps": Math.floor(distance)};
     }
 });
 }
