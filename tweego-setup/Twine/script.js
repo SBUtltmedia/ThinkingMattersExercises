@@ -168,6 +168,14 @@ function getDistance(clickedX, clickedY) {
     return [distanceX, distanceY, 2 * Math.sqrt(((distanceX ) ** 2 + (distanceY) ** 2))];
 }
 
+function showClickEffect(rect, x, y){
+    let d = Object.assign(document.createElement("div"), {"className": "clickEffect"});
+    d.style.top= parseFloat(y) + "%";
+    d.style.left= parseFloat(x) + "%";
+    rect.appendChild(d);
+    d.addEventListener('animationend',function(){d.parentElement.removeChild(d);}.bind(this));
+}
+
 window.addEventListener('keydown', e => { currentMovement = lookup[e.key] });
 window.addEventListener('keyup', e => {
     currentMovement = null;
@@ -197,6 +205,7 @@ document.addEventListener('click', e => {
         let deltaY = yDistance / distance;
         
         currentMovement = {'style': {'top': deltaY, 'left': deltaX}, 'row': getDirection(angle), "steps": Math.floor(distance)};
+        showClickEffect(target, clickedX, clickedY);
     }
 });
 }
