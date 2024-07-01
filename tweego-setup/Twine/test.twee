@@ -20,11 +20,18 @@ testgd
 Save.clear();
 // SaveSystem.purge()
 Config.passages.nobr = true;
-importScripts(['script.js', 'resize.js']);	
-$(document).on(':passagestart', function (ev) {
-	setTimeout(tryResize,1000);
+importScripts(['script.js', 'resize.js']);
 
-});
+importScripts('resize.js')
+	.then(function() {
+		$(document).on(':passagestart', function (ev) {
+			setTimeout(tryResize,1000);
+		});
+	})
+// $(document).on(':passagestart', function (ev) {
+// 	setTimeout(tryResize,1000);
+
+// });
 $(document).on(':passageinit', function (ev) {
 	
 	$('#story').hide();
