@@ -183,29 +183,28 @@ window.addEventListener('keyup', e => {
 });
 document.addEventListener('click', e => {
     // Get the target
-    const target = e.target;
-    if(target.id === 'stage') {
-        // Get the bounding rectangle of target
-        const rect = target.getBoundingClientRect();
+    const target = document.getElementById('stage');
+    // Get the bounding rectangle of target
+    const rect = target.getBoundingClientRect();
 
-        // Mouse position
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const clickedX = x / rect.width * 100;
-        const clickedY = y / rect.height * 100;
-        console.log({x, y, clickedX, clickedY});
+    // Mouse position
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const clickedX = x / rect.width * 100;
+    const clickedY = y / rect.height * 100;
+    console.log({x, y, clickedX, clickedY});
 
-        let [xDistance, yDistance, distance] = getDistance(clickedX, clickedY)
+    let [xDistance, yDistance, distance] = getDistance(clickedX, clickedY)
 
-        let angle = Math.atan2(yDistance, xDistance) * 180 / Math.PI;
+    let angle = Math.atan2(yDistance, xDistance) * 180 / Math.PI;
 
-        console.log(angle);
+    console.log(angle);
 
-        let deltaX = xDistance / distance;
-        let deltaY = yDistance / distance;
-        
-        currentMovement = {'style': {'top': deltaY, 'left': deltaX}, 'row': getDirection(angle), "steps": Math.floor(distance)};
-        showClickEffect(target, clickedX, clickedY);
+    let deltaX = xDistance / distance;
+    let deltaY = yDistance / distance;
+    
+    currentMovement = {'style': {'top': deltaY, 'left': deltaX}, 'row': getDirection(angle), "steps": Math.floor(distance)};
+    showClickEffect(target, clickedX, clickedY);
     }
-});
-}
+)
+};
