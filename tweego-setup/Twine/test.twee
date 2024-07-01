@@ -20,7 +20,9 @@ testgd
 Save.clear();
 // SaveSystem.purge()
 Config.passages.nobr = true;
-importScripts(['script.js', 'resize.js']);
+
+/* OLD */
+// importScripts(['script.js', 'resize.js']);
 
 importScripts('resize.js')
 	.then(function() {
@@ -28,6 +30,15 @@ importScripts('resize.js')
 			setTimeout(tryResize,1000);
 		});
 	})
+
+importScripts('script.js')
+	.then(function() {
+		$(document).on(':passagedisplay', function (ev) {
+			makeDoors(passage());
+		});
+	})
+
+/* OLD */
 // $(document).on(':passagestart', function (ev) {
 // 	setTimeout(tryResize,1000);
 
@@ -68,7 +79,7 @@ player = document.getElementById('player');
 console.log("player", player.style);
 player.style.left = "5%";
 player.style.top = "5%";
-document.getElementById("stage").append(Object.assign(document.createElement('div'),{"id":"box1","className":"collidable"}));
+// document.getElementById("stage").append(Object.assign(document.createElement('div'),{"id":"box1","className":"collidable"}));
 
 </script>
 

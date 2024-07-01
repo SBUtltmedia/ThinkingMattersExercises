@@ -24,6 +24,62 @@ let collisionCallbacks = {
     "box5": () => { console.log(5) },
 }
 
+let collidables;
+
+function makeDoors(currentPassage) {
+    console.log(currentPassage);
+    
+    const [x,y] = currentPassage.split("_").map(Number);
+    console.log(x,y);
+
+    const up = `${x}_${y + 1}`;
+    const down = `${x}_${y - 1}`;
+    const left = `${x - 1}_${y}`;
+    const right = `${x + 1}_${y}`;
+
+    let adjacent = { up, down, left, right};
+    console.log(adjacent)
+
+    let index = 1;
+
+    Object.entries(adjacent).forEach(([direction, adjRoom]) => {
+        if(SugarCube.Story.has(adjRoom)) {
+            let door = createDoor(direction, `box${index}`);
+            document.getElementById('stage').append(door);
+            console.log(door);
+            collisionCallbacks[`box${index}`] = () => {SugarCube.Engine.play(adjRoom)};
+        }
+        index++;
+    });
+
+    collidables = document.querySelectorAll(".collidable")
+    console.log('collidables: ', collidables )
+    
+}
+
+function createDoor(direction, doorID) {
+    let door = Object.assign(document.createElement('div'),{"id":doorID,"className":"collidable"});
+    switch(direction) {
+        case 'up':
+            door.style.left = '50%';
+            door.style.top = '0%';
+            break;
+        case 'down':
+            door.style.left = '50%';
+            door.style.top = '95%';
+            break;
+        case 'left':
+            door.style.left = '0%';
+            door.style.top = '50%';
+            break;
+        case 'right':
+            door.style.left = '95%';
+            door.style.top = '50%';
+            break;
+    }
+    return door;
+}
+
 // $(setTimeout(init,1000))
 // $(document).on(':passagestart', (ev) => {
 //     init();
@@ -58,11 +114,6 @@ function getDirection(angle) {
       return currentDirection;
 }
 function init(){
-
-    // $(document).on(':passagedisplay', function (ev) {
-    //     console.log('passage start');
-    //     resizeWindow();
-    // });
    player = document.getElementById('player');
     if(!player) {
         setTimeout(init, 100);
@@ -84,16 +135,18 @@ function move() {
     )
 }
 
-let collidables = document.querySelectorAll(".collidable")
+// let collidables = document.querySelectorAll(".collidable")
+// console.log('collidables: ', collidables )
 
-collidables.forEach((el, id) => {
 
-    let itemLeft = Math.random() * 100;
-    let itemTop = Math.random() * 100;
-    el.style.left = `${itemLeft}%`;
-    el.style.top = `${itemTop}%`;
+// collidables.forEach((el, id) => {
 
-})
+//     let itemLeft = Math.random() * 100;
+//     let itemTop = Math.random() * 100;
+//     el.style.left = `${itemLeft}%`;
+//     el.style.top = `${itemTop}%`;
+
+// })
 
 
 function overlaps(a, b) {
@@ -124,7 +177,7 @@ function moveChar(moveData) {
             if (overlaps(player, el)) { 
                 collisionCallbacks[el.id]() 
                 currentMovement = null;
-            } 
+            }
         })
 
     for (i of ["left","top"]) {

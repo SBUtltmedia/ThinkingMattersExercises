@@ -102,7 +102,9 @@ var LZString={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234
 Save.clear();
 // SaveSystem.purge()
 Config.passages.nobr = true;
-importScripts(['script.js', 'resize.js']);
+
+/* OLD */
+// importScripts(['script.js', 'resize.js']);
 
 importScripts('resize.js')
 	.then(function() {
@@ -110,6 +112,15 @@ importScripts('resize.js')
 			setTimeout(tryResize,1000);
 		});
 	})
+
+importScripts('script.js')
+	.then(function() {
+		$(document).on(':passagedisplay', function (ev) {
+			makeDoors(passage());
+		});
+	})
+
+/* OLD */
 // $(document).on(':passagestart', function (ev) {
 // 	setTimeout(tryResize,1000);
 
@@ -137,7 +148,7 @@ player = document.getElementById(&#39;player&#39;);
 console.log(&quot;player&quot;, player.style);
 player.style.left = &quot;5%&quot;;
 player.style.top = &quot;5%&quot;;
-document.getElementById(&quot;stage&quot;).append(Object.assign(document.createElement(&#39;div&#39;),{&quot;id&quot;:&quot;box1&quot;,&quot;className&quot;:&quot;collidable&quot;}));
+// document.getElementById(&quot;stage&quot;).append(Object.assign(document.createElement(&#39;div&#39;),{&quot;id&quot;:&quot;box1&quot;,&quot;className&quot;:&quot;collidable&quot;}));
 
 &lt;/script&gt;
 
