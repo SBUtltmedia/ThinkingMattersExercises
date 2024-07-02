@@ -5,7 +5,7 @@
 #player {
     position: absolute;
     width: 4.9%;
-    height: 10.4%;
+    height: 7.5%;
     background-image: url(sheet.svg);
     background-size: 2400%;
     /* transition: left 6s ease, top 6s ease; */
@@ -18,9 +18,32 @@
     background-color: beige;
     /* opacity:0; */
 }
+#npc1{
+    left:50%;
+    top:50%;
+}
 
+#dialog{
+    background-color:rgba(0,0,0,55);
+    left: 70%;
+    position: absolute;
+    width:30%;
+    height: 100%;
+}
+
+#walkway,.overlay {
+    left:0;
+    position: absolute;
+    width:70%;
+    height: 100%;
+}
 html {
     font-size: 10px;
+    
+        transition: none;
+        -webkit-transition: none;
+        -moz-transition: none;
+        
 }
 
 .fade-in {
@@ -80,4 +103,8 @@ div.clickEffect {
     width: 1em;
     height: 1em;
     box-sizing: border-box;
+}
+
+.hide {
+    display: none;
 }

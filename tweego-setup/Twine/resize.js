@@ -45,7 +45,7 @@ function resizeWindow() {
     }
 
     // Set "screen" object width and height to stageWidth and stageHeight, and center screen
-    $("#stage").css({
+    $("#stage,.overlay").css({
         width: stageWidth + "px",
         height: stageHeight + "px",
         left: stageLeft + "px",

@@ -9,6 +9,14 @@ let frameWidth = 100 / (frameNumber - 1);
 let frameHeight = 100 / 3;
 let lastE = null;
 const movePlayer = .60;
+function typeWriter(i=0,txt="no text provided",speed = 50) {
+  
+    if (i < txt.length) {
+      document.getElementById("dialog").innerHTML += txt.charAt(i);
+      i++;
+      setTimeout(()=>typeWriter(i,txt,speed), speed);
+    }
+  }
 let lookup = {
     'w': { 'style': {'top': -wasd_move , 'left': 0} , 'row': 2 },
     's': { 'style': {'top': wasd_move , 'left': 0}, 'row': 3 },
@@ -18,7 +26,9 @@ let lookup = {
 
 let collisionCallbacks = {
     "box1": () => {  SugarCube.Engine.play("2_2"); },
-    "box2": () => { console.log(2) },
+    "npc1": () => { 
+       typeWriter(0,SugarCube.State.getVar("$dialog")[0])
+     },
     "box3": () => { console.log(3) },
     "box4": () => { console.log(4) },
     "box5": () => { console.log(5) },
@@ -45,9 +55,12 @@ function makeDoors(currentPassage) {
     Object.entries(adjacent).forEach(([direction, adjRoom]) => {
         if(SugarCube.Story.has(adjRoom)) {
             let door = createDoor(direction, `box${index}`);
-            document.getElementById('stage').append(door);
+            document.getElementById("walkway").append(door);
             console.log(door);
-            collisionCallbacks[`box${index}`] = () => {SugarCube.Engine.play(adjRoom)};
+            collisionCallbacks[`box${index}`] = () => {
+                SugarCube.Engine.play(adjRoom);
+                console.log(door.style.left) 
+                $('.hide').show()};
         }
         index++;
     });
@@ -116,7 +129,7 @@ function getDirection(angle) {
 function init(){
    player = document.getElementById('player');
     if(!player) {
-        setTimeout(init, 100);
+        setTimeout(init);
         return;
     } else {
         tryResize();
@@ -134,10 +147,6 @@ function move() {
     }
     )
 }
-
-// let collidables = document.querySelectorAll(".collidable")
-// console.log('collidables: ', collidables )
-
 
 // collidables.forEach((el, id) => {
 
@@ -160,25 +169,24 @@ function overlaps(a, b) {
     return isOverlapping;
 }
 
-function checkMovement(delta, playerStyle) {
-    collidables.forEach(
-        (el, id) => { 
-            if (overlaps(player, el)) { 
-                collisionCallbacks[el.id]() 
-                let returnVal = false;
-            } 
-        })
-        // if(playerStyle )
-}
-
 function moveChar(moveData) {
+    /* Check if character is moving out of bounds */
+    const walkway = document.getElementById("walkway").getBoundingClientRect();
     collidables.forEach(
         (el, id) => { 
             if (overlaps(player, el)) { 
+                moveData['style']["left"]=- moveData['style']["left"]
+                moveData['style']["top"]=- moveData['style']["top"]
                 collisionCallbacks[el.id]() 
                 currentMovement = null;
             }
         })
+        
+        if(moveData["steps"] != Infinity) {
+            x = frameWidth * currentFrame
+            y = frameHeight * moveData['row']
+            setChar(x,y)
+        }
 
     for (i of ["left","top"]) {
         player.style[i]=( (parseFloat(player.style[i])+(moveData['style'][i]))+100) %100 + '%';
@@ -193,9 +201,6 @@ function moveChar(moveData) {
         }
     }
 
-    x = frameWidth * currentFrame
-    y = frameHeight * moveData['row']
-    setChar(x,y)
 
     currentFrame++
     currentFrame %= frameNumber;
@@ -236,7 +241,7 @@ window.addEventListener('keyup', e => {
 });
 document.addEventListener('click', e => {
     // Get the target
-    const target = document.getElementById('stage');
+    const target = document.getElementById("walkway");
     // Get the bounding rectangle of target
     const rect = target.getBoundingClientRect();
 
