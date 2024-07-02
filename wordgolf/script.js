@@ -35,6 +35,12 @@ class WordGolf {
     }
     init() {
         document.querySelector("#dialog")?.remove();
+
+        // shows available levels
+
+        if(document.querySelector('.levels').children.length === 1) {
+            this.showAvailableLevels();
+        }
         console.log("current level: ", this.currentLevel);
         // Current level score
         this.curLevelScore = 0;
@@ -162,6 +168,19 @@ class WordGolf {
             // console.log(selectedWord);
             $(definitionCard).css({"left": right, top});
             definitionCard.style.visibility = visibilityStatus[e.type];
+        })
+    }
+
+    showAvailableLevels() {
+        this.levels.map((level, index) => {
+            let l = Object.assign(document.createElement('button'), {"textContent": level.title}) 
+            l.addEventListener("click", (e) => {
+                console.log(index);
+                this.currentLevel = index;
+                this.init();
+                
+            })
+            document.querySelector('.levels').append(l);
         })
     }
 
