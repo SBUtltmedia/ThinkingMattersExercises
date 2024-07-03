@@ -17,7 +17,7 @@ function tryResize() {
 }
 // Resize the window
 function resizeWindow() {
-
+ console.log("f")
     // Get window width and height
     var w = window.innerWidth//$(window).width();
     var h = window.innerHeight//$(window).height();

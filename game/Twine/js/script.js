@@ -8,15 +8,9 @@ let wasd_move = 0.5
 let frameWidth = 100 / (frameNumber - 1);
 let frameHeight = 100 / 3;
 let lastE = null;
+
 const movePlayer = .60;
-function typeWriter(i=0,txt="no text provided",speed = 50) {
-  
-    if (i < txt.length) {
-      document.getElementById("dialog").innerHTML += txt.charAt(i);
-      i++;
-      setTimeout(()=>typeWriter(i,txt,speed), speed);
-    }
-  }
+
 let lookup = {
     'w': { 'style': {'top': -wasd_move , 'left': 0} , 'row': 2 },
     's': { 'style': {'top': wasd_move , 'left': 0}, 'row': 3 },
@@ -24,15 +18,6 @@ let lookup = {
     'd': { 'style': {'top': 0 , 'left': wasd_move}, 'row': 0 }
 }
 
-let collisionCallbacks = {
-    "box1": () => {  SugarCube.Engine.play("2_2"); },
-    "npc1": () => { 
-       typeWriter(0,SugarCube.State.getVar("$dialog")[0])
-     },
-    "box3": () => { console.log(3) },
-    "box4": () => { console.log(4) },
-    "box5": () => { console.log(5) },
-}
 
 let collidables;
 

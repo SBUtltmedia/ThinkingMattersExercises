@@ -6,7 +6,7 @@
     position: absolute;
     width: 4.9%;
     height: 7.5%;
-    background-image: url(sheet.svg);
+    background-image: url(../img/sheet.svg);
     background-size: 2400%;
     /* transition: left 6s ease, top 6s ease; */
 }

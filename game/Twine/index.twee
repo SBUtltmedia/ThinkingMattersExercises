@@ -13,7 +13,7 @@ testgd
 
 
 :: Story Stylesheet [stylesheet]
-@import url('style.css');
+@import url('style/style.css');
 
 
 :: Story JavaScript [script]
@@ -24,19 +24,19 @@ Config.passages.nobr = true;
 /* OLD */
 // importScripts(['script.js', 'resize.js']);
 
-importScripts('resize.js')
-	.then(function() {
-		$(document).on(':passagestart', function (ev) {
-			setTimeout(tryResize,1000);
-		});
-	})
-
-importScripts('script.js')
+importScripts(['js/collidable.js','js/inits.js','js/dialogs.js','js/script.js'])
 	.then(function() {
 		$(document).on(':passagedisplay', function (ev) {
 			makeDoors(passage());
 		});
 	})
+importScripts('js/resize.js')
+	.then(function() {
+		$(document).on(':passagestart', function (ev) {
+			setTimeout(tryResize,1);
+		});
+	})
+
 
 /* OLD */
 // $(document).on(':passagestart', function (ev) {
@@ -86,7 +86,7 @@ player.style.top = "5%";
 </script>
 
 <<print passage()>>
-
+:: 0_0 {"position":"1100,725","size":"100,100"}
 
 :: -5_-5 {"position":"475,100","size":"100,100"}
 
@@ -158,7 +158,7 @@ player.style.top = "5%";
 
 
 :: -3_-2 {"position":"850,350","size":"100,100"}
-
+  
 
 :: -3_-1 {"position":"975,350","size":"100,100"}
 
@@ -254,7 +254,7 @@ player.style.top = "5%";
 <div class="hide">Text goes here 3</div>
 
 
-:: 0_0 {"position":"1100,725","size":"100,100"}
+
 
 
 :: 0_1 {"position":"1225,725","size":"100,100"}
