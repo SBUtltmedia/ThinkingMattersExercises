@@ -230,6 +230,13 @@ document.addEventListener('click', e => {
     // Get the bounding rectangle of target
     const rect = target.getBoundingClientRect();
 
+    console.log(e.target);
+
+       // Check if the click event occurred within the 'walkway' div
+    if (!target.contains(e.target)) {
+        return;  // If the click is outside 'walkway', do nothing
+    }
+
     // Mouse position
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;

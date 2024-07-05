@@ -106,18 +106,20 @@ Config.passages.nobr = true;
 /* OLD */
 // importScripts(['script.js', 'resize.js']);
 
-importScripts(['js/collidable.js','js/inits.js','js/dialogs.js','js/script.js'])
-	.then(function() {
-		$(document).on(':passagedisplay', function (ev) {
-			makeDoors(passage());
-		});
-	})
 importScripts('js/resize.js')
 	.then(function() {
 		$(document).on(':passagestart', function (ev) {
 			setTimeout(tryResize,1);
 		});
 	})
+
+importScripts(['js/script.js'])
+	.then(function() {
+		$(document).on(':passagedisplay', function (ev) {
+			makeDoors(passage());
+		});
+	}).then(importScripts('js/collidable.js','js/inits.js','js/dialogs.js', 'js/utils.js'))
+
 
 
 /* OLD */

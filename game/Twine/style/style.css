@@ -108,3 +108,18 @@ div.clickEffect {
 .hide {
     display: none;
 }
+
+.overlay {
+    pointer-events: none;
+}
+
+.optionContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 0.6em 0.6em;
+}
+
+.optionContainer > button {
+    padding: 0.4em 0em;
+    margin: 0.2em 0em;
+}
