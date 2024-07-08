@@ -18,7 +18,7 @@
     background-color: beige;
     /* opacity:0; */
 }
-#npc1{
+#npc1, #godel{
     left:50%;
     top:50%;
 }
@@ -122,4 +122,8 @@ div.clickEffect {
 .optionContainer > button {
     padding: 0.4em 0em;
     margin: 0.2em 0em;
+}
+
+#dialog {
+    font-size: 0.5rem;
 }

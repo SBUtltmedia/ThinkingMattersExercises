@@ -1,7 +1,5 @@
 let player;
 let currentMovement = null;
-let playerWidth = 0
-let playerHeight = 0
 let currentFrame = 7;
 let frameNumber = 24;
 let wasd_move = 0.5
@@ -155,26 +153,37 @@ function overlaps(a, b) {
 }
 
 function moveChar(moveData) {
-    /* Check if character is moving out of bounds */
-    const walkway = document.getElementById("walkway").getBoundingClientRect();
-    collidables.forEach(
-        (el, id) => { 
-            if (overlaps(player, el)) { 
-                moveData['style']["left"]=- moveData['style']["left"]
-                moveData['style']["top"]=- moveData['style']["top"]
-                collisionCallbacks[el.id]() 
-                currentMovement = null;
-            }
-        })
-        
-        if(moveData["steps"] != Infinity) {
-            x = frameWidth * currentFrame
-            y = frameHeight * moveData['row']
-            setChar(x,y)
+    for(let i=0; i<collidables.length; i++) {
+        if(overlaps(player, collidables[i])) {
+            player['style']["left"]=- moveData['style']["left"]
+            player['style']["top"]=- moveData['style']["top"]
+            collisionCallbacks[collidables[i].id]() 
+            currentMovement = null;
+            return false;
         }
-
+    }
+    // collidables.forEach(
+    //     (el, id) => { 
+    //         if (overlaps(player, el)) { 
+    //             moveData['style']["left"]=- moveData['style']["left"]
+    //             moveData['style']["top"]=- moveData['style']["top"]
+    //             collisionCallbacks[el.id]() 
+    //             currentMovement = null;
+    //         }
+    //     })
+        
+    if(moveData["steps"] != Infinity) {
+        x = frameWidth * currentFrame
+        y = frameHeight * moveData['row']
+        setChar(x,y)
+    }
+    let playerSize = {}
+    playerSize["left"]  = $("#player").width() / $("#walkway").width() * 100;
+    playerSize["top"]  = $("#player").height() / $("#walkway").height() * 100;
     for (i of ["left","top"]) {
-        player.style[i]=( (parseFloat(player.style[i])+(moveData['style'][i]))+100) %100 + '%';
+        let offset = playerSize[i]
+        console.log(offset);
+        player.style[i]=(Math.min(100- offset, Math.max(0, (parseFloat(player.style[i])+(moveData['style'][i]))))) + '%';
         /* For click functionality */
         if('steps' in moveData) {
             if (!moveData['steps']) {    

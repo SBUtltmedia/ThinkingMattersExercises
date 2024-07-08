@@ -17,6 +17,7 @@ testgd
 
 
 :: Story JavaScript [script]
+/* twine-user-script #1: "Story JavaScript" */
 Save.clear();
 // SaveSystem.purge()
 Config.passages.nobr = true;
@@ -49,8 +50,7 @@ $(document).on(':passageinit', function (ev) {
 	
 	$('#story').hide();
 });
-
-:: UserScript[script]
+/* twine-user-script #2: "UserScript" */
 /*
     Prepend the content of the passage "New Header" to every passage.
 
@@ -63,20 +63,21 @@ $(document).on(':passagestart', function (eventObject) {
 });
 
 
-
 :: StoryInit {"position":"100,100","size":"100,100"}
 
 
 :: PassageHeader {"position":"100,100","size":"100,100"}
 <div id="stage" class="screen">
+
 	<div id="dialog"></div>
 	<div id="walkway">
 		<div id="player"></div>
+
 	</div>
 </div>
 
-
 :: PassageFooter {"position":"350,100","size":"100,100"}
+
 <script>
 
 player = document.getElementById('player');
@@ -88,8 +89,16 @@ player.style.top = "5%";
 </script>
 
 <<print passage()>>
-:: 0_0 {"position":"1100,725","size":"100,100"}
 
+
+:: 0_0 {"position":"1100,725","size":"100,100"}
+<script>
+walkway = document.getElementById("walkway");
+console.log(walkway);
+npc = Object.assign(document.createElement("div"),{id:"godel",className:"collidable"});
+walkway.append(npc);
+
+</script>
 :: -5_-5 {"position":"475,100","size":"100,100"}
 
 
@@ -160,7 +169,7 @@ player.style.top = "5%";
 
 
 :: -3_-2 {"position":"850,350","size":"100,100"}
-  
+
 
 :: -3_-1 {"position":"975,350","size":"100,100"}
 
@@ -256,9 +265,6 @@ player.style.top = "5%";
 <div class="hide">Text goes here 3</div>
 
 
-
-
-
 :: 0_1 {"position":"1225,725","size":"100,100"}
 <<set $dialog=["One line of dialog"]>>
 <div class="overlay">
@@ -266,6 +272,8 @@ player.style.top = "5%";
 
 </div>
 </div>
+
+
 :: 0_2 {"position":"100,850","size":"100,100"}
 
 
