@@ -75,9 +75,9 @@ async function dialogueEngine(npc) {
 
   while (current !== "end") {
 
-    if(!overlaps(document.getElementById("player"),document.getElementById(npc))) {
-        break;
-    }
+    // if(!overlaps(document.getElementById("player"),document.getElementById(npc))) {
+    //     break;
+    // }
 
     await new Promise((resolve) => {
       typeWriter(0, selectedDialogue[current]["text"], 50, resolve);

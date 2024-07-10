@@ -18,6 +18,7 @@ let lookup = {
 
 
 let collidables;
+let lastnonOverlap = {'left':"5%", 'top': "5%"};
 
 function makeDoors(currentPassage) {
     console.log(currentPassage);
@@ -155,11 +156,15 @@ function overlaps(a, b) {
 function moveChar(moveData) {
     for(let i=0; i<collidables.length; i++) {
         if(overlaps(player, collidables[i])) {
-            player['style']["left"] -=  moveData['style']["left"]
-            player['style']["top"] -= moveData['style']["top"]
+            player['style']["left"] = lastnonOverlap["left"];
+            player['style']["top"] = lastnonOverlap["top"];
             collisionCallbacks[collidables[i].id]() 
             currentMovement = null;
+            return false;
             // return;
+        } else {
+            lastnonOverlap["left"] = player['style']["left"];
+            lastnonOverlap["top"] = player['style']["top"];
         }
     }
     // collidables.forEach(
