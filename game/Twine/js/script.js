@@ -155,11 +155,11 @@ function overlaps(a, b) {
 function moveChar(moveData) {
     for(let i=0; i<collidables.length; i++) {
         if(overlaps(player, collidables[i])) {
-            player['style']["left"]=- moveData['style']["left"]
-            player['style']["top"]=- moveData['style']["top"]
+            player['style']["left"] -=  moveData['style']["left"]
+            player['style']["top"] -= moveData['style']["top"]
             collisionCallbacks[collidables[i].id]() 
             currentMovement = null;
-            return false;
+            // return;
         }
     }
     // collidables.forEach(
@@ -228,7 +228,7 @@ function showClickEffect(rect, x, y){
     d.addEventListener('animationend',function(){d.parentElement.removeChild(d);}.bind(this));
 }
 
-window.addEventListener('keydown', e => { currentMovement = lookup[e.key] });
+window.addEventListener('keydown', e => { currentMovement = JSON.parse(JSON.stringify(lookup[e.key])) });
 window.addEventListener('keyup', e => {
     currentMovement = null;
     currentFrame=7;

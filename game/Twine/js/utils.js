@@ -23,6 +23,8 @@
 
 // }
 
+window.conversationRunning = false;
+
 function overlaps(a, b) {
     const rect1 = a.getBoundingClientRect();
     const rect2 = b.getBoundingClientRect();
@@ -64,6 +66,10 @@ function displayOptions(selectedDialogue, current, callback) {
 }
 
 async function dialogueEngine(npc) {
+  if(window.conversationRunning) {
+    return;
+  }
+  window.conversationRunning = true;
   let selectedDialogue = dialogs[npc];
   let current = 0;
 
@@ -87,5 +93,5 @@ async function dialogueEngine(npc) {
     document.getElementById("dialog").innerHTML = '';
   }
   document.getElementById("dialog").innerHTML = '';
-  return;
+  window.conversationRunning = false;
 }
