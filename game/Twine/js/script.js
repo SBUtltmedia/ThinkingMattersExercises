@@ -40,17 +40,21 @@ function makeDoors(currentPassage) {
         if(SugarCube.Story.has(adjRoom)) {
             let door = createDoor(direction, `box${index}`);
             document.getElementById("walkway").append(door);
-            console.log(door);
             collisionCallbacks[`box${index}`] = () => {
                 SugarCube.Engine.play(adjRoom);
-                console.log(door.style.left) 
-                $('.hide').show()};
+                if(door.id === "box3" || door.id === "box4") {
+                    player.style.left = door.style.left === '0%' ? '85%' : '10%';
+                    player.style.top = '50%';
+                } else {
+                    player.style.top = door.style.top === '0%' ? '85%' : '10%';
+                    player.style.left = '50%';
+                }
+            };
         }
         index++;
     });
 
-    collidables = document.querySelectorAll(".collidable")
-    console.log('collidables: ', collidables )
+    collidables = document.querySelectorAll(".collidable");
     
 }
 
@@ -132,16 +136,6 @@ function move() {
     )
 }
 
-// collidables.forEach((el, id) => {
-
-//     let itemLeft = Math.random() * 100;
-//     let itemTop = Math.random() * 100;
-//     el.style.left = `${itemLeft}%`;
-//     el.style.top = `${itemTop}%`;
-
-// })
-
-
 function overlaps(a, b) {
     const rect1 = a.getBoundingClientRect();
     const rect2 = b.getBoundingClientRect();
@@ -156,28 +150,17 @@ function overlaps(a, b) {
 function moveChar(moveData) {
     for(let i=0; i<collidables.length; i++) {
         if(overlaps(player, collidables[i])) {
-            player['style']["left"] = lastnonOverlap["left"];
-            player['style']["top"] = lastnonOverlap["top"];
-            console.log(player["style"]["left"], player["style"]["top"]);
+            player.style.left = lastnonOverlap["left"];
+            player.style.top = lastnonOverlap["top"];
             collisionCallbacks[collidables[i].id]() 
             currentMovement = null;
             return false;
             // return;
         } else {
-            lastnonOverlap["left"] = player['style']["left"];
-            lastnonOverlap["top"] = player['style']["top"];
-            console.log({lastnonOverlap});
+            lastnonOverlap["left"] = player.style.left;
+            lastnonOverlap["top"] = player.style.top;
         }
     }
-    // collidables.forEach(
-    //     (el, id) => { 
-    //         if (overlaps(player, el)) { 
-    //             moveData['style']["left"]=- moveData['style']["left"]
-    //             moveData['style']["top"]=- moveData['style']["top"]
-    //             collisionCallbacks[el.id]() 
-    //             currentMovement = null;
-    //         }
-    //     })
         
     if(moveData["steps"] != Infinity) {
         x = frameWidth * currentFrame
@@ -220,8 +203,8 @@ function standing() {
 }
 
 function getDistance(clickedX, clickedY) {
-    let distanceX = clickedX - parseFloat(player.style["left"]) ;
-    let distanceY = clickedY - parseFloat(player.style["top"]);
+    let distanceX = clickedX - parseFloat(player.style.left) ;
+    let distanceY = clickedY - parseFloat(player.style.top);
     
     return [distanceX, distanceY, 2 * Math.sqrt(((distanceX ) ** 2 + (distanceY) ** 2))];
 }

@@ -19,8 +19,15 @@
     /* opacity:0; */
 }
 #npc1, #godel{
+    background-image: url('../img/pixel_scientist.png');
     left:50%;
     top:50%;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-color: transparent;
+    opacity: 1;
+    height: 2rem;
 }
 
 #dialog{
