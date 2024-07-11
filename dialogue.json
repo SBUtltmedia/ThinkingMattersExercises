@@ -1,0 +1,94 @@
+{
+    "npc1": [
+      {
+        "text": "Hello, how are you?",
+        "options": [
+          {
+            "response": "Bad",
+            "next": 1
+          },
+          {
+            "response": "Good",
+            "next": 2
+          }
+        ]
+      },
+      {
+        "text": "Why, what's wrong?",
+        "options": [
+          {
+            "response": "My dog ran away",
+            "next": 3
+          },
+          {
+            "response": "I broke up with my girlfriend",
+            "next": 4
+          }
+        ]
+      },
+      {
+        "text": "That's nice",
+        "next": "end"
+      },
+      {
+        "text": "I'm sorry to hear that. Have you tried looking for your dog?",
+        "options": [
+          {
+            "response": "Yes, but no luck",
+            "next": 5
+          },
+          {
+            "response": "Not yet",
+            "next": 6
+          }
+        ]
+      },
+      {
+        "text": "Breakups are tough. Do you want to talk about it?",
+        "options": [
+          {
+            "response": "Yes, please",
+            "next": 7
+          },
+          {
+            "response": "No, thank you",
+            "next": 8
+          }
+        ]
+      },
+      {
+        "text": "Keep searching. I hope you find your dog soon.",
+        "next": "end"
+      },
+      {
+        "text": "You should start looking as soon as possible. Time is of the essence.",
+        "next": "end"
+      },
+      {
+        "text": "It feels like my world has ended. I don't know what to do.",
+        "options": [
+          {
+            "response": "Take it one day at a time",
+            "next": 9
+          },
+          {
+            "response": "You'll find someone better",
+            "next": 10
+          }
+        ]
+      },
+      {
+        "text": "Alright, but remember, it's okay to ask for help if you need it.",
+        "next": "end"
+      },
+      {
+        "text": "That's good advice. Thank you.",
+        "next": "end"
+      },
+      {
+        "text": "I hope so. It's just hard to see it right now.",
+        "next": "end"
+      }
+    ]
+  }
+  

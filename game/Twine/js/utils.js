@@ -95,3 +95,10 @@ async function dialogueEngine(npc) {
   document.getElementById("dialog").innerHTML = '';
   window.conversationRunning = false;
 }
+
+function addCharacter(characterID) {
+  let walkway = document.getElementById("walkway");
+  // console.log(walkway);
+  npc = Object.assign(document.createElement("div"),{id:characterID, className:"collidable"});
+  walkway.append(npc);
+}

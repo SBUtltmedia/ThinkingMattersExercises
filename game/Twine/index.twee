@@ -76,8 +76,8 @@ $(document).on(':passagestart', function (eventObject) {
 	</div>
 </div>
 
-:: PassageFooter {"position":"350,100","size":"100,100"}
 
+:: PassageFooter {"position":"350,100","size":"100,100"}
 <script>
 
 player = document.getElementById('player');
@@ -93,11 +93,7 @@ player.style.top = "5%";
 
 :: 0_0 {"position":"1100,725","size":"100,100"}
 <script>
-walkway = document.getElementById("walkway");
-console.log(walkway);
-npc = Object.assign(document.createElement("div"),{id:"godel",className:"collidable"});
-walkway.append(npc);
-
+addCharacter("godel");
 </script>
 :: -5_-5 {"position":"475,100","size":"100,100"}
 
@@ -266,16 +262,13 @@ walkway.append(npc);
 
 
 :: 0_1 {"position":"1225,725","size":"100,100"}
-<<set $dialog=["One line of dialog"]>>
-<div class="overlay">
-<div id="npc1" class="collidable">
-
-</div>
-</div>
+/* <<set $dialog=["One line of dialog"]>> */
+<script>
+addCharacter("npc1");
+</script>
 
 
 :: 0_2 {"position":"100,850","size":"100,100"}
-
 
 :: 0_3 {"position":"225,850","size":"100,100"}
 

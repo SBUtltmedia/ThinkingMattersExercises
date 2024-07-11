@@ -158,6 +158,7 @@ function moveChar(moveData) {
         if(overlaps(player, collidables[i])) {
             player['style']["left"] = lastnonOverlap["left"];
             player['style']["top"] = lastnonOverlap["top"];
+            console.log(player["style"]["left"], player["style"]["top"]);
             collisionCallbacks[collidables[i].id]() 
             currentMovement = null;
             return false;
@@ -165,6 +166,7 @@ function moveChar(moveData) {
         } else {
             lastnonOverlap["left"] = player['style']["left"];
             lastnonOverlap["top"] = player['style']["top"];
+            console.log({lastnonOverlap});
         }
     }
     // collidables.forEach(
@@ -187,7 +189,6 @@ function moveChar(moveData) {
     playerSize["top"]  = $("#player").height() / $("#walkway").height() * 100;
     for (i of ["left","top"]) {
         let offset = playerSize[i]
-        console.log(offset);
         player.style[i]=(Math.min(100- offset, Math.max(0, (parseFloat(player.style[i])+(moveData['style'][i]))))) + '%';
         /* For click functionality */
         if('steps' in moveData) {
@@ -244,9 +245,7 @@ document.addEventListener('click', e => {
     // Get the bounding rectangle of target
     const rect = target.getBoundingClientRect();
 
-    console.log(e.target);
-
-       // Check if the click event occurred within the 'walkway' div
+    // Check if the click event occurred within the 'walkway' div
     if (!target.contains(e.target)) {
         return;  // If the click is outside 'walkway', do nothing
     }
@@ -256,13 +255,10 @@ document.addEventListener('click', e => {
     const y = e.clientY - rect.top;
     const clickedX = x / rect.width * 100;
     const clickedY = y / rect.height * 100;
-    console.log({x, y, clickedX, clickedY});
 
     let [xDistance, yDistance, distance] = getDistance(clickedX, clickedY)
 
     let angle = Math.atan2(yDistance, xDistance) * 180 / Math.PI;
-
-    console.log(angle);
 
     let deltaX = xDistance / distance;
     let deltaY = yDistance / distance;
