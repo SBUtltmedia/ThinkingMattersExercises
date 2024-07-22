@@ -38,7 +38,7 @@ importScripts(['js/script.js'])
 			makeDoors(passage());
 		});
 	}).then(importScripts('js/collidable.js','js/inits.js','js/dialogs.js', 'js/utils.js'))
-
+	// .then(importScripts('js/wordgolf.js'))
 
 
 /* OLD */
@@ -69,10 +69,10 @@ $(document).on(':passagestart', function (eventObject) {
 :: PassageHeader {"position":"100,100","size":"100,100"}
 <div id="stage" class="screen">
 
-	<div id="dialog"></div>
+	<div id="dialog">
+	</div>
 	<div id="walkway">
 		<div id="player"></div>
-
 	</div>
 </div>
 
@@ -93,8 +93,9 @@ player.style.top = "5%";
 
 :: 0_0 {"position":"1100,725","size":"100,100"}
 <script>
-addCharacter("godel");
+addCharacter("godel_0");
 </script>
+
 :: -5_-5 {"position":"475,100","size":"100,100"}
 
 
@@ -258,17 +259,14 @@ addCharacter("godel");
 
 
 :: 0_-1 {"position":"975,725","size":"100,100"}
-<div class="hide">Text goes here 3</div>
-
 
 :: 0_1 {"position":"1225,725","size":"100,100"}
 /* <<set $dialog=["One line of dialog"]>> */
-<script>
-addCharacter("npc1");
-</script>
+<script>addCharacter("npc1")</script>
 
 
 :: 0_2 {"position":"100,850","size":"100,100"}
+
 
 :: 0_3 {"position":"225,850","size":"100,100"}
 

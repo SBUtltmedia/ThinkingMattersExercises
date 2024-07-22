@@ -1,9 +1,10 @@
 let dialogs= {
-        "godel": [{
+        "godel_0": [{
           text: "Greetings! I am Kurt Gödel. Let's explore a puzzle related to incompleteness. Are you ready to begin?",
           options: [
             { response: "Yes, let's start", next: 1 },
-            { response: "Can you explain incompleteness first?", next: 2 }
+            { response: "Can you explain incompleteness first?", next: 2 },
+            { response: "I'll come back later", next: "end"}
           ]
         },
         {

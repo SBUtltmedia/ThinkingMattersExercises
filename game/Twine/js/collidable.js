@@ -8,8 +8,8 @@ let collisionCallbacks = {
     "box3": () => { console.log(3) },
     "box4": () => { console.log(4) },
     "box5": () => { console.log(5) },
-    "godel":() => {
+    "godel_0":(id) => {
       console.log(this);
-      dialogueEngine("godel");
+      dialogueEngine(id);
     }
 }

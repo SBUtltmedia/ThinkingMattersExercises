@@ -18,7 +18,7 @@
     background-color: beige;
     /* opacity:0; */
 }
-#npc1, #godel{
+#npc1, #godel_0{
     background-image: url('../img/pixel_scientist.png');
     left:50%;
     top:50%;
@@ -133,4 +133,21 @@ div.clickEffect {
 
 #dialog {
     font-size: 0.5rem;
+    padding: 0.3em 0.5em;
 }
+
+.typed-out {
+    padding: 0.1em;
+    font-size: 0.3rem;
+    text-align: center;
+}
+/* .typed-out{
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 2.5s steps(20, end);
+    width: 0;
+  }
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  } */

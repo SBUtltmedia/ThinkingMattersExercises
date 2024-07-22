@@ -152,7 +152,7 @@ function moveChar(moveData) {
         if(overlaps(player, collidables[i])) {
             player.style.left = lastnonOverlap["left"];
             player.style.top = lastnonOverlap["top"];
-            collisionCallbacks[collidables[i].id]() 
+            collisionCallbacks[collidables[i].id](collidables[i].id) 
             currentMovement = null;
             return false;
             // return;

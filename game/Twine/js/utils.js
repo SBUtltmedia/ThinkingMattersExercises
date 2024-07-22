@@ -75,13 +75,12 @@ async function dialogueEngine(npc) {
 
   while (current !== "end") {
 
-    // if(!overlaps(document.getElementById("player"),document.getElementById(npc))) {
-    //     break;
-    // }
+    showVideo(npc, current)
+    showCaptions();
 
-    await new Promise((resolve) => {
-      typeWriter(0, selectedDialogue[current]["text"], 50, resolve);
-    });
+    // await new Promise((resolve) => {
+    //   typeWriter(0, selectedDialogue[current]["text"], 50, resolve);
+    // });
 
     if(!selectedDialogue[current]["options"]) {
       break;
@@ -101,4 +100,53 @@ function addCharacter(characterID) {
   // console.log(walkway);
   npc = Object.assign(document.createElement("div"),{id:characterID, className:"collidable"});
   walkway.append(npc);
+}
+
+function showVideo(npc, current) {
+  let videoContainer = document.querySelector('#videoContainer');
+    
+  if(!videoContainer) {
+    videoContainer = Object.assign(document.createElement("div"), {id: "videoContainer"});
+    document.querySelector("#dialog").append(videoContainer);
+  }
+
+  let video = document.createElement('video');
+  video.src = `./videos/${npc}/${current}.mp4`
+  video.autoplay = true;
+  
+  let captions = document.createElement('track');
+  captions.default = true;
+  captions.src = `./captions/${npc}/${current}.vtt`;
+  captions.srclang = 'en';
+  captions.kind = 'captions';
+
+  video.append(captions);
+  videoContainer.append(video);
+
+  let captionsSpan = Object.assign(document.createElement("div"), {className: "typed-out"});
+  videoContainer.append(captionsSpan);
+}
+
+function showCaptions() {
+  var video = document.querySelector('#videoContainer video');
+  var span1 = document.querySelector('#videoContainer > div');
+  span1.innerHTML = '';
+  if (!video.textTracks) return;
+
+  var track = video.textTracks[0];
+  track.mode = 'hidden';
+  var idx = 0;
+
+  track.oncuechange = function(e) {
+    var cue = this.activeCues[0];
+    if (cue) {
+      if (idx >= 0) {
+        span1.classList.remove('on');
+        span1.innerHTML = '';
+        span1.appendChild(cue.getCueAsHTML());
+        span1.classList.add('on');
+      }
+      idx = ++idx % 2;
+    }
+  }
 }
