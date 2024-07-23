@@ -36,6 +36,13 @@ function overlaps(a, b) {
     return isOverlapping;
 }
 
+function addCharacter(characterID) {
+  let walkway = document.getElementById("walkway");
+  // console.log(walkway);
+  npc = Object.assign(document.createElement("div"),{id:characterID, className:"collidable"});
+  walkway.append(npc);
+}
+
 function typeWriter(i = 0, txt, speed = 50, callback) {
   if (i < txt.length) {
     document.getElementById("dialog").innerHTML += txt.charAt(i);
@@ -70,7 +77,10 @@ async function dialogueEngine(npc) {
     return;
   }
   window.conversationRunning = true;
-  let selectedDialogue = dialogs[npc];
+  // let selectedDialogue = dialogs[npc];
+  let res =  await fetch('./data.json');
+  let allDialogue = await res.json();
+  let selectedDialogue = allDialogue[npc]
   let current = 0;
 
   while (current !== "end") {
@@ -93,13 +103,6 @@ async function dialogueEngine(npc) {
   }
   document.getElementById("dialog").innerHTML = '';
   window.conversationRunning = false;
-}
-
-function addCharacter(characterID) {
-  let walkway = document.getElementById("walkway");
-  // console.log(walkway);
-  npc = Object.assign(document.createElement("div"),{id:characterID, className:"collidable"});
-  walkway.append(npc);
 }
 
 function showVideo(npc, current) {

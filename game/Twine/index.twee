@@ -96,6 +96,7 @@ player.style.top = "5%";
 addCharacter("godel_0");
 </script>
 
+
 :: -5_-5 {"position":"475,100","size":"100,100"}
 
 
@@ -260,9 +261,10 @@ addCharacter("godel_0");
 
 :: 0_-1 {"position":"975,725","size":"100,100"}
 
+
 :: 0_1 {"position":"1225,725","size":"100,100"}
 /* <<set $dialog=["One line of dialog"]>> */
-<script>addCharacter("npc1")</script>
+<script>addCharacter("npc1");</script>
 
 
 :: 0_2 {"position":"100,850","size":"100,100"}
