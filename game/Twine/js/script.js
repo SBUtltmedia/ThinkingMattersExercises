@@ -217,11 +217,29 @@ function showClickEffect(rect, x, y){
     d.addEventListener('animationend',function(){d.parentElement.removeChild(d);}.bind(this));
 }
 
+function placeObject(object) {
+    object.style.position = "absolute";
+    object.style.width = "5%";
+    object.style.height = "5%";
+    document.getElementById("walkway").appendChild(object);
+    object.style.backgroundColor = "blue";
+    object.style.left = player.style.left;
+    object.style.top = parseFloat(player.style.top) + "%";
+}
+
 window.addEventListener('keydown', e => { currentMovement = JSON.parse(JSON.stringify(lookup[e.key])) });
 window.addEventListener('keyup', e => {
     currentMovement = null;
     currentFrame=7;
 });
+
+window.addEventListener('keydown',(e) => {
+    if(e.key === 'f') {
+        console.log('item placed')
+        placeObject(document.createElement("div"))
+    }
+});
+
 document.addEventListener('click', e => {
     // Get the target
     const target = document.getElementById("walkway");
