@@ -48,22 +48,24 @@ class WordGolf {
         document.querySelectorAll("#history,#message,#correct,#picker").forEach(item => item.innerHTML = "");
         document.querySelector("#player-score").innerHTML = "Attempts: 0";
         document.querySelector("#par").innerHTML = `Par: ${this.levels[this.currentLevel]["par"]}`
-
-        this.levels[this.currentLevel]["from"].split("").forEach(element => {
-
+        
+        let characters = this.levels[this.currentLevel]["from"].split("")
+        characters.forEach(element => {
             // Figures out what letters are left to guess?
             let lettersLeft = this.alphabet.filter((letter) => letter != element.toUpperCase())
             // console.log(lettersLeft)
             let allOptions = [element.toUpperCase(), ...lettersLeft].map((el) => $("<option />", { html: el }))
             // console.log(allOptions)
             let sel = $("<select/>")
+            sel.css({"width": `${100/characters.length}%`})
             $("#picker").append(sel)
 
         });
         document.querySelector("#title").innerHTML = this.levels[this.currentLevel]["title"]
         let startingWord = this.levels[this.currentLevel]["from"];
-        this.populate(startingWord)
-        document.querySelector("#history").innerHTML += `<span class="hover">${startingWord.toUpperCase()}</span><br/>`
+        this.populate(startingWord);
+        this.makeSpan(startingWord);
+        // document.querySelector("#history").innerHTML += `<span class="hover">${startingWord.toUpperCase()}</span><br/>`
         this.createDefinitionCard(startingWord.toUpperCase(), this.words[startingWord.toLowerCase()]);
         $("select").on("change", (selectObject) => {
             this.curLevelScore++;
@@ -73,6 +75,7 @@ class WordGolf {
 
             // Combines the selected letters into a word 
             let newWord = $("select").each((i, obj) => accum += $(obj).val())
+            console.log(accum);
             // console.log(accum);
 
             if (Object.keys(this.words).includes(accum.toLowerCase())) {
@@ -83,12 +86,17 @@ class WordGolf {
                 } else {
                     this.animateAnswer("animateRight");
                     let definit = this.words[accum.toLowerCase()];
-                    document.querySelector("#history").innerHTML += `<span class= "hover">${accum}</span></br>`
+                    this.makeSpan(accum);
+                   //document.querySelector("#history").innerHTML += `<span class= "hover">${accum}</span></br>`
                     this.createDefinitionCard(accum, definit);
                 }
             } else {
-
-                let lastWord = $("#history span").toArray().reverse()[0]?.innerHTML || this.levels[this.currentLevel]["from"]
+                const spanElement = document.querySelector('.hover');
+                const divs = spanElement.querySelectorAll('div');
+                const textContent = Array.from(divs).map(div => div.textContent).join('');
+                // let lastWord = $("#history span").toArray().reverse()[0]?.innerHTML || this.levels[this.currentLevel]["from"]
+                let lastWord = textContent || this.levels[this.currentLevel]["from"]
+                console.log(lastWord);
                 document.querySelector("#message").innerHTML = `<br><span class="myred">${accum} is not a word in the dictionary </span><br/>`
                 
                 /* Shows the input is wrong */ 
@@ -111,6 +119,10 @@ class WordGolf {
                 select.classList.remove(animation);
             });
         })
+        document.querySelector("#picker").classList.add(animation);
+        document.querySelector("#picker").addEventListener("animationend", (event) => {
+            document.querySelector("#picker").classList.remove(animation);
+        });
     }
 
     populate(word) {
@@ -181,6 +193,16 @@ class WordGolf {
                 
             })
             document.querySelector('.levels').append(l);
+        })
+    }
+
+    makeSpan(word) {
+        let span = Object.assign(document.createElement("span"), {"className": "hover"});
+        document.querySelector("#history").appendChild(span);
+        word.split("").forEach(letter => {
+            let l = Object.assign(document.createElement("div"), {"textContent": letter.toUpperCase()})
+            l.style.width = `${100/word.length}%`;
+            span.appendChild(l);
         })
     }
 

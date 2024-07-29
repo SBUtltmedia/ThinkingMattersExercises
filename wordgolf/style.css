@@ -5,7 +5,7 @@
 body{
   background:var(--second);
   color:var(--fifth);
-  padding: 1rem 1rem;
+  /* padding: 1rem 1rem; */
 }
 
 @keyframes animateWrong {
@@ -72,12 +72,14 @@ body, select{
 #title,#score-container, .definition{
 
   padding:.2rem;
-  border-radius:5%;
   background-color:var(--first);
+  border-radius: 0.2em;
 }
 
 #title {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.5em;
+  text-align: center;
+  /* width: 80%; */
 }
 .list-choice{
   width:300px;
@@ -115,13 +117,21 @@ transition: all 250ms ease;
 }
 
 #score-container{
-  left:70%;
-  position:absolute;
+  /* width: 80%; */
+  height: 10%;
+  font-size: 0.5rem;
+  margin-bottom: 0.5em;
 }
 
 #score-container div{
-text-align:left;
+  width: 20%;
+  text-align:left;
+  display: inline-block;
+  text-wrap: nowrap;
+}
 
+#par {
+  margin-right:50%;
 }
 
 
@@ -131,10 +141,14 @@ max-height: 540px;
 
 #message {
   font-size: 1rem;
+  width: 100%;
 }
 
 #history {
-  letter-spacing: 1.55rem;
+  /* letter-spacing: 1.5rem; */ 
+  width: 78%;
+  background-color: var(--third);
+  padding-left: 0.5em;
 }
 
 .flex-container {
@@ -154,13 +168,17 @@ max-height: 540px;
 }
 
 #par {
-  font-size: 1rem;
-  text-align: end;
+  /* right: 100%; */
 }
+
 
 .screen {
   margin: 0;
-  padding: 0;;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
 
 }
 
@@ -168,14 +186,25 @@ select {
   appearance: none;
   border: 0px none;
   overflow-y: auto;
-  width: 8.07%;
   height: 5%;
   font-size: 1rem;
   background-color: var(--third);
 }
 
-.hover {
+#picker {
+  width: 78%;
+  padding-left: 0.5em;
   background-color: var(--third);
+}
+
+.hover {
+  display: inline-block;
+  background-color: var(--third);
+  width: 100%;
+}
+
+.hover > div {
+  display: inline-block;
 }
 
 .definition {
@@ -247,9 +276,19 @@ because the nesting selector cannot represent pseudo-elements. */
 .levels {
   border: 0.1em solid var(--fourth);
   overflow-y: auto;
-  padding: 0.5em;
-  margin-bottom: 0.25em;
-  max-height: 4.5em;
+  /* padding: 0.5em; */
+  margin: 0.25em 0.5em;
+  height: 100%;
+
+}
+
+.levels-title{
+  padding: 0.25em;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--third);
+  text-align: center;
 }
 
 .levels > button:hover {
@@ -259,6 +298,7 @@ because the nesting selector cannot represent pseudo-elements. */
 }
 
 .levels > button {
+  font-size: 0.5rem;
   display: block;
   padding: 0.5em 0.5em;
   width: 100%;
@@ -276,4 +316,14 @@ because the nesting selector cannot represent pseudo-elements. */
 
 .levels::-webkit-scrollbar { 
   display: none;  /* Safari and Chrome */
+}
+
+.game-area {
+  margin: 0.25em 0.1em;
+  height: 100%;
+  width: 100%;
+}
+
+.header {
+  width: 80%;;
 }

@@ -2,20 +2,14 @@
     {
         "from": "hate",
         "to": "love",
-        "title": "Make LOVE out of HATE",
+        "title": "Make LOVE out of HATE.",
         "par": 5
     },
     {
         "from": "cold",
         "to": "warm",
-        "title": "Turn COLD into WARM",
+        "title": "Turn COLD into WARM.",
         "par": 7
-    },
-    {
-        "from": "wheat",
-        "to": "bread",
-        "title": "Make WHEAT into BREAD",
-        "par": 10
     },
     {
         "from": "dry",
