@@ -175,13 +175,19 @@ max-height: 540px;
 .screen {
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: row;
   height: 100%;
   width: 100%;
-
 }
 
+.body {
+  display: flex;
+  flex-direction: row;
+}
+
+.title {
+  display: inline-block;
+  margin-left: 50%;
+}
 select {
   appearance: none;
   border: 0px none;
@@ -237,6 +243,10 @@ dialog {
     display 0.7s ease-out allow-discrete;
   /* Equivalent to
   transition: all 0.7s allow-discrete; */
+  position: absolute;
+  left: -5%;
+  top: 55%;
+  width: 15em;
 }
 
 /*   Before-open state  */
@@ -278,7 +288,7 @@ because the nesting selector cannot represent pseudo-elements. */
   overflow-y: auto;
   /* padding: 0.5em; */
   margin: 0.25em 0.5em;
-  height: 100%;
+  height: 20em;
 
 }
 
@@ -326,4 +336,19 @@ because the nesting selector cannot represent pseudo-elements. */
 
 .header {
   width: 80%;;
+}
+
+.tooltip{
+  font-size: 0.4rem;
+  color: black;
+}
+
+#tourButton {
+  display: inline-block;
+  margin-left: 3em;
+}
+
+#tourButton > img {
+  width: 0.8rem;
+  height: 0.8rem;
 }

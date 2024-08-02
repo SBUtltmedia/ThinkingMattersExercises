@@ -91,8 +91,9 @@ class WordGolf {
                     this.createDefinitionCard(accum, definit);
                 }
             } else {
-                const spanElement = document.querySelector('.hover');
-                const divs = spanElement.querySelectorAll('div');
+                const spanElements = document.querySelectorAll('.hover');
+                const last = spanElements[spanElements.length-1];
+                const divs = last.querySelectorAll('div');
                 const textContent = Array.from(divs).map(div => div.textContent).join('');
                 // let lastWord = $("#history span").toArray().reverse()[0]?.innerHTML || this.levels[this.currentLevel]["from"]
                 let lastWord = textContent || this.levels[this.currentLevel]["from"]
