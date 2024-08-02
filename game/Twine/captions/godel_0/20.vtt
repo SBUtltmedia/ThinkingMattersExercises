@@ -1,8 +1,14 @@
 WEBVTT
 
-00:00.000 --> 00:05.680 
- The incompleteness theorems show that for any consistent form of system, F-powerful enough
-00:05.680 --> 00:11.280 
- to encode arithmetic, which doesn't mean mathematics is inconsistent, but rather that
-00:11.280 --> 00:14.960 
- no single form of system can capture all mathematical truths.
+00:00.000 --> 00:06.080 
+ The Incompeteness Theorems show that for any consistent formal system f powerful enough
+00:06.080 --> 00:11.600 
+ to encode arithmetic, there are statements that can be formulated in f that can neither
+00:11.600 --> 00:14.940 
+ be proved nor disproved within f.
+00:14.940 --> 00:19.900 
+ This doesn't mean mathematics is inconsistent, but rather that no single formal system can
+00:19.900 --> 00:22.840 
+ capture all mathematical truths.
+00:22.840 --> 00:27.320 
+ Shall we explore another aspect of this?

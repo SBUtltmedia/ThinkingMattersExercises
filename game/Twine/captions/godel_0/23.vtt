@@ -1,10 +1,10 @@
 WEBVTT
 
-00:00.000 --> 00:02.520 
+00:00.000 --> 00:03.400 
  I'm afraid that's not correct.
-00:02.520 --> 00:07.440 
- The second incompleteness theorem actually states that for any consistent formal system,
-00:07.440 --> 00:12.960 
+00:03.400 --> 00:08.880 
+ The second-in-competeness theorem actually states that for any consistent formal system
+00:08.880 --> 00:15.180 
  f powerful enough to encode arithmetic, f cannot prove its own consistency.
-00:12.960 --> 00:13.640 
- Would you like to explore?
+00:15.180 --> 00:17.540 
+ Would you like to explore why this is significant?

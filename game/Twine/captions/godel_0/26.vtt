@@ -1,6 +1,12 @@
 WEBVTT
 
-00:00.000 --> 00:08.000 
- The concept of incompleteness relates to the limitations of formal systems in capturing all truths about arithmetic.
-00:08.000 --> 00:11.000 
- If you like to explore a specific aspect of this.
+00:00.000 --> 00:07.240 
+ The concept of incompleteness relates to the limitations of formal systems in capturing
+00:07.240 --> 00:11.080 
+ all truth about arithmetic.
+00:11.080 --> 00:16.820 
+ It shows that for any consistent formal system powerful enough to encode arithmetic, there
+00:16.820 --> 00:21.940 
+ are statements that can neither be proved nor disproved within that system.
+00:21.940 --> 00:24.740 
+ Would you like to explore a specific aspect of this?

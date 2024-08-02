@@ -80,11 +80,11 @@ async function dialogueEngine(npc) {
   // let selectedDialogue = dialogs[npc];
   let res =  await fetch('./data.json');
   let allDialogue = await res.json();
-  let selectedDialogue = allDialogue[npc]
+  let selectedDialogue = allDialogue[npc]["dialogue"];
   let current = 0;
 
   while (current !== "end") {
-
+    console.log("current ", current);
     showVideo(npc, current)
     showCaptions();
 
@@ -114,7 +114,7 @@ function showVideo(npc, current) {
   }
 
   let video = document.createElement('video');
-  video.src = `./videos/${npc}/${current}.mp4`
+  video.src = `./videos/${npc}_new/${current}_new.mp4`
   video.autoplay = true;
   
   let captions = document.createElement('track');

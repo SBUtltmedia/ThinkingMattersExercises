@@ -1,6 +1,10 @@
 WEBVTT
 
-00:00.000 --> 00:06.120 
- Now, our finders for their consistent orders for the incompleteness theorem show that in
-00:06.120 --> 00:13.360 
- any consistent format system, F powerful enough to encode arithmetic, by formulated, may they
+00:00.000 --> 00:08.000 
+ The incompleteness theorems show that in any consistent formal system F-powerful enough to encode arithmetic,
+00:08.000 --> 00:15.000 
+ there are statements that can be formulated in F but can neither be proved nor disproved within F.
+00:15.000 --> 00:24.000 
+ This doesn't mean all truths are unprovable, but that some truths about arithmetic cannot be proved within the system itself.
+00:24.000 --> 00:27.000 
+ Shall we continue?

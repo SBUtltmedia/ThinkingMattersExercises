@@ -1,6 +1,12 @@
 WEBVTT
 
-00:00.000 --> 00:11.000 
- The Incompetence theorems demonstrate that in any consistent formal system, f that can represent elementary arithmetic, there are statements that can neither be proved nor disproved within f.
-00:11.000 --> 00:15.000 
+00:00.000 --> 00:06.340 
+ The incompleteness theorems demonstrate that in any consistent formal system f that can
+00:06.340 --> 00:11.360 
+ represent elementary arithmetic, there are statements that can neither be proved nor
+00:11.360 --> 00:13.860 
+ disproved with an f.
+00:13.860 --> 00:19.080 
  This doesn't mean f is inconsistent, but rather that it's incomplete.
+00:19.080 --> 00:21.400 
+ Would you like to explore another aspect?

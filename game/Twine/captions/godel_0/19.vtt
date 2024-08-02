@@ -1,8 +1,12 @@
 WEBVTT
 
-00:00.000 --> 00:05.560 
- The incompleteness theorems don't prove that mathematics is inconsistent, and rather they
-00:05.560 --> 00:10.600 
- show that consistent systems, powerful enough for encoding arithmetic, cannot prove their
-00:10.600 --> 00:13.160 
- own consistency.
+00:00.000 --> 00:04.880 
+ The incomplete mass theorems don't prove that mathematics is inconsistent.
+00:04.880 --> 00:10.380 
+ Rather, they show that consistent systems powerful enough to encode arithmetic cannot
+00:10.380 --> 00:13.140 
+ prove their own consistency.
+00:13.140 --> 00:15.860 
+ This is different from being inconsistent.
+00:15.860 --> 00:19.480 
+ Would you like to explore the concept of consistency further?

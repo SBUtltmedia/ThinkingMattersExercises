@@ -1,4 +1,12 @@
 WEBVTT
 
-00:00.000 --> 00:14.000 
- Certainly, the incompleteness theorems show that for any consistent formless system, F powerful enough to encode arithmetic, there are statements that can be formulated in F that can neither be proved nor disproved within F. Shall we proceed with the puzzle?
+00:00.000 --> 00:02.660 
+ Certainly.
+00:02.660 --> 00:07.540 
+ The Incompeteness theorems show that for any consistent formal system f powerful enough
+00:07.540 --> 00:13.040 
+ to encode arithmetic, there are statements that can be formulated in f that can neither
+00:13.040 --> 00:15.940 
+ be proved nor disproved within f.
+00:15.940 --> 00:16.740 
+ Shall we proceed?
