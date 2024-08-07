@@ -166,21 +166,38 @@ class WordGolf {
     }
 
     createDefinitionCard(accum, definit) {
-        console.log("def card")
-        let def = Object.assign(document.createElement("div"), {"id": accum, "className": "definition", "textContent": definit});
-        document.querySelector("#history").appendChild(def);
-        def.style.visibility = "hidden";
+        let def = Object.assign(document.createElement("div"), {"id": accum, "className": "definition", "textContent": `${accum} - ${definit}`});
+        
+        document.querySelector(".levels").appendChild(def);
+        // def.style.visibility = "hidden";
+        $(".definition").hide();
+        // requestAnimationFrame(()=>$(".definition").hide());
+        let lastLetter = "";
+        let events = {"mouseenter": "show", "mouseleave": "hide"}
+        $(".hover").on(Object.keys(events).join(" "), function (e) {
+            // if(lastLetter)
+            //     return false
+            // // lastLetter = 
+            console.log(e.target, e.currentTarget);
+            // if(!e.currentTarget.class)
+            //     return;
 
-        $(".hover").on("mouseover mouseout", function (e) {
-            let visibilityStatus = {"mouseover": "visible", "mouseout":"hidden"};
-            let { right , top } = e.target.getBoundingClientRect();
-            console.log({ right, top });
-            let selectedWord = e.currentTarget.innerText;
+            let word = e.currentTarget.id.split('_')[1].toUpperCase();
+            console.log(word);
 
-            let definitionCard = document.querySelector("#"+ selectedWord);
-            // console.log(selectedWord);
-            $(definitionCard).css({"left": right, top});
-            definitionCard.style.visibility = visibilityStatus[e.type];
+
+            // let visibilityStatus = {"mouseover": "show", "mouseout":"hide"};
+            // // // let { left , top } = e.currentTarget.getBoundingClientRect();
+
+            // // let selectedWord = e.currentTarget.innerText;
+            // // let definitionCard ="#"+ e.target.id;
+            // // // console.log(e.target);
+            // // // console.log(e.currentTarget);
+
+            // // console.log([visibilityStatus[e.type]])
+            // // // console.log(selectedWord);
+            // // // $(definitionCard).css({"left":left - (1.1 * $(`#${selectedWord}`).width()) , top});
+            $(`#${word}`)[events[e.type]](100);
         })
     }
 
@@ -198,7 +215,7 @@ class WordGolf {
     }
 
     makeSpan(word) {
-        let span = Object.assign(document.createElement("span"), {"className": "hover"});
+        let span = Object.assign(document.createElement("div"), {"className": "hover", "id": `hover_${word}`});
         document.querySelector("#history").appendChild(span);
         word.split("").forEach(letter => {
             let l = Object.assign(document.createElement("div"), {"textContent": letter.toUpperCase()})

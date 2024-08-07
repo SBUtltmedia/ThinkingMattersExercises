@@ -73,17 +73,17 @@ body, select{
 
   padding:.2rem;
   background-color:var(--first);
-  border-radius: 0.2em;
+  border-radius: 0.2rem;
 }
 
 #title {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
   text-align: center;
   /* width: 80%; */
 }
 .list-choice{
   width:300px;
-  margin:1em auto;
+  margin:1rem auto;
   position: relative;
   cursor: pointer;  
 }
@@ -97,18 +97,18 @@ width: 100%;
 display: block;
 
 text-align: center;
-padding: 0.55em 1em;
+padding: 0.55rem 1rem;
 box-sizing: border-box;
 color: var(--fifth);
 text-shadow: 0 1px 0 #CACACA;
-border-radius: 0.2em;
+border-radius: 0.2rem;
 }
 
 
 .list-choice-objects {
 position: absolute;
 top: 0;
-padding-top: 2.1em;
+padding-top: 2.1rem;
 box-sizing: border-box;
 width: 100%;
 overflow: hidden;
@@ -120,7 +120,7 @@ transition: all 250ms ease;
   /* width: 80%; */
   height: 10%;
   font-size: 0.5rem;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
 }
 
 #score-container div{
@@ -148,7 +148,7 @@ max-height: 540px;
   /* letter-spacing: 1.5rem; */ 
   width: 78%;
   background-color: var(--third);
-  padding-left: 0.5em;
+  padding-left: 0.5rem;
 }
 
 .flex-container {
@@ -177,6 +177,7 @@ max-height: 540px;
   padding: 0;
   height: 100%;
   width: 100%;
+  position: relative;
 }
 
 .body {
@@ -199,7 +200,7 @@ select {
 
 #picker {
   width: 78%;
-  padding-left: 0.5em;
+  padding-left: 0.5rem;
   background-color: var(--third);
 }
 
@@ -207,19 +208,28 @@ select {
   display: inline-block;
   background-color: var(--third);
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.hover > div {
+.hover > div, #picker > select{
   display: inline-block;
+  text-align: center;
 }
 
 .definition {
   font-family: 'Raleway', sans-serif;
   font-size: 0.35rem;
-  width: 30%;
+  width: 22%;
+  left:1.6%;
   position: absolute;
   /* background-color: purple; */
   letter-spacing: normal;
+  z-index:15;
+  top:7%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* option {
@@ -246,7 +256,7 @@ dialog {
   position: absolute;
   left: -5%;
   top: 55%;
-  width: 15em;
+  width: 15rem;
 }
 
 /*   Before-open state  */
@@ -283,17 +293,24 @@ because the nesting selector cannot represent pseudo-elements. */
   }
 }
 
-.levels {
-  border: 0.1em solid var(--fourth);
-  overflow-y: auto;
-  /* padding: 0.5em; */
-  margin: 0.25em 0.5em;
-  height: 20em;
+.levels, .definition {
+  border-radius: 0.2rem;
+  height: 20rem;
+  /* width: 8rem; */
+  scrollbar-width: none;
+  border: 0.1rem solid var(--fourth);
+}
 
+.levels{
+  /* border: 0.1rem solid var(--fourth); */
+  overflow-y: auto;
+  /* padding: 0.5rem; */
+  margin: 0.25rem 0.5rem;
+  height: 20rem;
 }
 
 .levels-title{
-  padding: 0.25em;
+  padding: 0.25rem;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -303,33 +320,36 @@ because the nesting selector cannot represent pseudo-elements. */
 
 .levels > button:hover {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--third);
   cursor: pointer;
-  padding: 0.7em;
+  /* padding: 0.7rem; */
 }
 
 .levels > button {
   font-size: 0.5rem;
   display: block;
-  padding: 0.5em 0.5em;
+  padding: 0.5rem 0.5rem;
   width: 100%;
   background-color: var(--second);
   border: transparent;
-  border-radius: 0.1em;
+  border-radius: 0.1rem;
   color: var(--fifth);
-  margin: 0.3em 0em;
+  margin: 0.3rem 0rem;
 }
 
 .levels p {
   margin: 0;
-  padding-bottom: 0.25em;
+  padding-bottom: 0.25rem;
 }
 
-.levels::-webkit-scrollbar { 
+
+.levels::scrollbar { 
   display: none;  /* Safari and Chrome */
 }
 
+
 .game-area {
-  margin: 0.25em 0.1em;
+  margin: 0.25rem 0.1rem;
   height: 100%;
   width: 100%;
 }
@@ -345,7 +365,7 @@ because the nesting selector cannot represent pseudo-elements. */
 
 #tourButton {
   display: inline-block;
-  margin-left: 3em;
+  margin-left: 3rem;
 }
 
 #tourButton > img {
