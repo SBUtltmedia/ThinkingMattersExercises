@@ -166,14 +166,14 @@ class WordGolf {
     }
 
     createDefinitionCard(accum, definit) {
-        let def = Object.assign(document.createElement("div"), {"id": accum, "className": "definition", "textContent": `${accum} - ${definit}`});
+        let def = Object.assign(document.createElement("div"), {"id": accum, "className": "definition", "innerHTML": `${accum} <hr/> ${definit}`});
         
         document.querySelector(".levels").appendChild(def);
         // def.style.visibility = "hidden";
         $(".definition").hide();
         // requestAnimationFrame(()=>$(".definition").hide());
         let lastLetter = "";
-        let events = {"mouseenter": "show", "mouseleave": "hide"}
+        let events = {"mouseenter": "fadeIn", "mouseleave": "fadeOut"}
         $(".hover").on(Object.keys(events).join(" "), function (e) {
             // if(lastLetter)
             //     return false
@@ -197,7 +197,7 @@ class WordGolf {
             // // console.log([visibilityStatus[e.type]])
             // // // console.log(selectedWord);
             // // // $(definitionCard).css({"left":left - (1.1 * $(`#${selectedWord}`).width()) , top});
-            $(`#${word}`)[events[e.type]](100);
+            $(`#${word}`)[events[e.type]](250);
         })
     }
 

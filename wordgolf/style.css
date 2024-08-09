@@ -52,6 +52,15 @@ body{
 .animateRight {
   animation: 0.5s forwards alternate animateRight;
 }
+.top{
+display:flex;
+justify-content: center;
+  width:92%;
+  margin: 0 0 .5rem 0;
+  background-color: var(--third);
+  border: 0.1rem solid var(--first);
+    
+}
 
 body, select{
   font-family: "JetBrains Mono", monospace;
@@ -69,13 +78,16 @@ body, select{
   --right: #78b900;
 }
 
-#title,#score-container, .definition{
+#title,#score-container,.top, .definition{
 
   padding:.2rem;
-  background-color:var(--first);
+
   border-radius: 0.2rem;
 }
 
+#title,#score-container, .definition{
+background-color:var(--first);
+}
 #title {
   margin-bottom: 0.5rem;
   text-align: center;
@@ -146,9 +158,9 @@ max-height: 540px;
 
 #history {
   /* letter-spacing: 1.5rem; */ 
-  width: 78%;
+
   background-color: var(--third);
-  padding-left: 0.5rem;
+
 }
 
 .flex-container {
@@ -187,7 +199,6 @@ max-height: 540px;
 
 .title {
   display: inline-block;
-  margin-left: 50%;
 }
 select {
   appearance: none;
@@ -199,8 +210,7 @@ select {
 }
 
 #picker {
-  width: 78%;
-  padding-left: 0.5rem;
+
   background-color: var(--third);
 }
 
@@ -220,14 +230,14 @@ select {
 
 .definition {
   font-family: 'Raleway', sans-serif;
+
   font-size: 0.35rem;
-  width: 22%;
-  left:1.6%;
+
   position: absolute;
   /* background-color: purple; */
   letter-spacing: normal;
   z-index:15;
-  top:7%;
+
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -294,18 +304,31 @@ because the nesting selector cannot represent pseudo-elements. */
 }
 
 .levels, .definition {
-  border-radius: 0.2rem;
+
+  /* position:absolute; */
+  top:0;
+  left:0;
   height: 20rem;
   /* width: 8rem; */
   scrollbar-width: none;
-  border: 0.1rem solid var(--fourth);
 }
 
+.menu{
+
+  border: 0.1rem solid var(--fourth);
+  position:absolute;
+  left:0;
+  
+  width:30%;
+  height:100%;
+}
 .levels{
   /* border: 0.1rem solid var(--fourth); */
   overflow-y: auto;
+  position:absolute;
+  width:100%;
   /* padding: 0.5rem; */
-  margin: 0.25rem 0.5rem;
+  /* margin: 0.25rem 0.5rem; */
   height: 20rem;
 }
 
@@ -349,13 +372,15 @@ because the nesting selector cannot represent pseudo-elements. */
 
 
 .game-area {
-  margin: 0.25rem 0.1rem;
+  /* margin: 0.25rem 0.1rem; */
   height: 100%;
-  width: 100%;
+  width: 67%;
+  position: absolute;
+  left:33%;
 }
 
-.header {
-  width: 80%;;
+.header,#history,#picker {
+  width: 90%;
 }
 
 .tooltip{
@@ -364,8 +389,8 @@ because the nesting selector cannot represent pseudo-elements. */
 }
 
 #tourButton {
-  display: inline-block;
-  margin-left: 3rem;
+position:absolute;
+ right: 3rem;
 }
 
 #tourButton > img {

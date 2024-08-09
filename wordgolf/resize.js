@@ -2,7 +2,7 @@
 $(window).resize(function () {
     resizeWindow();
 });
-
+const ASPECT=16/9;
 // Resize the window
 function resizeWindow() {
 
@@ -10,9 +10,9 @@ function resizeWindow() {
     var w = window.innerWidth//$(window).width();
     var h = window.innerHeight//$(window).height();
     // If the aspect ratio is greater than or equal to 4:3, fix height and set width based on height
-    if ((w / h) >= 4 / 3) {
+    if ((w / h) >= ASPECT) {
         stageHeight = h;
-        stageWidth = (4 / 3) * h;
+        stageWidth = (ASPECT) * h;
         stageLeft = (w - stageWidth) / 2;
         stageTop = 0;
         coverTop = 0;
@@ -23,7 +23,7 @@ function resizeWindow() {
     // If the aspect ratio is less than 4:3, fix width and set height based on width
     else {
         stageWidth = w;
-        stageHeight = (3 / 4) * w;
+        stageHeight = (1/ASPECT) * w;
         stageTop = (h - stageHeight) / 2;
         stageLeft = 0;
         coverTop = stageTop;
@@ -36,7 +36,7 @@ function resizeWindow() {
     $(".screen").css({
         width: stageWidth + "px",
         height: stageHeight + "px",
- 
+        left:   stageLeft + "px" 
     });
 
     // // Set "cover" object properties based on properties set above
@@ -86,21 +86,10 @@ function resizeWindow() {
     // Resize text based on stage height
     // To give a class a certain font size, assign it the class "fs-X" where X is an integer between 1 and 1000. 1000 is the height of the screen.
     // New font resize loop
-    for (var i = 1; i <= 1000; i++) {
-        var s = stageHeight * (i / 1000);
-        var c = ".fs-" + i;
-        $(c).css({
-            'font-size': s + "px"
-        });
-    }
+
 
     // Resize the stripes
-    var stripeSize = stageHeight * .05;
-    var str = stripeSize + "% " + stripeSize + "%"
-    $(".stripes").css({
-        'background-size': stripeSize
-    });
-    
+ 
     // Border
     var borderSize = stageHeight * .003;
     $("#fillInAnswer").css({
