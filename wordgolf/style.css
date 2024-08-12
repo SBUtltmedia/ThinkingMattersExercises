@@ -78,7 +78,7 @@ body, select{
   --right: #78b900;
 }
 
-#title,#score-container,.top, .definition{
+#title,#score-container,.top{
 
   padding:.2rem;
 
@@ -231,8 +231,8 @@ select {
 .definition {
   font-family: 'Raleway', sans-serif;
 
-  font-size: 0.35rem;
-
+  font-size: 0.4rem;
+  padding: 0.2rem;
   position: absolute;
   /* background-color: purple; */
   letter-spacing: normal;
@@ -240,6 +240,7 @@ select {
 
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 100%;
 }
 
 /* option {
@@ -304,18 +305,17 @@ because the nesting selector cannot represent pseudo-elements. */
 }
 
 .levels, .definition {
-
   /* position:absolute; */
   top:0;
   left:0;
   height: 20rem;
   /* width: 8rem; */
   scrollbar-width: none;
+  border: .1rem solid var(--third);
+  border-radius: 0.2rem;
 }
 
 .menu{
-
-  border: 0.1rem solid var(--fourth);
   position:absolute;
   left:0;
   

@@ -26,8 +26,21 @@ class WordGolf {
     async getWords() {
         let response = await fetch("dictionary.json");
         this.words = await response.json();
+
+
+        // console.log(findWordLadder("wheat", "bread", this.words))
         response = await fetch("levels.json");
         this.levels = await response.json();
+
+        for(let level of this.levels) {
+            let path = findWordLadder(level["from"], level["to"], this.words);
+            console.log(level);
+            // console.log(path.length)
+            // level.par = path.length;
+        }
+
+        console.log(this.levels);
+
         // console.log(this.levels.length)
         this.init()
 
@@ -44,10 +57,13 @@ class WordGolf {
         console.log("current level: ", this.currentLevel);
         // Current level score
         this.curLevelScore = 0;
-        console.log(document.querySelectorAll("#history,#message,#correct,#picker"));
+        let par = findWordLadder(this.levels[this.currentLevel]["from"], this.levels[this.currentLevel]["to"], this.words);
+        console.log(par);
+
+        
         document.querySelectorAll("#history,#message,#correct,#picker").forEach(item => item.innerHTML = "");
         document.querySelector("#player-score").innerHTML = "Attempts: 0";
-        document.querySelector("#par").innerHTML = `Par: ${this.levels[this.currentLevel]["par"]}`
+        document.querySelector("#par").innerHTML = `Par: ${par.length+2} `
         
         let characters = this.levels[this.currentLevel]["from"].split("")
         characters.forEach(element => {
@@ -82,7 +98,7 @@ class WordGolf {
                 // Check for win
                 if (accum.toLowerCase() === this.levels[this.currentLevel]["to"]) {
                     console.log("win")
-                    this.win();
+                    this.win(par);
                 } else {
                     this.animateAnswer("animateRight");
                     let definit = this.words[accum.toLowerCase()];
@@ -155,11 +171,11 @@ class WordGolf {
         callback();
 
     }
-    win() {
+    win(par) {
         if(this.currentLevel === this.levels.length-1) {
             this.makeModal({ div: ["Congrats!", `You completed this level in ${this.curLevelScore} attempts.`], button: ["Play Again", "g"] })
-        } else if(this.curLevelScore > this.levels[this.currentLevel]["par"]) {
-            this.makeModal({ div: [`You did not complete this level under par: ${this.levels[this.currentLevel]["par"]} attempts.`], button: ["Try Level Again"] })
+        } else if(this.curLevelScore > par) {
+            this.makeModal({ div: [`You did not complete this level under par: ${par} attempts.`], button: ["Try Level Again"] })
         } else {
             this.makeModal({ div: ["Congrats!", `You completed this level in ${this.curLevelScore} attempts.`], button: ["Try Level Again", "Go To Next Level"] })
         }
@@ -168,9 +184,10 @@ class WordGolf {
     createDefinitionCard(accum, definit) {
         let def = Object.assign(document.createElement("div"), {"id": accum, "className": "definition", "innerHTML": `${accum} <hr/> ${definit}`});
         
-        document.querySelector(".levels").appendChild(def);
+        document.querySelector(".menu").appendChild(def);
         // def.style.visibility = "hidden";
         $(".definition").hide();
+        $(".levels").show();
         // requestAnimationFrame(()=>$(".definition").hide());
         let lastLetter = "";
         let events = {"mouseenter": "fadeIn", "mouseleave": "fadeOut"}

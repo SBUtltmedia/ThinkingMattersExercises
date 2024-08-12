@@ -1,0 +1,4 @@
+rm adapter.js
+rm ladder.js
+rm queue.js
+rm words.js
