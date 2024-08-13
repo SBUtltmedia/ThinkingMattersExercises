@@ -52,14 +52,14 @@ body{
 .animateRight {
   animation: 0.5s forwards alternate animateRight;
 }
-.top{
-display:flex;
-justify-content: center;
+
+#top{
+  display:flex;
+  justify-content: center;
   width:92%;
   margin: 0 0 .5rem 0;
   background-color: var(--third);
   border: 0.1rem solid var(--first);
-    
 }
 
 body, select{
@@ -78,58 +78,22 @@ body, select{
   --right: #78b900;
 }
 
-#title,#score-container,.top{
-
+#title,#score-container,#top{
   padding:.2rem;
-
   border-radius: 0.2rem;
 }
 
 #title,#score-container, .definition{
-background-color:var(--first);
+  background-color:var(--first);
 }
+
 #title {
   margin-bottom: 0.5rem;
   text-align: center;
-  /* width: 80%; */
-}
-.list-choice{
-  width:300px;
-  margin:1rem auto;
-  position: relative;
-  cursor: pointer;  
-}
-.list-choice input[type="radio"]{
-  position:absolute;
-  left:-9999px;
 }
 
-.list-choice-title {
-width: 100%;
-display: block;
-
-text-align: center;
-padding: 0.55rem 1rem;
-box-sizing: border-box;
-color: var(--fifth);
-text-shadow: 0 1px 0 #CACACA;
-border-radius: 0.2rem;
-}
-
-
-.list-choice-objects {
-position: absolute;
-top: 0;
-padding-top: 2.1rem;
-box-sizing: border-box;
-width: 100%;
-overflow: hidden;
-max-height: 0;
-transition: all 250ms ease;
-}
 
 #score-container{
-  /* width: 80%; */
   height: 10%;
   font-size: 0.5rem;
   margin-bottom: 0.5rem;
@@ -146,11 +110,6 @@ transition: all 250ms ease;
   margin-right:50%;
 }
 
-
-.list-choice:hover .list-choice-objects {
-max-height: 540px;
-}
-
 #message {
   font-size: 1rem;
   width: 100%;
@@ -163,28 +122,12 @@ max-height: 540px;
 
 }
 
-.flex-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-
-.flex-item {
-  flex: 1;
-  padding:1rem;
-  text-align:center;
-}
-
 #next {
   display: none;
 }
 
-#par {
-  /* right: 100%; */
-}
 
-
-.screen {
+#screen {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -200,6 +143,7 @@ max-height: 540px;
 .title {
   display: inline-block;
 }
+
 select {
   appearance: none;
   border: 0px none;
@@ -243,9 +187,6 @@ select {
   min-width: 100%;
 }
 
-/* option {
-  font-size: 1rem;
-} */
 
 /*   Open state of the dialog  */
 dialog[open] {
@@ -266,8 +207,9 @@ dialog {
   transition: all 0.7s allow-discrete; */
   position: absolute;
   left: -5%;
-  top: 55%;
+  top: 500%;
   width: 15rem;
+  z-index: 20;
 }
 
 /*   Before-open state  */
@@ -280,29 +222,6 @@ dialog {
   }
 }
 
-/* Transition the :backdrop when the dialog modal is promoted to the top layer */
-dialog::backdrop {
-  background-color: rgb(0 0 0 / 0%);
-  transition:
-    display 0.7s allow-discrete,
-    overlay 0.7s allow-discrete,
-    background-color 0.7s;
-  /* Equivalent to
-  transition: all 0.7s allow-discrete; */
-}
-
-dialog[open]::backdrop {
-  background-color: rgb(0 0 0 / 25%);
-}
-
-/* This starting-style rule cannot be nested inside the above selector
-because the nesting selector cannot represent pseudo-elements. */
-
-@starting-style {
-  dialog[open]::backdrop {
-    background-color: rgb(0 0 0 / 0%);
-  }
-}
 
 .levels, .definition {
   /* position:absolute; */
@@ -365,10 +284,6 @@ because the nesting selector cannot represent pseudo-elements. */
   padding-bottom: 0.25rem;
 }
 
-
-.levels::scrollbar { 
-  display: none;  /* Safari and Chrome */
-}
 
 
 .game-area {

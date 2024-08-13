@@ -32,14 +32,27 @@ class WordGolf {
         response = await fetch("levels.json");
         this.levels = await response.json();
 
-        for(let level of this.levels) {
-            let path = findWordLadder(level["from"], level["to"], this.words);
-            console.log(level);
-            // console.log(path.length)
-            // level.par = path.length;
-        }
+        // console.log(findWordLadder("pitch", "tents", this.words));
+        // for(let level of this.levels) {
+        //     let path = findWordLadder(level["from"], level["to"], this.words);
+        //     if(path=== undefined) {
+        //         continue;
+        //     } else {
+        //     level.par = path.length;
+        //     }
+        // }
+        // this.levels.sort((a,b) => {
+        //     if(a.par < b.par) {
+        //         return -1;
+        //     }
+        //     if(a.par > b.par) {
+        //         return 1;
+        //     }
+        //     return 0;
+        // })
+        // console.log(JSON.stringify(this.levels));
 
-        console.log(this.levels);
+        // console.log(this.levels);
 
         // console.log(this.levels.length)
         this.init()
@@ -57,14 +70,15 @@ class WordGolf {
         console.log("current level: ", this.currentLevel);
         // Current level score
         this.curLevelScore = 0;
-        let par = findWordLadder(this.levels[this.currentLevel]["from"], this.levels[this.currentLevel]["to"], this.words);
-        console.log(par);
-
+       
+        let par = this.levels[this.currentLevel]["par"]+1;
         
         document.querySelectorAll("#history,#message,#correct,#picker").forEach(item => item.innerHTML = "");
         document.querySelector("#player-score").innerHTML = "Attempts: 0";
-        document.querySelector("#par").innerHTML = `Par: ${par.length+2} `
+        document.querySelector("#par").innerHTML = `Par: ${par}`
         
+        // this.makeModal({ div: ["Congrats!", `You completed this level in ${this.curLevelScore} attempts.`], button: ["Play Again", "g"] })
+
         let characters = this.levels[this.currentLevel]["from"].split("")
         characters.forEach(element => {
             // Figures out what letters are left to guess?
@@ -162,7 +176,7 @@ class WordGolf {
             })
         })
 
-        document.querySelector(".screen").append(dialog);
+        document.querySelector("#screen").append(dialog);
         dialog.show();
     }
     listen(e) {

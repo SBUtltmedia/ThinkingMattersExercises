@@ -3,19 +3,31 @@
         "from": "hate",
         "to": "love",
         "title": "Make LOVE out of HATE.",
-        "par": 5
-    },
-    {
-        "from": "cold",
-        "to": "warm",
-        "title": "Turn COLD into WARM.",
-        "par": 7
+        "par": 4
     },
     {
         "from": "dry",
         "to": "wet",
         "title": "Change DRY to WET",
-        "par": 10
+        "par": 4
+    },
+    {
+        "from": "wet",
+        "to": "dry",
+        "title": "Change WET to DRY.",
+        "par": 4
+    },
+    {
+        "from": "eye",
+        "to": "lid",
+        "title": "Cover EYE with LID.",
+        "par": 4
+    },
+    {
+        "from": "cold",
+        "to": "warm",
+        "title": "Turn COLD into WARM.",
+        "par": 5
     },
     {
         "from": "pig",
@@ -24,81 +36,9 @@
         "par": 5
     },
     {
-        "from": "four",
-        "to": "five",
-        "title": "Raise FOUR to FIVE.",
-        "par": 5
-    },
-    {
-        "from": "wheat",
-        "to": "bread",
-        "title": "Make WHEAT into BREAD.",
-        "par": 5
-    },
-    {
-        "from": "pen",
-        "to": "ink",
-        "title": "Dip PEN into INK.",
-        "par": 5
-    },
-    {
-        "from": "chin",
-        "to": "nose",
-        "title": "Touch CHIN with NOSE.",
-        "par": 5
-    },
-    {
-        "from": "tears",
-        "to": "smile",
-        "title": "Change TEARS into SMILE.",
-        "par": 5
-    },
-    {
-        "from": "wet",
-        "to": "dry",
-        "title": "Change WET to DRY.",
-        "par": 5
-    },
-    {
-        "from": "hare",
-        "to": "soup",
-        "title": "Make HARE into SOUP.",
-        "par": 5
-    },
-    {
-        "from": "pitch",
-        "to": "tents",
-        "title": "PITCH TENTS.",
-        "par": 5
-    },
-    {
-        "from": "eye",
-        "to": "lid",
-        "title": "Cover EYE with LID.",
-        "par": 5
-    },
-    {
-        "from": "pity",
-        "to": "good",
-        "title": "Prove PITY to be GOOD.",
-        "par": 5
-    },
-    {
-        "from": "steal",
-        "to": "coins",
-        "title": "STEAL COINS.",
-        "par": 5
-    },
-    {
         "from": "eel",
         "to": "pie",
         "title": "Make EEL into PIE.",
-        "par": 5
-    },
-    {
-        "from": "poor",
-        "to": "rich",
-        "title": "Turn POOR into RICH.",
         "par": 5
     },
     {
@@ -114,51 +54,9 @@
         "par": 5
     },
     {
-        "from": "wood",
-        "to": "tree",
-        "title": "Get WOOD from TREE.",
-        "par": 5
-    },
-    {
-        "from": "grass",
-        "to": "green",
-        "title": "Prove GRASS to be GREEN.",
-        "par": 5
-    },
-    {
-        "from": "man",
-        "to": "ape",
-        "title": "Evolve MAN from APE.",
-        "par": 5
-    },
-    {
-        "from": "cain",
-        "to": "abel",
-        "title": "Change CAIN into ABEL.",
-        "par": 5
-    },
-    {
-        "from": "flour",
-        "to": "bread",
-        "title": "Make FLOUR into BREAD.",
-        "par": 5
-    },
-    {
         "from": "tea",
         "to": "hot",
         "title": "Make TEA HOT.",
-        "par": 5
-    },
-    {
-        "from": "comb",
-        "to": "hair",
-        "title": "Run COMB into HAIR.",
-        "par": 5
-    },
-    {
-        "from": "rogue",
-        "to": "beast",
-        "title": "Prove a ROGUE to be a BEAST.",
         "par": 5
     },
     {
@@ -168,99 +66,189 @@
         "par": 5
     },
     {
-        "from": "army",
-        "to": "navy",
-        "title": "Combine ARMY and NAVY.",
-        "par": 5
-    },
-    {
-        "from": "bears",
-        "to": "shelf",
-        "title": "Place BEARS on SHELF.",
-        "par": 5
-    },
-    {
-        "from": "hook",
-        "to": "fish",
-        "title": "HOOK FISH.",
-        "par": 5
-    },
-    {
-        "from": "quell",
-        "to": "bravo",
-        "title": "QUELL a BRAVO.",
-        "par": 5
-    },
-    {
-        "from": "furies",
-        "to": "barrel",
-        "title": "Stow FURIES in BARREL.",
-        "par": 5
-    },
-    {
-        "from": "buy",
-        "to": "ass",
-        "title": "BUY an ASS.",
-        "par": 5
-    },
-    {
-        "from": "coal",
-        "to": "mine",
-        "title": "Get COAL from MINE.",
-        "par": 5
-    },
-    {
-        "from": "costs",
-        "to": "pence",
-        "title": "Pay COSTS in PENCE.",
-        "par": 5
-    },
-    {
-        "from": "one",
-        "to": "two",
-        "title": "Raise ONE to TWO.",
-        "par": 5
-    },
-    {
-        "from": "blue",
-        "to": "pink",
-        "title": "Change BLUE to PINK.",
-        "par": 5
-    },
-    {
-        "from": "black",
-        "to": "white",
-        "title": "Change BLACK to WHITE.",
-        "par": 5
-    },
-    {
         "from": "fish",
         "to": "bird",
         "title": "Change FISH to BIRD.",
         "par": 5
     },
     {
+        "from": "wheat",
+        "to": "bread",
+        "title": "Make WHEAT into BREAD.",
+        "par": 6
+    },
+    {
+        "from": "pen",
+        "to": "ink",
+        "title": "Dip PEN into INK.",
+        "par": 6
+    },
+    {
+        "from": "chin",
+        "to": "nose",
+        "title": "Touch CHIN with NOSE.",
+        "par": 6
+    },
+    {
+        "from": "hare",
+        "to": "soup",
+        "title": "Make HARE into SOUP.",
+        "par": 6
+    },
+    {
+        "from": "pity",
+        "to": "good",
+        "title": "Prove PITY to be GOOD.",
+        "par": 6
+    },
+    {
+        "from": "wood",
+        "to": "tree",
+        "title": "Get WOOD from TREE.",
+        "par": 6
+    },
+    {
+        "from": "man",
+        "to": "ape",
+        "title": "Evolve MAN from APE.",
+        "par": 6
+    },
+    {
+        "from": "hook",
+        "to": "fish",
+        "title": "HOOK FISH.",
+        "par": 6
+    },
+    {
+        "from": "furies",
+        "to": "barrel",
+        "title": "Stow FURIES in BARREL.",
+        "par": 6
+    },
+    {
+        "from": "buy",
+        "to": "ass",
+        "title": "BUY an ASS.",
+        "par": 6
+    },
+    {
+        "from": "coal",
+        "to": "mine",
+        "title": "Get COAL from MINE.",
+        "par": 6
+    },
+    {
+        "from": "pitch",
+        "to": "tents",
+        "title": "PITCH TENTS.",
+        "par": 7
+    },
+    {
+        "from": "poor",
+        "to": "rich",
+        "title": "Turn POOR into RICH.",
+        "par": 7
+    },
+    {
+        "from": "grass",
+        "to": "green",
+        "title": "Prove GRASS to be GREEN.",
+        "par": 7
+    },
+    {
+        "from": "flour",
+        "to": "bread",
+        "title": "Make FLOUR into BREAD.",
+        "par": 7
+    },
+    {
+        "from": "comb",
+        "to": "hair",
+        "title": "Run COMB into HAIR.",
+        "par": 7
+    },
+    {
+        "from": "costs",
+        "to": "pence",
+        "title": "Pay COSTS in PENCE.",
+        "par": 7
+    },
+    {
+        "from": "one",
+        "to": "two",
+        "title": "Raise ONE to TWO.",
+        "par": 7
+    },
+    {
+        "from": "four",
+        "to": "five",
+        "title": "Raise FOUR to FIVE.",
+        "par": 8
+    },
+    {
+        "from": "blue",
+        "to": "pink",
+        "title": "Change BLUE to PINK.",
+        "par": 8
+    },
+    {
+        "from": "black",
+        "to": "white",
+        "title": "Change BLACK to WHITE.",
+        "par": 8
+    },
+    {
         "from": "shoes",
         "to": "crust",
         "title": "Sell SHOES for CRUST.",
-        "par": 5
+        "par": 8
     },
     {
-        "from": "kettle",
-        "to": "holder",
-        "title": "Make KETTLE HOLDER.",
-        "par": 5
+        "from": "rogue",
+        "to": "beast",
+        "title": "Prove a ROGUE to be a BEAST.",
+        "par": 9
     },
     {
         "from": "winter",
         "to": "summer",
         "title": "Change WINTER to SUMMER.",
-        "par": 5
+        "par": 9
+    },
+    {
+        "from": "tears",
+        "to": "smile",
+        "title": "Change TEARS into SMILE.",
+        "par": 10
+    },
+    {
+        "from": "army",
+        "to": "navy",
+        "title": "Combine ARMY and NAVY.",
+        "par": 10
+    },
+    {
+        "from": "bears",
+        "to": "shelf",
+        "title": "Place BEARS on SHELF.",
+        "par": 11
+    },
+    {
+        "from": "quell",
+        "to": "bravo",
+        "title": "QUELL a BRAVO.",
+        "par": 11
+    },
+    {
+        "from": "kettle",
+        "to": "holder",
+        "title": "Make KETTLE HOLDER.",
+        "par": 11
     },
     {
         "from": "rouge",
         "to": "cheek",
         "title": "Put ROUGE on CHEEK.",
-        "par": 5
+        "par": 11
     }
 ]
