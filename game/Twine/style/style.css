@@ -151,3 +151,7 @@ div.clickEffect {
     from { width: 0 }
     to { width: 100% }
   } */
+
+#enter-dialog {
+    display: none;
+}

@@ -1,6 +1,9 @@
 $(function () {
     new WordGolf()
 });
+
+let globalwords;
+
 class WordGolf {
     constructor(startLevel = 0) {
         this.alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
@@ -26,6 +29,7 @@ class WordGolf {
     async getWords() {
         let response = await fetch("dictionary.json");
         this.words = await response.json();
+        globalwords = this.words;
 
 
         // console.log(findWordLadder("wheat", "bread", this.words))
@@ -88,6 +92,7 @@ class WordGolf {
             // console.log(allOptions)
             let sel = $("<select/>")
             sel.css({"width": `${100/characters.length}%`})
+            // sel.css({"margin": `0 ${25/characters.length}% 0 ${25/characters.length}%`})
             $("#picker").append(sel)
 
         });
@@ -140,6 +145,7 @@ class WordGolf {
 
         })
         resizeWindow();
+        $("body").fadeIn(500);
     }
 
     animateAnswer(animation) {
@@ -249,7 +255,7 @@ class WordGolf {
         let span = Object.assign(document.createElement("div"), {"className": "hover", "id": `hover_${word}`});
         document.querySelector("#history").appendChild(span);
         word.split("").forEach(letter => {
-            let l = Object.assign(document.createElement("div"), {"textContent": letter.toUpperCase()})
+            let l = Object.assign(document.createElement("div"), {"className": "card", "textContent": letter.toUpperCase()})
             l.style.width = `${100/word.length}%`;
             span.appendChild(l);
         })

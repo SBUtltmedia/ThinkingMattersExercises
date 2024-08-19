@@ -124,7 +124,8 @@ function init(){
     }
     player.style.left = "5%"
     player.style.top = "5%"
-    SugarCube.Engine.play('0_0');
+    SugarCube.State.metadata.clear();
+    // SugarCube.Engine.play('0_0');
 
 move()
 function move() {
@@ -159,6 +160,8 @@ function moveChar(moveData) {
         } else {
             lastnonOverlap["left"] = player.style.left;
             lastnonOverlap["top"] = player.style.top;
+            window.runningDialogue = null;
+            $('#dialog').empty();
         }
     }
         

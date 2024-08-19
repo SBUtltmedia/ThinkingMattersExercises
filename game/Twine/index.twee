@@ -24,6 +24,8 @@ Config.passages.nobr = true;
 
 /* OLD */
 // importScripts(['script.js', 'resize.js']);
+var lockID = LoadScreen.lock();
+
 
 importScripts('js/resize.js')
 	.then(function() {
@@ -37,7 +39,9 @@ importScripts(['js/script.js'])
 		$(document).on(':passagedisplay', function (ev) {
 			makeDoors(passage());
 		});
-	}).then(importScripts('js/collidable.js','js/inits.js','js/dialogs.js', 'js/utils.js'))
+	}).then(() => {importScripts('js/utils.js','js/collidable.js','js/inits.js','js/dialogs.js');setTimeout(function(){
+    LoadScreen.unlock(lockID);
+}, 500);});
 	// .then(importScripts('js/wordgolf.js'))
 
 
@@ -75,6 +79,13 @@ $(document).on(':passagestart', function (eventObject) {
 		<div id="player"></div>
 	</div>
 </div>
+<script>
+$("#dialog").empty();
+var enterDialog = $("#enter-dialog").html();
+if(enterDialog) {
+typeWriter(enterDialog);
+} 
+</script>
 
 
 :: PassageFooter {"position":"350,100","size":"100,100"}
@@ -95,6 +106,7 @@ player.style.top = "5%";
 <script>
 addCharacter("godel_0");
 </script>
+<div id="enter-dialog">Welcome</div>
 
 
 :: -5_-5 {"position":"475,100","size":"100,100"}
@@ -266,10 +278,10 @@ addCharacter("godel_0");
 /* <<set $dialog=["One line of dialog"]>> */
 <script>addCharacter("npc1");</script>
 
-
+<div id="enter-dialog">Hello from new york</div>
 :: 0_2 {"position":"100,850","size":"100,100"}
 
-
+<div id="enter-dialog">Hola from wonderland</div>
 :: 0_3 {"position":"225,850","size":"100,100"}
 
 

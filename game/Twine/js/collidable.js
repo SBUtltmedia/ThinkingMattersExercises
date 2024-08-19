@@ -10,6 +10,7 @@ let collisionCallbacks = {
     "box5": () => { console.log(5) },
     "godel_0":(id) => {
       console.log(this);
-      dialogueEngine(id);
+      
+      window.runningDialogue = dialogueEngine(id);
     }
 }
