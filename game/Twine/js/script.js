@@ -159,6 +159,8 @@ function moveChar(moveData) {
         } else {
             lastnonOverlap["left"] = player.style.left;
             lastnonOverlap["top"] = player.style.top;
+            window.runningDialogue = null;
+            $('#dialog').empty();
         }
     }
         
@@ -219,7 +221,7 @@ function showClickEffect(rect, x, y){
 
 function placeObject(object) {
     object.style.position = "absolute";
-    object.style.width = "5%";
+    object.style.width = "80%";
     object.style.height = "5%";
     document.getElementById("walkway").appendChild(object);
     object.style.backgroundColor = "blue";
@@ -236,7 +238,7 @@ window.addEventListener('keyup', e => {
 window.addEventListener('keydown',(e) => {
     if(e.key === 'f') {
         console.log('item placed')
-        placeObject(document.createElement("div"))
+        placeObject(Object.assign(document.createElement("div"), {'id': 'test'}));
     }
 });
 
@@ -269,3 +271,14 @@ document.addEventListener('click', e => {
     }
 )
 };
+
+document.querySelectorAll('.drag').forEach(draggable => {
+    draggable.addEventListener('dragstart', (event) => {
+        // Set the data being dragged
+        event.dataTransfer.setData('text/plain', draggable.id);
+      });
+    draggable.addEventListener('dragover', (event) => {
+        // Prevent default behavior to allow drop
+        event.preventDefault();
+      });
+})

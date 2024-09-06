@@ -14,6 +14,7 @@ testgd
 
 :: Story Stylesheet [stylesheet]
 @import url('style/style.css');
+@import url('style/icons.css');
 
 
 :: Story JavaScript [script]
@@ -24,6 +25,10 @@ Config.passages.nobr = true;
 
 /* OLD */
 // importScripts(['script.js', 'resize.js']);
+/* OLD */
+// importScripts(['script.js', 'resize.js']);
+var lockID = LoadScreen.lock();
+
 
 importScripts('js/resize.js')
 	.then(function() {
@@ -37,7 +42,9 @@ importScripts(['js/script.js'])
 		$(document).on(':passagedisplay', function (ev) {
 			makeDoors(passage());
 		});
-	}).then(importScripts('js/collidable.js','js/inits.js','js/dialogs.js', 'js/utils.js'))
+	}).then(() => {importScripts('js/utils.js','js/collidable.js','js/inits.js','js/dialogs.js');setTimeout(function(){
+    LoadScreen.unlock(lockID);
+}, 500);});
 	// .then(importScripts('js/wordgolf.js'))
 
 
@@ -64,10 +71,9 @@ $(document).on(':passagestart', function (eventObject) {
 
 
 :: StoryInit {"position":"100,100","size":"100,100"}
-
-
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/intro.js" charset="utf-8"></script>
 :: PassageHeader {"position":"100,100","size":"100,100"}
-<div id="stage" class="screen">
+<div id="stage" class="screen" data-intro='Hello step one!'>
 
 	<div id="dialog">
 	</div>
@@ -75,9 +81,17 @@ $(document).on(':passagestart', function (eventObject) {
 		<div id="player"></div>
 	</div>
 </div>
+<script>
+$("#dialog").empty();
+var enterDialog = $("#enter-dialog").html();
+if(enterDialog) {
+typeWriter(enterDialog);
+} 
+</script>
 
 
 :: PassageFooter {"position":"350,100","size":"100,100"}
+
 <script>
 
 player = document.getElementById('player');
@@ -85,7 +99,6 @@ console.log("player", player.style);
 player.style.left = "5%";
 player.style.top = "5%";
 // document.getElementById("stage").append(Object.assign(document.createElement('div'),{"id":"box1","className":"collidable"}));
-
 </script>
 
 <<print passage()>>
@@ -93,8 +106,13 @@ player.style.top = "5%";
 
 :: 0_0 {"position":"1100,725","size":"100,100"}
 <script>
-addCharacter("godel_0");
+	addCharacter("godel_0");
+	phrase = ['forevermore', 'yesterday', "all_pasts", "yesterday", "tomorrow", "some_past"];
+	makeProblemBlock(phrase);
+
 </script>
+<div id="enter-dialog">Welcome</div>
+
 
 
 :: -5_-5 {"position":"475,100","size":"100,100"}

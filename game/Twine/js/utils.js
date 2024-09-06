@@ -56,32 +56,41 @@ function typeWriter(i = 0, txt, speed = 50, callback) {
   }
 }
 
-function displayOptions(selectedDialogue, current, callback) {
-    let options = selectedDialogue[current]["options"];
-    let optionsBox =  Object.assign(document.createElement("div"), {"className": "optionContainer"});
-    document.getElementById("dialog").appendChild(optionsBox);
-    options.forEach((option, index) => {
-    let link = Object.assign(document.createElement("button"), {
-        textContent: option.response,
-    });
-    link.addEventListener("click", () => {
-        console.log(index);
-        callback(index); // Resolve the promise with the index of the selected option
-    });
-    optionsBox.appendChild(link);
-    });
+function displayOptions(npc, selectedDialogue, current, callback) {
+  let options = selectedDialogue[current]["options"];
+  let optionsBox =  Object.assign(document.createElement("div"), {"className": "optionContainer"});
+  document.getElementById("dialog").appendChild(optionsBox);
+  options.forEach((option, index) => {
+  let link = Object.assign(document.createElement("button"), {
+      textContent: option.response,
+  });
+  link.addEventListener("click", () => {
+      console.log(index);
+      let history = SugarCube.State.getVar("$history") || {};
+      let currentSpeaker = history[npc] || {};
+      currentSpeaker["picked"] = currentSpeaker["picked"] || [];
+      currentSpeaker["picked"][current] = index;
+      currentSpeaker["currentDialogueId"] = option.next;
+      // currentSpeaker.push(current);
+      history[npc] = currentSpeaker;
+      SugarCube.State.setVar("$history", history);
+      callback(index); // Resolve the promise with the index of the selected option
+  });
+  optionsBox.appendChild(link);
+  });
 }
 
 async function dialogueEngine(npc) {
-  if(window.conversationRunning) {
-    return;
-  }
-  window.conversationRunning = true;
   // let selectedDialogue = dialogs[npc];
   let res =  await fetch('./data.json');
   let allDialogue = await res.json();
   let selectedDialogue = allDialogue[npc]["dialogue"];
   let current = 0;
+  let playerHistory = SugarCube.State.getVar("$history") || {};
+
+  if(playerHistory[npc]?.currentDialogueId) { 
+    current = playerHistory[npc].currentDialogueId;
+  }
 
   while (current !== "end") {
     console.log("current ", current);
@@ -95,7 +104,8 @@ async function dialogueEngine(npc) {
     if(!selectedDialogue[current]["options"]) {
       break;
     }
-    let selectedOptionIndex = await new Promise((resolve)=> {displayOptions(selectedDialogue, current, resolve)});
+    let selectedOptionIndex = await new Promise((resolve)=> {displayOptions(npc, selectedDialogue, current, resolve)});
+
     current = selectedDialogue[current]["options"][selectedOptionIndex].next; // Update current to the next dialogue index
 
     // Clear the dialog content for the next text
@@ -152,4 +162,25 @@ function showCaptions() {
       idx = ++idx % 2;
     }
   }
+}
+
+function generateSymbol(desc) {
+  let symbols = {'forevermore': 'square', 'all_pasts': 
+  'square', 'eventually': 'diamond', 'some_past': 'diamond', 'tomorrow': 'triangle', 'yesterday': 'triangle'}
+
+  var ns = 'http://www.w3.org/2000/svg';
+  let svg = document.createElementNS(ns, 'svg');
+  let use = document.createElementNS(ns, 'use');
+  use.setAttributeNS(null, 'href', `img/icons.svg#${symbols[desc]}`);
+  use.setAttribute('class',desc);
+  svg.appendChild(use);
+  return svg;
+}
+
+function makeProblemBlock(phrase) {
+  let block = Object.assign(document.createElement('div'),{'className': 'drag', 'id': 1 });
+  document.getElementById('walkway').appendChild(block);
+  phrase.forEach(desc => {
+		block.appendChild(generateSymbol(desc));
+	})
 }

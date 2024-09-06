@@ -19,7 +19,7 @@
     /* opacity:0; */
 }
 #npc1, #godel_0{
-    background-image: url('../img/pixel_scientist.png');
+    background-image: url('../img/einstein.png  ');
     left:50%;
     top:50%;
     background-size:contain;
@@ -36,6 +36,9 @@
     position: absolute;
     width:30%;
     height: 100%;
+    font-size: 0.5rem;
+    padding: 0.3em 0.5em;
+    /* border-radius: 10%; */
 }
 
 #walkway,.overlay {
@@ -131,10 +134,6 @@ div.clickEffect {
     margin: 0.2em 0em;
 }
 
-#dialog {
-    font-size: 0.5rem;
-    padding: 0.3em 0.5em;
-}
 
 .typed-out {
     padding: 0.1em;
@@ -151,3 +150,21 @@ div.clickEffect {
     from { width: 0 }
     to { width: 100% }
   } */
+#enter-dialog {
+    display: none;
+}
+/* #videoContainer {
+    width: 75%;
+    margin-top: 1em;
+} */
+
+.drag {
+    width:  fit-content;
+    border: 0.01rem solid black;
+    height: 2rem;
+}
+
+/* .drag svg {
+    width: 1rem;
+    height: 1rem;
+} */
