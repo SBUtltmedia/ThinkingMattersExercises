@@ -155,7 +155,6 @@ function showCaptions() {
   var span1 = document.querySelector('#videoContainer > div');
   span1.innerHTML = '';
   if (!video.textTracks) return;
-
   var track = video.textTracks[0];
   track.mode = 'hidden';
   var idx = 0;
