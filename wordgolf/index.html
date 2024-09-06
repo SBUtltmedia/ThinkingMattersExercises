@@ -106,13 +106,15 @@
           window.addEventListener('load', ()=> {
             var doneTour = localStorage.getItem('doneTour') === 'yeah!';
             if (doneTour) return;
-            intro.start();
+            setTimeout(()=>intro.start(),500);
           })
           $("#tourButton").click(function(){
             intro.start();
           });
-
+          
         };
+
+        // setTimeout(()=>startIntro(), 500);
 
       startIntro();
       </script>

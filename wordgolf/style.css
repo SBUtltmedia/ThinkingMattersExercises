@@ -5,6 +5,7 @@
 body{
   background:var(--second);
   color:var(--fifth);
+  display: none;
   /* padding: 1rem 1rem; */
 }
 
@@ -118,8 +119,21 @@ body, select{
 #history {
   /* letter-spacing: 1.5rem; */ 
 
-  background-color: var(--third);
+  /* background-color: var(--third); */
 
+}
+
+.card {
+  transition: transform 1s;
+  transform-style: preserve-3d;
+}
+
+.flip-start {
+  transform: rotateY(90deg);
+}
+
+.flip-end {
+  transform: rotateY(90deg);
 }
 
 #next {
@@ -160,11 +174,15 @@ select {
 
 .hover {
   display: inline-block;
-  background-color: var(--third);
+  /* background-color: var(--third); */
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.hover div {
+  background-color: var(--third);
 }
 
 .hover > div, #picker > select{

@@ -25,8 +25,6 @@ Config.passages.nobr = true;
 
 /* OLD */
 // importScripts(['script.js', 'resize.js']);
-/* OLD */
-// importScripts(['script.js', 'resize.js']);
 var lockID = LoadScreen.lock();
 
 
@@ -112,7 +110,6 @@ player.style.top = "5%";
 
 </script>
 <div id="enter-dialog">Welcome</div>
-
 
 
 :: -5_-5 {"position":"475,100","size":"100,100"}
@@ -284,10 +281,10 @@ player.style.top = "5%";
 /* <<set $dialog=["One line of dialog"]>> */
 <script>addCharacter("npc1");</script>
 
-
+<div id="enter-dialog">Hello from new york</div>
 :: 0_2 {"position":"100,850","size":"100,100"}
 
-
+<div id="enter-dialog">Hola from wonderland</div>
 :: 0_3 {"position":"225,850","size":"100,100"}
 
 

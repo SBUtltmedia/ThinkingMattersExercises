@@ -163,7 +163,8 @@ function findSuccessors(word, words) {
  * Internally, this function works by running a breadth-first search of the 
  * word graph.  The shortest path to the destination word is thus found.
  */
-function findWordLadder(startWord, endWord, words) {
+function findWordLadder(startWord, endWord, words=globalwords) {
+    console.log(words);
     /* Maintain a work list of partial ladders, seeded with the start word. */
     var workList = new Queue();
     workList.enqueue(new WordLadder(startWord));

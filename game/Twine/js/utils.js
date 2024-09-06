@@ -43,11 +43,12 @@ function addCharacter(characterID) {
   walkway.append(npc);
 }
 
-function typeWriter(i = 0, txt, speed = 50, callback) {
+function typeWriter(txt,  i = 0, speed = 50, callback=()=>{}) {
+  console.log('typing');
   if (i < txt.length) {
     document.getElementById("dialog").innerHTML += txt.charAt(i);
     i++;
-    setTimeout(() => typeWriter(i, txt, speed, callback), speed);
+    setTimeout(() => typeWriter(txt,  i , speed, callback), speed);
   } else {
     if (callback) {
       // Signals typewriter is done
@@ -57,28 +58,35 @@ function typeWriter(i = 0, txt, speed = 50, callback) {
 }
 
 function displayOptions(npc, selectedDialogue, current, callback) {
-  let options = selectedDialogue[current]["options"];
-  let optionsBox =  Object.assign(document.createElement("div"), {"className": "optionContainer"});
-  document.getElementById("dialog").appendChild(optionsBox);
-  options.forEach((option, index) => {
-  let link = Object.assign(document.createElement("button"), {
-      textContent: option.response,
-  });
-  link.addEventListener("click", () => {
-      console.log(index);
-      let history = SugarCube.State.getVar("$history") || {};
-      let currentSpeaker = history[npc] || {};
-      currentSpeaker["picked"] = currentSpeaker["picked"] || [];
-      currentSpeaker["picked"][current] = index;
-      currentSpeaker["currentDialogueId"] = option.next;
-      // currentSpeaker.push(current);
-      history[npc] = currentSpeaker;
-      SugarCube.State.setVar("$history", history);
-      callback(index); // Resolve the promise with the index of the selected option
-  });
-  optionsBox.appendChild(link);
-  });
+    let options = selectedDialogue[current]["options"];
+    let optionsBox =  Object.assign(document.createElement("div"), {"className": "optionContainer"});
+    document.getElementById("dialog").appendChild(optionsBox);
+    options.forEach((option, index) => {
+    let link = Object.assign(document.createElement("button"), {
+        textContent: option.response,
+    });
+    link.addEventListener("click", () => {
+        console.log(index);
+        let history = SugarCube.State.getVar("$history") || {};
+        let currentSpeaker = history[npc] || {};
+        currentSpeaker["picked"] = currentSpeaker["picked"] || [];
+        currentSpeaker["picked"][current] = index;
+        currentSpeaker["currentDialogueId"] = option.next;
+        // currentSpeaker.push(current);
+        history[npc] = currentSpeaker;
+        SugarCube.State.setVar("$history", history);
+        callback(index); // Resolve the promise with the index of the selected option
+    });
+    optionsBox.appendChild(link);
+    });
 }
+
+// history :{
+//   godel_0:{
+//     lastDialogueId: 0,
+//     picked: []
+//   }
+// }
 
 async function dialogueEngine(npc) {
   // let selectedDialogue = dialogs[npc];
@@ -87,10 +95,13 @@ async function dialogueEngine(npc) {
   let selectedDialogue = allDialogue[npc]["dialogue"];
   let current = 0;
   let playerHistory = SugarCube.State.getVar("$history") || {};
-
+  
   if(playerHistory[npc]?.currentDialogueId) { 
     current = playerHistory[npc].currentDialogueId;
   }
+  
+
+  // let current = 0;
 
   while (current !== "end") {
     console.log("current ", current);
@@ -105,7 +116,6 @@ async function dialogueEngine(npc) {
       break;
     }
     let selectedOptionIndex = await new Promise((resolve)=> {displayOptions(npc, selectedDialogue, current, resolve)});
-
     current = selectedDialogue[current]["options"][selectedOptionIndex].next; // Update current to the next dialogue index
 
     // Clear the dialog content for the next text
