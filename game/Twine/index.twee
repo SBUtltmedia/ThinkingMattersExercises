@@ -69,7 +69,9 @@ $(document).on(':passagestart', function (eventObject) {
 
 
 :: StoryInit {"position":"100,100","size":"100,100"}
- <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/intro.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/intro.js" charset="utf-8"></script>
+
+
 :: PassageHeader {"position":"100,100","size":"100,100"}
 <div id="stage" class="screen" data-intro='Hello step one!'>
 
@@ -89,7 +91,6 @@ typeWriter(enterDialog);
 
 
 :: PassageFooter {"position":"350,100","size":"100,100"}
-
 <script>
 
 player = document.getElementById('player');
@@ -105,8 +106,6 @@ player.style.top = "5%";
 :: 0_0 {"position":"1100,725","size":"100,100"}
 <script>
 	addCharacter("godel_0");
-	phrase = ['forevermore', 'yesterday', "all_pasts", "yesterday", "tomorrow", "some_past"];
-	makeProblemBlock(phrase);
 
 </script>
 <div id="enter-dialog">Welcome</div>
@@ -282,9 +281,12 @@ player.style.top = "5%";
 <script>addCharacter("npc1");</script>
 
 <div id="enter-dialog">Hello from new york</div>
-:: 0_2 {"position":"100,850","size":"100,100"}
 
+
+:: 0_2 {"position":"100,850","size":"100,100"}
 <div id="enter-dialog">Hola from wonderland</div>
+
+
 :: 0_3 {"position":"225,850","size":"100,100"}
 
 

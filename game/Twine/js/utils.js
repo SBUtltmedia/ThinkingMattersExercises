@@ -173,23 +173,23 @@ function showCaptions() {
   }
 }
 
-function generateSymbol(desc) {
-  let symbols = {'forevermore': 'square', 'all_pasts': 
-  'square', 'eventually': 'diamond', 'some_past': 'diamond', 'tomorrow': 'triangle', 'yesterday': 'triangle'}
+// function generateSymbol(desc) {
+//   let symbols = {'forevermore': 'square', 'all_pasts': 
+//   'square', 'eventually': 'diamond', 'some_past': 'diamond', 'tomorrow': 'triangle', 'yesterday': 'triangle'}
 
-  var ns = 'http://www.w3.org/2000/svg';
-  let svg = document.createElementNS(ns, 'svg');
-  let use = document.createElementNS(ns, 'use');
-  use.setAttributeNS(null, 'href', `img/icons.svg#${symbols[desc]}`);
-  use.setAttribute('class',desc);
-  svg.appendChild(use);
-  return svg;
-}
+//   var ns = 'http://www.w3.org/2000/svg';
+//   let svg = document.createElementNS(ns, 'svg');
+//   let use = document.createElementNS(ns, 'use');
+//   use.setAttributeNS(null, 'href', `img/icons.svg#${symbols[desc]}`);
+//   use.setAttribute('class',desc);
+//   svg.appendChild(use);
+//   return svg;
+// }
 
-function makeProblemBlock(phrase) {
-  let block = Object.assign(document.createElement('div'),{'className': 'drag', 'id': 1 });
-  document.getElementById('walkway').appendChild(block);
-  phrase.forEach(desc => {
-		block.appendChild(generateSymbol(desc));
-	})
-}
+// function makeProblemBlock(phrase) {
+//   let block = Object.assign(document.createElement('div'),{'className': 'drag', 'id': 1 });
+//   document.getElementById('walkway').appendChild(block);
+//   phrase.forEach(desc => {
+// 		block.appendChild(generateSymbol(desc));
+// 	})
+// }
