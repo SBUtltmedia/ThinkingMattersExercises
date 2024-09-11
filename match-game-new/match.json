@@ -1,0 +1,21 @@
+{
+    "problem_sets": {
+        "alice": {
+            "questions": [
+                "l if r not",
+                "if forevermore eventually",
+                "all_pasts"
+            ],
+            "answers": [
+                "Alice will eat jam at most once.",														
+                "Before a finite number of days ago, Alice had never eaten jam.",				
+                "Until the day before yesterday, Alice always had eaten jam.", 							
+                "Alice has never eaten jam two (or more) days in a row.",						
+                "There has never been two or more days in a row in which Alice did not eat jam.",
+                "At some time in the future, Alice will eat jam two or more days in a row.",
+                "Alice will never eat jam after today.",											
+                "Alice will eat jam every other day."
+            ]
+        }
+    }
+}

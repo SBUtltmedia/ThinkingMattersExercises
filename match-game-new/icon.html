@@ -32,13 +32,13 @@
     </body>
 
     <script>
-        let phrase= ['forevermore', 'yesterday', "all_pasts", "yesterday", "tomorrow", "some_past"]
+        let phrase= ['if', 'forevermore', 'or', 'and', 'not', 'l', 'r']
         phrase.forEach(desc=> {
             document.getElementById('test').appendChild(generateSymbol(desc))
         })
         function generateSymbol(desc) {
             let symbols = {'forevermore': 'square', 'all_pasts': 
-            'square', 'eventually': 'diamond', 'some_past': 'diamond', 'tomorrow': 'triangle', 'yesterday': 'triangle'}
+            'square', 'eventually': 'diamond', 'some_past': 'diamond', 'tomorrow': 'triangle', 'yesterday': 'triangle', 'if':'arrow', 'or': 'or', 'and': 'and', 'not':'not', 'l':'left-paren', 'r': 'right-paren'}
 
         var ns = 'http://www.w3.org/2000/svg'
         let svg = document.createElementNS(ns, 'svg')
