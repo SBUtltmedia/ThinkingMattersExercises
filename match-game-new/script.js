@@ -115,6 +115,10 @@ function generateSymbolBlock(desc) {
     let symbols = {'forevermore': 'square', 'all_pasts': 
     'square', 'eventually': 'diamond', 'some_past': 'diamond', 'tomorrow': 'triangle', 'yesterday': 'triangle', 'if':'arrow', 'or': 'or', 'and': 'and', 'not':'not', 'l':'left-paren', 'r': 'right-paren'}
 
+    if(!(desc in symbols)) {
+      console.log('not a symbol')
+      return Object.assign(document.createElement('span'), {'textContent': ' A'});
+    } 
     var ns = 'http://www.w3.org/2000/svg'
     let svg = document.createElementNS(ns, 'svg')
     let use = document.createElementNS(ns, 'use')
@@ -160,3 +164,11 @@ async function startGame() {
 }
 
 startGame();
+
+
+
+/* TODO:
+Make the drag and drop work
+Show symbols and the meanings
+Create proper JSON structure
+*/

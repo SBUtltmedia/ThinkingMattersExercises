@@ -272,14 +272,3 @@ document.addEventListener('click', e => {
     }
 )
 };
-
-document.querySelectorAll('.drag').forEach(draggable => {
-    draggable.addEventListener('dragstart', (event) => {
-        // Set the data being dragged
-        event.dataTransfer.setData('text/plain', draggable.id);
-      });
-    draggable.addEventListener('dragover', (event) => {
-        // Prevent default behavior to allow drop
-        event.preventDefault();
-      });
-})

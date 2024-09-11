@@ -1,11 +1,21 @@
 :: StoryTitle
 testgd
+
+
 :: StoryData
 {
-        "ifid": "11B24428-47AC-4D10-B4AD-290D770D0718"
+	"ifid": "11B24428-47AC-4D10-B4AD-290D770D0718",
+	"format": "SugarCube",
+	"format-version": "2.37.0-alpha.5",
+	"start": "Start",
+	"zoom": 1
 }
-::Start
 
 
-::Passage 2
+:: Start {"position":"100,100","size":"100,100"}
+
+
+:: Passage 2 {"position":"225,100","size":"100,100"}
 BlAHS
+
+
