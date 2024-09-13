@@ -1,4 +1,4 @@
-const draggableListItems = document.querySelectorAll('.draggable-list li');
+// const draggableListItems = document.querySelectorAll('.draggable-list li');
 const endMessage = document.getElementById('endMessage');
 
 // current phrase being dragged
@@ -10,7 +10,6 @@ let dropTargetId;
 // counter for correct phrases
 let matchingCounter = 0;
 
-addEventListeners();
 
 function dragStart() {
   selectedId = this.id;
@@ -30,12 +29,7 @@ function dragOver(ev) {
 
 function dragDrop() {
   dropTargetId = this.id;
-
   if (checkForMatch(selectedId, dropTargetId)) {
-    document.getElementById(selectedId).style.display = 'none';
-    document.getElementById(dropTargetId).style.display = 'none';
-    matchingCounter++;
-  } else if (checkForMatch2(selectedId, dropTargetId)) {
     document.getElementById(selectedId).style.display = 'none';
     document.getElementById(dropTargetId).style.display = 'none';
     matchingCounter++;
@@ -49,48 +43,13 @@ function dragDrop() {
 }
 
 function checkForMatch(selected, dropTarget) {
-  switch (selected) {
-    case 'e1':
-      return dropTarget === 's1' ? true : false;
-
-    case 'e2':
-      return dropTarget === 's2' ? true : false;
-
-    case 'e3':
-      return dropTarget === 's3' ? true : false;
-
-    case 'e4':
-      return dropTarget === 's4' ? true : false;
-
-    case 'e5':
-      return dropTarget === 's5' ? true : false;
-
-    default:
-      return false;
+  console.log('check for match')
+  if(selected[1] === dropTarget[1]) {
+    return true;
   }
+  return false;
 }
 
-function checkForMatch2(selected, dropTarget) {
-  switch (selected) {
-    case 's1':
-      return dropTarget === 'e1' ? true : false;
-
-    case 's2':
-      return dropTarget === 'e2' ? true : false;
-
-    case 's3':
-      return dropTarget === 'e3' ? true : false;
-
-    case 's4':
-      return dropTarget === 'e4' ? true : false;
-
-    case 's5':
-      return dropTarget === 'e5' ? true : false;
-
-    default:
-      return false;
-  }
-}
 
 function playAgain() {
   matchingCounter = 0;
@@ -101,6 +60,7 @@ function playAgain() {
 }
 
 function addEventListeners() {
+  let draggableListItems = document.querySelectorAll('.draggable-list li');
   draggableListItems.forEach (item => {
     item.addEventListener('dragstart', dragStart);
     item.addEventListener('dragenter', dragEnter);
@@ -117,7 +77,7 @@ function generateSymbolBlock(desc) {
 
     if(!(desc in symbols)) {
       console.log('not a symbol')
-      return Object.assign(document.createElement('span'), {'textContent': ' A'});
+      return Object.assign(document.createElement('span'), {'textContent': 'A'});
     } 
     var ns = 'http://www.w3.org/2000/svg'
     let svg = document.createElementNS(ns, 'svg')
@@ -132,7 +92,7 @@ function generateSymbolBlock(desc) {
 function generateAnswerBlocks(answers) {
     let blocks = [];
     answers.forEach((answer, index) => {
-        let answerBlock = Object.assign(document.createElement('li'), {'textContent': answer, 'draggable':true, 'id':`s${index+1}`})
+        let answerBlock = Object.assign(document.createElement('li'), {'textContent': answer, 'draggable':true, 'id':`a${index+1}`})
         document.querySelectorAll('.draggable-list')[1].appendChild(answerBlock);
     })
     return blocks;
@@ -145,9 +105,11 @@ function generateQuestionBlocks(questions) {
         description.forEach((desc, index) => {
         symbolBlock.appendChild(generateSymbolBlock(desc));
          })
+        symbolBlock.id = `s${document.querySelectorAll('.draggable-list')[0].childElementCount + 1};`
         document.querySelectorAll('.draggable-list')[0].appendChild(symbolBlock);
     });
 }
+
 
 
 async function startGame() {
@@ -158,13 +120,13 @@ async function startGame() {
 
     const questions = set['questions'];
     const answers = set['answers'];
-    await generateAnswerBlocks(answers);
-    await generateQuestionBlocks(questions);
+    generateAnswerBlocks(answers);
+    generateQuestionBlocks(questions);
+    addEventListeners();
 
 }
 
 startGame();
-
 
 
 /* TODO:

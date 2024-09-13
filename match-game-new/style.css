@@ -92,3 +92,8 @@ svg {
 .all_pasts, .some_past, .yesterday {
     fill:red;
 }
+
+li svg {
+  margin: 0rem 0.3rem;
+}
+

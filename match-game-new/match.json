@@ -2,9 +2,14 @@
     "problem_sets": {
         "alice": {
             "questions": [
-                "l if r not",
-                "if forevermore eventually",
-                "all_pasts Alice"
+                "yesterday all_pasts yesterday J",
+                "some_past all_pasts not J",
+                "all_pasts l J if yesterday not J r",
+                "all_pasts l J or yesterday J r",
+                "forevermore tomorrow not J",
+                "eventually l J and tomorrow J r",
+                "forevermore l J if tomorrow  forevermore not J",
+                "forevermore l l J if tomorrow not J r and l not J if tomorrow J r r"
             ],
             "answers": [
                 "Alice will eat jam at most once.",														
