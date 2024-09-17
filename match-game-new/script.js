@@ -10,7 +10,7 @@ let dropTargetId;
 // counter for correct phrases
 let matchingCounter = 0;
 
-
+let draggableListItems;
 function dragStart() {
   selectedId = this.id;
 }
@@ -43,11 +43,17 @@ function dragDrop() {
 }
 
 function checkForMatch(selected, dropTarget) {
-  console.log('check for match')
-  if(selected[1] === dropTarget[1]) {
-    return true;
+  if (selected === dropTarget) {
+    return;
   }
-  return false;
+  let match = selected[1] === dropTarget[1];
+  animateCat(match);
+  return match;
+  // if(selected[1] === dropTarget[1]) {
+  //   return true;
+  // }
+  // animateCat(false);
+  // return false;
 }
 
 
@@ -60,7 +66,7 @@ function playAgain() {
 }
 
 function addEventListeners() {
-  let draggableListItems = document.querySelectorAll('.draggable-list li');
+  draggableListItems = document.querySelectorAll('.draggable-list li');
   draggableListItems.forEach (item => {
     item.addEventListener('dragstart', dragStart);
     item.addEventListener('dragenter', dragEnter);
@@ -110,9 +116,47 @@ function generateQuestionBlocks(questions) {
     });
 }
 
+function animateCat(answer) {
+  let cat = document.querySelector('#cat');
+  if(answer === false) {
+    console.log('cat taunts')
+    cat.classList.add('taunt');
+    cat.addEventListener('animationend', (event) => {
+      cat.classList.remove('taunt');
+    })
+  } else {
+    console.log('Correct')
+    cat.classList.add('damage');
+    cat.addEventListener('animationend', (event) => {
+      cat.classList.remove('damage');
+    })
+  }
+}
+
+function displayText(text) {
+  let catMessage = document.querySelector('#cat-message');
+  if(text==='clear') {
+    catMessage.style.visibility = 'hidden';
+    return;
+  }
+  catMessage.textContent = text;
+}
+
+
+function showIntroduction(index) {
+  console.log(index);
+    let messages = ['Hello', 'My name is whatever you want it to be.', 'It doesnt matter who I am.', 'But you have to finish the game', 'Good luck!']
+    if (index < messages.length) {
+      displayText(messages[index]);
+      setTimeout(() => showIntroduction(index+1), 1000);
+    } else {
+      displayText('clear');
+    }
+}
 
 
 async function startGame() {
+    showIntroduction(0);
     // Create symbol blocks && answer blocks
     const data = await fetch('match.json')
     const response = await data.json();
@@ -130,7 +174,6 @@ startGame();
 
 
 /* TODO:
-Make the drag and drop work
-Show symbols and the meanings
-Create proper JSON structure
+Symbol showing in forms of a hint?
+
 */

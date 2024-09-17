@@ -15,7 +15,7 @@
   
   main {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 2fr 2fr 1fr;
     grid-gap: 5px;
   }
   
@@ -97,3 +97,75 @@ li svg {
   margin: 0rem 0.3rem;
 }
 
+.cheshire-cat-container {
+  margin-left: 1rem;
+  width: 10rem;
+  height: 10rem;
+  border: 0.5rem solid blue;
+  border-radius: 100%;
+  background: url('Cheshire-Cat-PNG.png') no-repeat;
+  background-size: 15rem;
+  background-position: 1rem -4rem;
+  /* background-color: blueviolet; */
+}
+
+.cat-message {
+  height: fit-content;
+  width: 10rem;
+  border: 1px solid green;
+  position: absolute;
+  left: 47rem;
+  top:10rem;
+  background-color: white;
+}
+
+
+@keyframes taunt {
+  0% {
+      background-color: green;
+      transform: scale(1) translateY(5rem);
+  }
+
+  50% {
+      background-color: red;
+      transform: scale(1.1) translateY(10rem);
+  }
+
+  100% {
+      background-color: yellow;
+      transform: scale(1);
+  }
+
+}
+
+.taunt {
+  animation: 0.5s forwards alternate taunt;
+}
+
+
+@keyframes damage {
+  0% {
+      background-color: red;
+      transform: scale(1);
+  }
+
+  50% {
+      background-color: whitesmoke;
+      transform: scale(1.4);
+  }
+
+  100% {
+      background-color: red;
+      transform: scale(1);
+  }
+
+}
+
+.damage {
+  animation: 0.5s forwards alternate damage;
+}
+
+/* .cheshire-cat-container img {
+  height: auto;
+  width: 10rem;
+} */
