@@ -4,7 +4,7 @@
     <symbol viewBox="0 0 102 102" id="triangle"> 
       <polygon points="0 50 100 0 100 100"/>
     </symbol>
-    <symbol viewBox="0 0 102 102" id="diamond"> 
+    <symbol viewBox="-10 0 110 110" id="diamond"> 
        <rect width="90" height="90" transform="translate(-5,51) rotate(-45) scale(0.8)"/>
 
     </symbol>
