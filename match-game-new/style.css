@@ -5,7 +5,7 @@
   
   body {
     background-color: #eceff1;
-    font-family: sans-serif;
+    font-family: fantasy;
     color: #37474f;
   }
   
@@ -15,7 +15,7 @@
   
   main {
     display: grid;
-    grid-template-columns: 2fr 2fr 1fr;
+    grid-template-columns:  2fr 2fr 2fr 1fr;
     grid-gap: 5px;
   }
   
@@ -117,6 +117,7 @@ li svg {
   left: 47rem;
   top:10rem;
   background-color: white;
+  visibility: hidden;
 }
 
 
@@ -165,7 +166,15 @@ li svg {
   animation: 0.5s forwards alternate damage;
 }
 
-/* .cheshire-cat-container img {
-  height: auto;
-  width: 10rem;
-} */
+.symbol-section {
+  border: 0.1rem dashed ;
+  background-color: blanchedalmond;
+  height: fit-content;
+  padding: 5px;
+  margin: 2rem 0rem;
+  text-align: center;
+}
+
+.symbol-box {
+  padding: 0.3rem 0rem;
+}

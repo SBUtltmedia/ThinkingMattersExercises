@@ -151,12 +151,27 @@ function showIntroduction(index) {
       setTimeout(() => showIntroduction(index+1), 1000);
     } else {
       displayText('clear');
+      // displaySymbolsAndMeanings();
     }
+}
+
+function displaySymbolsAndMeanings() {
+  let symbolsContainer = document.querySelector('#symbols');
+
+  let symbols = {'forevermore': 'square', 'all_pasts': 
+    'square', 'eventually': 'diamond', 'some_past': 'diamond', 'tomorrow': 'triangle', 'yesterday': 'triangle', 'if':'arrow', 'or': 'or', 'and': 'and', 'not':'not'}
+  
+  for (const [key, value] of Object.entries(symbols)) {
+    let symbolBlock = Object.assign(document.createElement('div'), {'textContent': `${key} - `, 'className': 'symbol-box'});
+    symbolBlock.appendChild(generateSymbolBlock(key));
+    symbolsContainer.appendChild(symbolBlock);
+  }
+
 }
 
 
 async function startGame() {
-    showIntroduction(0);
+    // showIntroduction(0);
     // Create symbol blocks && answer blocks
     const data = await fetch('match.json')
     const response = await data.json();
@@ -164,6 +179,7 @@ async function startGame() {
 
     const questions = set['questions'];
     const answers = set['answers'];
+    displaySymbolsAndMeanings();
     generateAnswerBlocks(answers);
     generateQuestionBlocks(questions);
     addEventListeners();
