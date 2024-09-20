@@ -35,7 +35,7 @@ function dragDrop() {
     matchingCounter++;
   }
 
-  if (matchingCounter === 5) {
+  if (matchingCounter === Math.floor(draggableListItems.length / 2)) {
     endMessage.style.display = 'block';
   }
 
@@ -74,6 +74,19 @@ function addEventListeners() {
     item.addEventListener('dragover', dragOver);
     item.addEventListener('dragleave', dragLeave);
   })
+}
+
+function closeModal() {
+  endMessage.style.display = 'none';
+  let showModal = document.querySelector('.show-modal');
+  console.log(showModal);
+  if(!showModal) {
+  showModal = Object.assign(document.createElement('button'), {'className':"show-modal", 'textContent': "Show Button"});
+    showModal.addEventListener('click', function (e) {
+      endMessage.style.display = 'block';
+    })
+  document.querySelector('.container').appendChild(showModal);
+  }
 }
 
 
