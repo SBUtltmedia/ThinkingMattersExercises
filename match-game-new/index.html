@@ -13,66 +13,45 @@
   <p>Arrastra la frase en inglés hasta la frase en español correspondiente</p> -->
     <h1>Alice in Wonderland Jam Puzzle</h1>
   <main class="container">
-    <div class="symbol-section" id="symbols">
-      <h2>Symbols</h2>
-    </div>
-    <div>
-      <ul class="draggable-list">
-        <!-- <li id="e1" draggable="true">What's your name?</li>
-        <li id="e2" draggable="true">Nice to meet you</li>
-        <li id="e3" draggable="true">I'm sorry</li>
-        <li id="e4" draggable="true">What do you do in your free time?</li>
-        <li id="e5" draggable="true">Is something wrong?</li> -->
-      </ul>
-    </div>
-    <div>
-      <ul class="draggable-list">
-        <!-- <li id="s2" draggable="true">Mucho gusto</li>
-        <li id="s5" draggable="true">¿Pasa algo?</li>
-        <li id="s1" draggable="true">¿Cómo te llamas? </li>
-        <li id="s3" draggable="true">Lo siento</li>
-        <li id="s4" draggable="true">¿Qué haces en tu tiempo libre?</li> -->
-      </ul>
-    </div>
-    <div>
-      <div class="cheshire-cat-container" id="cat">
+    <div class="game-container">
+      <div class="symbol-section" id="symbols">
+        <h2>Symbols</h2>
       </div>
-      <div class="cat-message" id="cat-message"></div>
+      <div>
+        <ul class="draggable-list">
+          <!-- <li id="e1" draggable="true">What's your name?</li>
+          <li id="e2" draggable="true">Nice to meet you</li>
+          <li id="e3" draggable="true">I'm sorry</li>
+          <li id="e4" draggable="true">What do you do in your free time?</li>
+          <li id="e5" draggable="true">Is something wrong?</li> -->
+        </ul>
+      </div>
+      <div>
+        <ul class="draggable-list">
+          <!-- <li id="s2" draggable="true">Mucho gusto</li>
+          <li id="s5" draggable="true">¿Pasa algo?</li>
+          <li id="s1" draggable="true">¿Cómo te llamas? </li>
+          <li id="s3" draggable="true">Lo siento</li>
+          <li id="s4" draggable="true">¿Qué haces en tu tiempo libre?</li> -->
+        </ul>
+      </div>
+      <div>
+        <div class="cheshire-cat-container" id="cat">
+        </div>
+        <div class="cat-message" id="cat-message"></div>
+      </div>
     </div>
   </main>
 
   <div id="endMessage">
-    <h3>Well done!</h3>
-    <h3>¡Bien hecho!</h3>
-    <table>
-      <tr>
-        <th>English</th>
-        <th>Spanish</th>
-      </tr>
-      <tr>
-        <td>What’s your name?</td>
-        <td>¿Cómo te llamas?</td>
-      </tr>
-      <tr>
-        <td>Nice to meet you</td>
-        <td>Mucho gusto</td>
-      </tr>
-      <tr>
-        <td>I'm sorry</td>
-        <td>Lo siento</td>
-      </tr>
-      <tr>
-        <td>What do you do in your free time?</td>
-        <td>¿Qué haces en tu tiempo libre?</td>
-      </tr>
-      <tr>
-        <td>Is something wrong?</td>
-        <td>¿Pasa algo?</td>
-      </tr>
-    </table>
-
-    <button onclick="playAgain()">Play Again</button>
-  </div>
+    <div class="end-game">
+        <svg class="close" onclick="closeModal()">
+          <use href="./icons.svg#close"></use>
+        </svg>
+      <h3>Well done!</h3>
+      <button class="play-btn" onclick="playAgain()">Play Again</button>
+    </div> 
+    </div>
 
   <script src="script.js"></script>
 
