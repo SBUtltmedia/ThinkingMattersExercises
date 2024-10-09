@@ -112,20 +112,27 @@ function generateSymbolBlock(desc) {
 function generateAnswerBlocks(answers) {
     let blocks = [];
     answers.forEach((answer, index) => {
-        let answerBlock = Object.assign(document.createElement('li'), {'textContent': answer, 'draggable':true, 'id':`a${index+1}`})
+        let answerBlock = Object.assign(document.createElement('li'), {'textContent': answer.text, 'draggable':true, 'id':`a${answer.question}`})
         document.querySelectorAll('.draggable-list')[1].appendChild(answerBlock);
+        blocks.push(answerBlock);
     })
-    return blocks;
+    // const shuffled = shuffleArray(blocks);
+
+    // shuffled.forEach(block => {
+    //   document.querySelectorAll('.draggable-list')[1].appendChild(block);
+    // })
+    return;
 }
 
 function generateQuestionBlocks(questions) {
-    questions.forEach(question => {
+    questions.forEach((question, index) => {
         let description = question.split(" ");
         let symbolBlock = Object.assign(document.createElement('li'), {'draggable':true})
         description.forEach((desc, index) => {
         symbolBlock.appendChild(generateSymbolBlock(desc));
          })
-        symbolBlock.id = `s${document.querySelectorAll('.draggable-list')[0].childElementCount + 1};`
+        // symbolBlock.id = `s${document.querySelectorAll('.draggable-list')[0].childElementCount + 1};`
+        symbolBlock.id = `s${index+1}`
         document.querySelectorAll('.draggable-list')[0].appendChild(symbolBlock);
     });
 }
@@ -181,6 +188,15 @@ function displaySymbolsAndMeanings() {
     symbolsContainer.appendChild(symbolBlock);
   }
 
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      // Swap elements
+      [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
 
 
