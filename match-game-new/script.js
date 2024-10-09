@@ -113,14 +113,14 @@ function generateAnswerBlocks(answers) {
     let blocks = [];
     answers.forEach((answer, index) => {
         let answerBlock = Object.assign(document.createElement('li'), {'textContent': answer.text, 'draggable':true, 'id':`a${answer.question}`})
-        document.querySelectorAll('.draggable-list')[1].appendChild(answerBlock);
+        // document.querySelectorAll('.draggable-list')[1].appendChild(answerBlock);
         blocks.push(answerBlock);
     })
-    // const shuffled = shuffleArray(blocks);
+    const shuffled = shuffleArray(blocks);
 
-    // shuffled.forEach(block => {
-    //   document.querySelectorAll('.draggable-list')[1].appendChild(block);
-    // })
+    shuffled.forEach(block => {
+      document.querySelectorAll('.draggable-list')[1].appendChild(block);
+    })
     return;
 }
 
