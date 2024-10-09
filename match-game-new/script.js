@@ -60,6 +60,7 @@ function checkForMatch(selected, dropTarget) {
 function playAgain() {
   matchingCounter = 0;
   endMessage.style.display = 'none';
+  document.querySelector('.show-modal').remove();
   draggableListItems.forEach(item => {
     document.getElementById(item.id).style.display = 'block';
   })
