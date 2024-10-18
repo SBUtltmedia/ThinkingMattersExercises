@@ -85,70 +85,49 @@ let allFlavors=["Almond",
         roomDiv.appendChild(checkboxContainer);
     }
 
-    //currentFlavors VARIABLE  which will loop for the first 2**numberofrooms times to only show
-    //that many icecreamsa dn across number of iccreams it shows alongside checkboxes for those many rooms only
-
     });
 
-    for (let i = 0; i < numberOfRooms; i++) {
-        let roomDiv = document.getElementById(`room_${i}`);
+    let submitButtonContainer = document.createElement("div");
+    submitButtonContainer.className = "submit-container";
+
+    let submitButton = document.createElement("button");
+    submitButton.innerHTML = "Submit";
+    submitButton.id = "submit-btn";
+    submitButton.onclick = handleSubmit;
+
+    submitButtonContainer.appendChild(submitButton);
+    parentContainer.appendChild(submitButtonContainer);
+
+    // for (let i = 0; i < numberOfRooms; i++) {
+    //     let roomDiv = document.getElementById(`room_${i}`);
         
-        let dropdownContainer = Object.assign(document.createElement("div"), {
-            className: "dropdown-container"
-        });
-        let dropdown = Object.assign(document.createElement("select"), {
-            id: `room_${i}-dropdown`
-        });
+    //     let dropdownContainer = Object.assign(document.createElement("div"), {
+    //         className: "dropdown-container"
+    //     });
+    //     let dropdown = Object.assign(document.createElement("select"), {
+    //         id: `room_${i}-dropdown`
+    //     });
 
-        let emptyOption = Object.assign(document.createElement("option"), {
-            value: "",
-            innerHTML: ""
-        });
-        let yesOption = Object.assign(document.createElement("option"), {
-            value: "Yes",
-            innerHTML: "Yes"
-        });
-        let noOption = Object.assign(document.createElement("option"), {
-            value: "No",
-            innerHTML: "No"
-        });
+    //     let emptyOption = Object.assign(document.createElement("option"), {
+    //         value: "",
+    //         innerHTML: ""
+    //     });
+    //     let yesOption = Object.assign(document.createElement("option"), {
+    //         value: "Yes",
+    //         innerHTML: "Yes"
+    // //     });
+    //     let noOption = Object.assign(document.createElement("option"), {
+    //         value: "No",
+    //         innerHTML: "No"
+    //     });
 
-        dropdown.appendChild(emptyOption);
-        dropdown.appendChild(yesOption);
-        dropdown.appendChild(noOption);
+    //     dropdown.appendChild(emptyOption);
+    //     dropdown.appendChild(yesOption);
+    //     dropdown.appendChild(noOption);
 
-        dropdownContainer.appendChild(dropdown);
-        roomDiv.appendChild(dropdownContainer);
-
-        // for (let i = 0; i < numberOfRooms; i++) {
-        //     let roomDiv = document.getElementById(`room_${i}`);
-
-        //     let dropdownContainer = Object.assign(document.createElement("div"), {
-        //         className: "dropdown-container"
-        //     });
-        //     let dropdown = Object.assign(document.createElement("select"), {
-        //         id: `room_${i}-dropdown`
-        //     });
-
-        //     let emptyOption = Object.assign(document.createElement("option"), {
-        //         value: "",
-        //         innerHTML: ""
-        //     });
-
-        //     dropdown.appendChild(emptyOption);
-    
-        //     // populating dropdown with all the flavors
-        //     allFlavors.forEach(flavor => {
-        //         let option = Object.assign(document.createElement("option"), {
-        //             value: flavor,
-        //             innerHTML: flavor
-        //         });
-        //         dropdown.appendChild(option);
-        //     });
-    
-        //     dropdownContainer.appendChild(dropdown);
-        //     roomDiv.appendChild(dropdownContainer);
-    }
+    //     dropdownContainer.appendChild(dropdown);
+    //     roomDiv.appendChild(dropdownContainer);
+    // }
 
 }
 
@@ -157,6 +136,10 @@ function isCorrectRoomConfig(roomsInfo){
     // let numberOfIcecreams=2**numberOfRooms
     // let iceCreamSet=new set
     return roomsInfo.length!=Array.from(new Set(roomsInfo)).length
+}
+
+function handleSubmit() {
+    alert("Submit button clicked!");
 }
 
 function handleClick(e){

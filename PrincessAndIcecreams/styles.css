@@ -101,3 +101,16 @@ body {
 .dropdown-container {
     margin-top: 10px;
 }
+
+/* submit button */
+.submit-container {
+  display: flex;       
+  justify-content: center;  
+  margin-top: 20px;       
+}
+
+#submit-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
