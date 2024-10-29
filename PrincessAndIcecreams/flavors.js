@@ -1,10 +1,10 @@
 let numberOfRooms=2
+let numberOfIceCreams=2**numberOfRooms
 
 addEventListener("DOMContentLoaded",() => init(numberOfRooms));
 
+//create the layout with flavors and checkboxes for each room
 function init(numberOfRooms){
-
-let numberOfIceCreams=2**numberOfRooms
 
 let allFlavors=["Almond",
     "Bastani sonnati  (Persian)",
@@ -40,6 +40,7 @@ let allFlavors=["Almond",
     let flavorContainer = document.getElementById("flavorContainer")
     let roomContainer = document.getElementById("container")
 
+     //create a column for each room
     for(let i = 0 ; i < numberOfRooms ; i++){
         let roomDiv = Object.assign(document.createElement("div"),{
             innerHTML : `<h2>ROOM ${i+1}</h2>`,
@@ -49,6 +50,7 @@ let allFlavors=["Almond",
         roomContainer.append(roomDiv)
     }
 
+    //adjusting the 1 or more than 1 columns layout for each room
     let parentContainer=document.getElementById("container")
     let gridTemplateColumns = `2fr `;
     for (let i = 0; i < numberOfRooms; i++) {
@@ -56,6 +58,7 @@ let allFlavors=["Almond",
     }
     parentContainer.setAttribute("style",`grid-template-columns:${gridTemplateColumns.trim()}`);
 
+    //get only as many flavors as needed for the combinations on the basis of the number of rooms
     let currentFlavors = allFlavors.slice(0, numberOfIceCreams); 
 
     currentFlavors.forEach((flavor,id) => {
@@ -67,12 +70,12 @@ let allFlavors=["Almond",
     flavorContainer.append(flavorDiv)
     flavorDiv.addEventListener('click',handleClick)
 
-    console.log("current number of icecreams",2**numberOfRooms)
+    // console.log("current number of icecreams",2**numberOfRooms)
 
     for (let i = 0; i < numberOfRooms; i++) {
         let roomId = `room_${i}`
-        console.log(roomId)
-        console.log("Here",i)
+        // console.log(roomId)
+        // console.log("Here",i)
         let roomDiv = document.getElementById(`room_${i}`);
         let checkboxContainer = Object.assign(document.createElement("div"), {
             className: "checkbox-container"
@@ -93,41 +96,11 @@ let allFlavors=["Almond",
     let submitButton = document.createElement("button");
     submitButton.innerHTML = "Submit";
     submitButton.id = "submit-btn";
-    submitButton.onclick = handleSubmit;
+    // submitButton.onclick = handleSubmit(numberOfIceCreams);
+    submitButton.onclick = () => handleSubmit(numberOfIceCreams);
 
     submitButtonContainer.appendChild(submitButton);
     parentContainer.appendChild(submitButtonContainer);
-
-    // for (let i = 0; i < numberOfRooms; i++) {
-    //     let roomDiv = document.getElementById(`room_${i}`);
-        
-    //     let dropdownContainer = Object.assign(document.createElement("div"), {
-    //         className: "dropdown-container"
-    //     });
-    //     let dropdown = Object.assign(document.createElement("select"), {
-    //         id: `room_${i}-dropdown`
-    //     });
-
-    //     let emptyOption = Object.assign(document.createElement("option"), {
-    //         value: "",
-    //         innerHTML: ""
-    //     });
-    //     let yesOption = Object.assign(document.createElement("option"), {
-    //         value: "Yes",
-    //         innerHTML: "Yes"
-    // //     });
-    //     let noOption = Object.assign(document.createElement("option"), {
-    //         value: "No",
-    //         innerHTML: "No"
-    //     });
-
-    //     dropdown.appendChild(emptyOption);
-    //     dropdown.appendChild(yesOption);
-    //     dropdown.appendChild(noOption);
-
-    //     dropdownContainer.appendChild(dropdown);
-    //     roomDiv.appendChild(dropdownContainer);
-    // }
 
 }
 
@@ -138,9 +111,75 @@ function isCorrectRoomConfig(roomsInfo){
     return roomsInfo.length!=Array.from(new Set(roomsInfo)).length
 }
 
-function handleSubmit() {
-    alert("Submit button clicked!");
+//collect and check the checkboxes selected by the user
+function handleSubmit(numberOfIceCreams) {
+    let arr = [];
+    
+    //go through each flavor and create a binary string of checked rooms
+    for (let i = 0; i < numberOfIceCreams; i++) {
+        let roomConfig = '';
+        for (let j = 0; j < numberOfRooms; j++) {
+            let checkbox = document.getElementById(`room_${j}-checkbox-${i}`);
+            roomConfig += checkbox.checked ? '1' : '0';
+        }
+        arr.push(roomConfig);
+    }
+
+    validateCombination(arr, numberOfRooms);    
 }
+
+// show a popup message if the selection is wrong or right
+function displayMessage(messageText, isSuccess) {
+    let modalOverlay = document.createElement("div");
+    modalOverlay.setAttribute("id", "message-modal-overlay");
+
+    let modalContent = document.createElement("div");
+    modalContent.className = "modal-content";
+    modalContent.classList.add(isSuccess ? "modal-success" : "modal-error");
+
+    let message = document.createElement("p");
+    message.innerText = messageText;
+    modalContent.appendChild(message);
+
+    let okButton = document.createElement("button");
+    okButton.innerText = "OK";
+    okButton.onclick = () => {
+        document.body.removeChild(modalOverlay);
+    };
+
+    modalContent.appendChild(okButton);
+    modalOverlay.appendChild(modalContent);
+    document.body.appendChild(modalOverlay);
+}
+
+//compare the user's selection with the correct combinations
+function validateCombination(userArr, numberOfRooms) {
+    let correctArr = generateCorrectBinaryCombinations(numberOfRooms);
+
+    let sortedUserArr = [...userArr].sort();
+    // console.log(sortedUserArr);
+    let sortedCorrectArr = [...correctArr].sort();
+    // console.log(sortedCorrectArr);
+
+    if (JSON.stringify(sortedUserArr) === JSON.stringify(sortedCorrectArr)) {
+        displayMessage("Good job!", true);
+    }else {
+        displayMessage("Wrong choices, revise binary tree concepts and take one more chance!", false);
+    }
+}
+
+//generate all possible correct binary combinations for the given number of rooms
+function generateCorrectBinaryCombinations(numberOfRooms) {
+    let correctArr = [];
+
+    for (let i = 0; i < numberOfIceCreams; i++) {
+        let binaryString = i.toString(2).padStart(numberOfRooms, '0');
+        correctArr.push(binaryString);
+    }
+
+    return correctArr;
+}
+
 
 function handleClick(e){
     console.log(e.currentTarget.id)
