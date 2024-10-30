@@ -97,7 +97,7 @@ function generateSymbolBlock(desc) {
 
     if(!(desc in symbols)) {
       console.log('not a symbol')
-      return Object.assign(document.createElement('span'), {'textContent': 'A'});
+      return Object.assign(document.createElement('span'), {'textContent': 'J'});
     } 
     var ns = 'http://www.w3.org/2000/svg'
     let svg = document.createElementNS(ns, 'svg')
