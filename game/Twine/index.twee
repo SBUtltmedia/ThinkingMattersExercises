@@ -96,7 +96,7 @@ player.style.top = "5%";
 </script>
 
 <<print passage()>>
-<<run addObjects($PC)>>
+/* <<run addObjects($PC)>> */
 
 
 :: 0_0 {"position":"1100,725","size":"100,100"}
@@ -105,10 +105,12 @@ player.style.top = "5%";
 
 </script>
 <div id="enter-dialog">Welcome</div>
-<<set $PC to [
+<<object "tree" "position:5%,5%" "img/tree.svg">>
+<<object "house" "position:15%,5%" "img/house.svg">>
+/* <<set $PC to [
     {name: "tree", source: "img/tree.svg"},
 	{name: "house", source: "img/house.svg"}
-  	]>>
+  	]>> */
 
 :: -5_-5 {"position":"475,100","size":"100,100"}
 

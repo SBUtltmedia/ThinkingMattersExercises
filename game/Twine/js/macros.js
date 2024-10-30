@@ -117,51 +117,51 @@ function isPositionOccupied(x, y, width, height) {
 
 SugarCube.Macro.add("object", {
   handler: function () {
-    const name = this.args[0];
-    const position = this.args[1];
-    const source = this.args[2];
-
-    console.log(name, position, source);
-
-    // Ensure the walkway exists or create it
-    let $walkway = $("#walkway");
-    if (!$walkway.length) {
-      $walkway = $('<div id="walkway"></div>').appendTo(document.body);
-    }
-
-    // Create the object element
-    let $object = $('<div></div>', {
-      class: 'object',
-      id: name.toLowerCase().replace(/\s+/g, '-'),
-      css: {
-        position: 'absolute',
-        left: position.split(',')[0] + 'px',
-        top: position.split(',')[1] + 'px',
-        backgroundImage: `url(${source})`,
-        backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat',
-        width: '50px',  // Adjust as needed
-        height: '50px'  // Adjust as needed
+    requestAnimationFrame(() => {
+      const name = this.args[0];
+      const source = this.args[2];
+      let [left,top]= this.args[1].split(":")[1].split(',')
+      console.log(name, left, top, source);
+  
+      // Ensure the walkway exists or create it
+      let walkway = $("#walkway");
+      // if (!$walkway.length) {
+      //   $walkway = $('<div id="walkway"></div>').appendTo(document.body);
+      // }
+      console.log(walkway);
+      // Create the object element
+     $('<div/>', {
+        class: 'object',
+        id: name.toLowerCase(),
+        css: {
+          position: 'absolute',
+          left,
+          top,
+          backgroundImage: `url(${source})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          width: '50px',  // Adjust as needed
+          height: '50px'  // Adjust as needed
       }
-    }).appendTo($walkway);
-
+    }).appendTo(walkway);
     // Initialize the objects array if not already done
-    if (!State.variables.objects) {
-      State.variables.objects = [];
+    if (!SugarCube.State.variables.objects) {
+      SugarCube.State.variables.objects = [];
     }
 
-    // Create a new object data
-    const newObject = {
-      name: name,
-      position: position,
-      source: source
-    };
+    // // Create a new object data
+    // const newObject = {
+    //   name: name,
+    //   position: [left,top],
+    //   source: source
+    // };
 
-    // Add the object to the objects array
-    State.variables.objects.push(newObject);
+    // // Add the object to the objects array
+    // SugarCube.State.variables.objects.push(newObject);
 
     // Provide feedback in the passage
-    this.output.append(`Object "${name}" added at position ${position}!`);
+    // this.output.append(`Object "${name}" added at position ${position}!`);
+    })
   }
 });
 
