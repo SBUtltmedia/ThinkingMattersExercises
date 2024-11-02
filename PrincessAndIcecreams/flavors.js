@@ -64,7 +64,7 @@ let allFlavors=["Almond",
     currentFlavors.forEach((flavor,id) => {
         let flavorDiv=Object.assign(document.createElement("div"),{
             innerHTML:flavor,
-            id,
+            id: `flavor-${id+1}`,
             className:"flavorClass"
         })
     flavorContainer.append(flavorDiv)
@@ -128,6 +128,22 @@ function handleSubmit(numberOfIceCreams) {
     validateCombination(arr, numberOfRooms);    
 }
 
+// function findDupRows(rowString){
+//     for (let i = 0; i < numberOfIceCreams; i++) {
+//         let currRow = ""
+//         for (let j = 0; j < numberOfRooms; j++) {
+//           currRow += document.getElementById(`room_${j}-checkbox-${i}`).checked?'1':'0';
+//     }
+
+//     if (currRow == rowString) {
+//         return i;
+//     }
+//     }
+
+//     return False
+
+//     }
+
 // show a popup message if the selection is wrong or right
 function displayMessage(messageText, isSuccess) {
     let modalOverlay = document.createElement("div");
@@ -179,7 +195,6 @@ function generateCorrectBinaryCombinations(numberOfRooms) {
 
     return correctArr;
 }
-
 
 function handleClick(e){
     console.log(e.currentTarget.id)
