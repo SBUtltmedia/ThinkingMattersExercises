@@ -26,6 +26,7 @@ body {
     border-radius: 8px;
   }
   
+/*   
   #story-container { 
     width: 60%; 
     background: rgba(255, 255, 255, 0.8); 
@@ -44,8 +45,47 @@ body {
     color: #2C3E50;
     font-family: 'Times New Roman', serif;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    height: 100px; /* Fixed height to display only one line
+    overflow: hidden; 
+  } */
+
+  #story-container {
+    width: 60%;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin-top: 100px;
+    max-height: 200px;
+    overflow: hidden; 
+    position: relative;
   }
   
+  #story-text {
+    font-size: 24px;
+    line-height: 1.8;
+    color: #2C3E50;
+    font-family: 'Times New Roman', serif;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    /* position: absolute;
+    width: 100%;
+    top: 100%; 
+    animation: scrollUp 5s linear infinite; */
+    position: relative;
+  }
+  
+  /*scroll animation to move text up*/
+  @keyframes scrollUp {
+    0% {
+      top: 100%;
+    }
+    100% {
+      top: -100%;
+    }
+  }
+
+
   #nextPageBtn {
     position: fixed;
     bottom: 20px;
