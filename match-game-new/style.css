@@ -45,26 +45,6 @@
     background-color: #90a4ae;
   }
   
-  
-  table {
-    max-width:640px;
-    margin: auto;
-    margin-bottom: 20px;
-    /* border: 1px solid #b0bec5; */
-  }
-  
-  th, td {
-    padding: 1rem 1rem;
-  }
-  
-  td {
-    border: 1px solid #90a4ae;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #cfd8dc;
-  }
-  
  .play-btn, .show-modal {
     cursor: pointer;
     display: block;
@@ -112,6 +92,7 @@ svg {
     height: 1rem;
     margin: 0rem 0.25rem;
     overflow:visible;
+    transform: translate(0rem, 0.1rem) 
 }
 
 .forevermore, .eventually, .tomorrow {
@@ -121,7 +102,7 @@ svg {
 }
 
 .tomorrow {
-  transform: translate(1.5rem) scale(-1,1);
+  transform: translate(1rem) scale(-1,1);
   /* transform: scale(-1,1); */
 }
 
@@ -247,3 +228,49 @@ position: relative;
 .show-modal {
   margin: auto;
 }
+
+
+.symbols-container {
+  width: 80%;
+  margin: auto;
+}
+
+.symbols-container h2 {
+  text-align: center;
+}
+
+#symbols2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap:1rem;
+  margin: auto;
+}
+
+.symbol-table {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-collapse: collapse;
+}
+
+.symbol-table th, .symbol-table td {
+  padding: 12px;
+  /* text-align: center; */
+  border: 1px solid #ddd;
+  /* background-color: #fff; */
+}
+
+.symbol-table th {
+  background-color: rgb(5, 5, 170);
+  color: white;
+  font-weight: bold;
+} 
+
+.symbol-table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.symbol-table tr:hover {
+  background-color: #dad5d5;
+}
+
