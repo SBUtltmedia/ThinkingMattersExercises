@@ -1,11 +1,11 @@
 .forevermore, .eventually, .tomorrow {
-    stroke: green;
+    stroke: rgb(136, 155, 28);
     stroke-width: 0.3rem;
     fill: none;
 }
 
 .all_pasts, .some_past, .yesterday {
-    fill:red;
+    fill:rgba(169, 89, 14, 0.505);
 }
 /* svg {
     width: 10rem;
