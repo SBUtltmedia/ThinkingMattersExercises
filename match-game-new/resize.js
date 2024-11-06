@@ -1,7 +1,8 @@
 // Fix aspect ratio of the stage
-$(window).resize(function () {
+window.addEventListener('resize', function() {
     resizeWindow();
 });
+
 const ASPECT=16/9;
 // Resize the window
 function resizeWindow() {
@@ -33,77 +34,12 @@ function resizeWindow() {
     }
 
     // Set "screen" object width and height to stageWidth and stageHeight, and center screen
-    $("#screen").css({
-        width: stageWidth + "px",
+    let screen = document.getElementById('screen').style;
+    screen = Object.assign(screen, { width: stageWidth + "px",
         height: stageHeight + "px",
-        left:   stageLeft + "px" 
-    });
-
-    // // Set "cover" object properties based on properties set above
-    // $("#coverTop").css({
-    //     'width': w,
-    //     'height': coverTop,
-    //     'top': 0,
-    //     'left': 0,
-    // });
-    // $("#coverBottom").css({
-    //     'width': w,
-    //     'height': coverBottom,
-    //     'top': h - coverBottom,
-    //     'left': 0,
-    // });
-    // $("#coverLeft").css({
-    //     'width': coverLeft,
-    //     'height': h,
-    //     'top': 0,
-    //     'left': 0,
-    // });
-    // $("#coverRight").css({
-    //     'width': coverRight,
-    //     'height': h,
-    //     'top': 0,
-    //     'left': w - coverRight,
-    // });
-
-    // // Resize corner border radii based on stage height
-    // var cornerSize = .025 * stageHeight;
-    // $(".rounded").css({
-    //     '-webkit-border-radius': cornerSize + "px",
-    //     '-moz-border-radius': cornerSize + "px",
-    //     'border-radius': cornerSize + "px"
-    // });
-
-    // var cornerSize2 = .05 * stageHeight;
-    // $(".roundedRight").css({
-    //     '-webkit-border-top-right-radius': cornerSize2 + "px",
-    //     '-webkit-border-bottom-right-radius': cornerSize2 + "px",
-    //     '-moz-border-radius-topright': cornerSize2 + "px",
-    //     '-moz-border-radius-bottomright': cornerSize2 + "px",
-    //     'border-top-right-radius': cornerSize2 + "px",
-    //     'border-bottom-right-radius': cornerSize2 + "px"
-    // });
-
-    // Resize text based on stage height
-    // To give a class a certain font size, assign it the class "fs-X" where X is an integer between 1 and 1000. 1000 is the height of the screen.
-    // New font resize loop
-
-
-    // Resize the stripes
- 
-    // Border
-    var borderSize = stageHeight * .003;
-    $("#fillInAnswer").css({
-        "border": borderSize + "px solid white"
-    });
+        left:   stageLeft + "px" })
     
-    // Resize text based on stage height
-    $("html").css("font-size", (stageHeight / 20) + "px");
-
-    // $("select").css({
-    //     "width": stageWidth/25,
-    //     "height": stageHeight/20,
-    //     "font-size": (stageHeight / 25) + "px"
-    // })
-
+    let htmlStyle  = document.getElementsByTagName('html')[0].style;
+    htmlStyle = Object.assign(htmlStyle, {"font-size": `${(stageHeight / 20)}px`} )
 }
 

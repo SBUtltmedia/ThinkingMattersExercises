@@ -331,7 +331,7 @@ async function startGame() {
   const response = await data.json();
   const set = response['problem_sets']['alice'];
 
-  const questions = set['questions'];
+  const questions = set["answers"].map(question => question.symbolism);
   const answers = set['answers'];
   displaySymbolsAndMeanings();
   displayLogicSymbols()
