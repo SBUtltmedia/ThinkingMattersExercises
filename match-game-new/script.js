@@ -226,8 +226,8 @@ function displaySymbolsAndMeanings() {
     // Past cell
     const pastCell = document.createElement("td");
     const pastSVG = generateSymbolBlock(rowData.past.class);
-    const pastText = document.createElement("span");
-    pastText.textContent = rowData.past.description;
+    const pastText = Object.assign(document.createElement("span"), {'textContent': ` - ${rowData.past.description}`});
+    // pastText.textContent = rowData.past.description;
 
     pastCell.appendChild(pastSVG);
     pastCell.appendChild(pastText);
@@ -236,8 +236,8 @@ function displaySymbolsAndMeanings() {
     // Future cell
     const futureCell = document.createElement("td");
     const futureSVG = generateSymbolBlock(rowData.future.class);
-    const futureText = document.createElement("span");
-    futureText.textContent = rowData.future.description;
+    const futureText = Object.assign(document.createElement("span"), {'textContent': ` - ${rowData.future.description}`})
+    // futureText.textContent = rowData.future.description;
 
     futureCell.appendChild(futureSVG);
     futureCell.appendChild(futureText);
@@ -256,7 +256,7 @@ function displayLogicSymbols() {
   //   'if': 'arrow', 'or': 'or', 'and': 'and', 'not': 'not', 'l': 'left-paren', 'r': 'right-paren'
   // }
 
-  const symbols = ['if', 'or', 'and', 'not', 'l', 'r'];
+  const symbols = ['if', 'or', 'and', 'not'];
 
   // Create table elements
   const table = document.createElement("table");

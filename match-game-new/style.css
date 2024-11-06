@@ -1,113 +1,131 @@
-/* .container {
-    max-width: 960px;
-    margin: auto;
-  } */
-  
-  body {
-    background-color: #eceff1;
-    /* font-family: fantasy; */
-    color: #37474f;
-  }
-  
-  h1, h3, p {
-    text-align: center;
-  }
-  
-  /* main {
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+body {
+  background-color: #eceff1;
+  /* font-family: fantasy; */
+  color: #37474f;
+}
+
+h1,
+h3,
+p {
+  text-align: center;
+}
+
+/* main {
     display: grid;
     grid-template-columns:  2fr 2fr 2fr 1fr;
     grid-gap: 5px;
   } */
 
-  .game-container {
-    display: flex;
-    flex-direction: row;
-    margin: 1rem 10rem;
-    height: 100%;
-    
-  }
-  
-  .draggable-list {
-    padding: 1rem;
-  }
-  
-  li {
-    list-style: none;
-    padding: 10px;
-    margin: 5px;
-    background-color: #cfd8dc;
-    border: 1px solid #b0bec5;
-    color: #263238;
-    cursor: grab;
-    width: 18rem;
-  }  
-  .over {
-    background-color: #90a4ae;
-  }
-  
- .play-btn, .show-modal {
-    cursor: pointer;
-    display: block;
-    padding: 1rem;
-    font-size: 1rem;
-    border-radius: 0.5rem;
-    border: none;
-    background-color: #607d8b;
-    color: #fff;
-  }
+.game-container {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  height: 100%;
+  /* justify-content: center; */
 
-  .play-btn {
-    margin-top: 3rem;
-    margin: auto;
-  }
-  
-  button:hover {
-    background-color: #516a75;
-  }
-  
-  #endMessage {
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgba(0,0,0,0.6);
-    display: none;
-  }
+}
 
-  .end-game {
-    background-color: white;
-    width: 25%;
-    height: 25%;
-    position: absolute;
-    top: 37.5%;
-    left: 37.5%;
-    padding: 1rem;
-  }
+.draggable-list {
+  padding: 1rem;
+}
+
+li {
+  list-style: none;
+  padding: 10px;
+  margin: 5px;
+  background-color: #cfd8dc;
+  border: 1px solid #b0bec5;
+  color: #263238;
+  cursor: grab;
+  width: 18rem;
+  height: 2.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+li:hover {
+  background-color: #abb5ba;
+}
+
+.over {
+  background-color: #90a4ae;
+}
+
+.play-btn,
+.show-modal {
+  cursor: pointer;
+  display: block;
+  padding: 1rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #607d8b;
+  color: #fff;
+}
+
+.play-btn {
+  margin-top: 3rem;
+  margin: auto;
+}
+
+button:hover {
+  background-color: #516a75;
+}
+
+#endMessage {
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+}
+
+.end-game {
+  background-color: white;
+  width: 25%;
+  height: 25%;
+  position: absolute;
+  top: 37.5%;
+  left: 37.5%;
+  padding: 1rem;
+}
 
 svg {
-    /* margin: 0 0.05rem; */
-    width: 1rem;
-    height: 1rem;
-    margin: 0rem 0.25rem;
-    overflow:visible;
-    transform: translate(0rem, 0.1rem) 
+  /* margin: 0 0.05rem; */
+  width: 1rem;
+  height: 1rem;
+  margin: 0rem 0.25rem;
+  overflow: visible;
+  transform: translate(0rem, 0.1rem)
 }
 
-.forevermore, .eventually, .tomorrow {
-    stroke: blue;
-    stroke-width: 0.5rem;
-    fill: none;
-}
-
+.forevermore,
+.eventually,
 .tomorrow {
-  transform: translate(1rem) scale(-1,1);
+  stroke: blue;
+  stroke-width: 0.5rem;
+  fill: none;
+}
+
+.tomorrow,
+.r {
+  transform: translate(1rem) scale(-1, 1);
   /* transform: scale(-1,1); */
 }
 
-.all_pasts, .some_past, .yesterday {
-    fill: brown;
+.all_pasts,
+.some_past,
+.yesterday {
+  fill: brown;
 }
 
 .close {
@@ -120,6 +138,7 @@ svg {
   padding: 0rem 0.3rem;
 } */
 
+
 li span {
   width: 1rem;
   height: 1rem;
@@ -130,28 +149,25 @@ li span {
 
 .cheshire-cat-container {
   margin: 3rem 0rem 0rem 1rem;
-  width: 10rem;
-  height: 10rem;
+  width: 15rem;
+  height: 15rem;
   /* border: 0.5rem solid blue; */
   border: double 0.5rem transparent;
   border-radius: 100%;
-  background-image: linear-gradient(white, white), 
-  linear-gradient(to right, blue, gold);
-background-origin: border-box;
-background-clip: content-box, border-box;
-overflow: hidden;
-position: relative;
-  /* background: url('redqueen.jpeg') no-repeat;
-  background-size: 20rem;
-  background-position: -7.5rem -7rem; */
-  /* background-color: blueviolet; */
+  background-image: linear-gradient(white, white),
+    linear-gradient(to right, blue, gold);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  overflow:hidden;
+  position: absolute;
+
 }
 
 .cheshire-cat-container img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  position: absolute; 
+  position: absolute;
   transform: scale(2) translateX(-1rem) translateY(2rem);
 }
 
@@ -161,7 +177,7 @@ position: relative;
   border: 1px solid green;
   position: absolute;
   left: 47rem;
-  top:10rem;
+  top: 10rem;
   background-color: white;
   visibility: hidden;
 }
@@ -169,18 +185,18 @@ position: relative;
 
 @keyframes taunt {
   0% {
-      background-color: green;
-      transform: scale(1) translateY(5rem);
+    background-color: green;
+    transform: scale(1) translateY(5rem);
   }
 
   50% {
-      background-color: red;
-      transform: scale(1.1) translateY(10rem);
+    background-color: red;
+    transform: scale(1.1) translateY(10rem);
   }
 
   100% {
-      background-color: yellow;
-      transform: scale(1);
+    background-color: yellow;
+    transform: scale(1);
   }
 
 }
@@ -192,18 +208,18 @@ position: relative;
 
 @keyframes damage {
   0% {
-      background-color: red;
-      transform: scale(1);
+    background-color: red;
+    transform: scale(1);
   }
 
   50% {
-      background-color: whitesmoke;
-      transform: scale(1.4);
+    background-color: whitesmoke;
+    transform: scale(1.4);
   }
 
   100% {
-      background-color: red;
-      transform: scale(1);
+    background-color: red;
+    transform: scale(1);
   }
 
 }
@@ -213,7 +229,7 @@ position: relative;
 }
 
 .symbol-section {
-  border: 0.1rem dashed ;
+  border: 0.1rem dashed;
   background-color: blanchedalmond;
   height: fit-content;
   padding: 5px;
@@ -243,7 +259,7 @@ position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap:1rem;
+  gap: 1rem;
   margin: auto;
 }
 
@@ -253,7 +269,8 @@ position: relative;
   border-collapse: collapse;
 }
 
-.symbol-table th, .symbol-table td {
+.symbol-table th,
+.symbol-table td {
   padding: 12px;
   /* text-align: center; */
   border: 1px solid #ddd;
@@ -264,7 +281,7 @@ position: relative;
   background-color: rgb(5, 5, 170);
   color: white;
   font-weight: bold;
-} 
+}
 
 .symbol-table tr:nth-child(even) {
   background-color: #ffffff;
@@ -273,4 +290,3 @@ position: relative;
 .symbol-table tr:hover {
   background-color: #dad5d5;
 }
-

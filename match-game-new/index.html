@@ -1,101 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matching Game</title>  
+  <title>Matching Game</title>
   <link rel="stylesheet" href="style.css">
+  <script src="resize.js"></script>
 </head>
-<body>
-  <!-- <h1>Spanish Matching Game</h1>
-  <p>Drag the English phrase over to the matching Spanish phrase</p>
-  <p>Arrastra la frase en inglés hasta la frase en español correspondiente</p> -->
-  <h1>"Jam Yesterday Jam Tomorrow but never Jam Today"</h1>
-  <p>Drag the sentence with logical symbols over to matching English sentence</p>
-  <div class="symbols-container">
-    <h3>Symbols You Should Know</h3>
-    <div id="symbols2"></div>
-  </div>
-  <main class="container">
-    <div class="game-container">
-      <!-- <div class="symbol-section" id="symbols">
-        <h2>Symbols</h2>
-      </div> -->
-      <div>
-        <ul class="draggable-list">
-        </ul>
-      </div>
-      <div>
-        <ul class="draggable-list">
-        </ul>
-      </div>
-      <div>
-        <div class="cheshire-cat-container" id="cat">
-          <img src="redqueen.jpeg" />
-        </div>
-        <div class="cat-message" id="cat-message"></div>
-      </div>
-    </div>
-  </main>
-  <!-- <div class="symbol-container">
-    <div class="symbol"></div>
-    <div class="symbol"></div>
-    <div class="symbol"></div>
-    <div class="symbol"></div>
-    <div class="symbol"></div>
-    <div class="symbol"></div>
-  </div> -->
-  <!-- <table class="symbol-table" id="symbols2">
-    <thead>
-        <tr>
-            <th>Past</th>
-            <th>Future</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <svg><use href="./icons.svg#square" class="all_pasts"></use></svg>
-                <span>Life or Health</span>
-            </td>
-            <td>
-              <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FF0000">
-                <path d="M12 2L15 8H9L12 2zM12 22L9 16H15L12 22z"/>
-              </svg>
-              <span>Life or Health</span>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#888888">
-                <rect x="4" y="4" width="16" height="16"/>
-              </svg>
-              <span>Square</span>
-            </td>
-            <td>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FF0000">
-                <path d="M12 2L15 8H9L12 2zM12 22L9 16H15L12 22z"/>
-              </svg>
-              <span>Defense or Armor</span>
-              </td>
-        </tr>
-         Add more rows as needed with different SVGs -->
-    <!-- </tbody> 
-</table>  -->
 
-  <div id="endMessage">
-    <div class="end-game">
+<body>
+  <div id="screen">
+    <h1>"Jam Yesterday Jam Tomorrow but never Jam Today"</h1>
+    <p>Drag the sentence with logical symbols over to matching English sentence</p>
+    <div class="symbols-container">
+      <h3>Symbols You Should Know</h3>
+      <div id="symbols2"></div>
+    </div>
+    <main class="container">
+      <div class="game-container">
+        <div>
+          <ul class="draggable-list">
+          </ul>
+        </div>
+        <div>
+          <ul class="draggable-list">
+          </ul>
+        </div>
+        <div>
+          <div class="cheshire-cat-container" id="cat">
+            <img src="redqueen.jpeg" />
+          </div>
+          <div class="cat-message" id="cat-message"></div>
+        </div>
+      </div>
+    </main>
+
+    <div id="endMessage">
+      <div class="end-game">
         <svg class="close" onclick="closeModal()">
           <use href="./icons.svg#close"></use>
         </svg>
-      <h3>Well done!</h3>
-      <button class="play-btn" onclick="playAgain()">Play Again</button>
-    </div> 
+        <h3>Well done!</h3>
+        <button class="play-btn" onclick="playAgain()">Play Again</button>
+      </div>
     </div>
+  </div>
 
   <script src="script.js"></script>
 
-  
+
 </body>
+
 </html>
