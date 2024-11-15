@@ -3,6 +3,7 @@ let numberOfIceCreams=2**numberOfRooms
 
 addEventListener("DOMContentLoaded",() => init(numberOfRooms));
 
+
 //create the layout with flavors and checkboxes for each room
 function init(numberOfRooms){
 
@@ -96,6 +97,18 @@ let allFlavors=["Almond",
     let submitButton = document.createElement("button");
     submitButton.innerHTML = "Submit";
     submitButton.id = "submit-btn";
+
+    // deciding mathematically how to posiiton the submit button in the middle of the rooms
+    if (numberOfRooms === 1) {
+        submitButtonContainer.style.gridColumn = `2`;
+    } else if (numberOfRooms % 2 === 0) {
+        let middleRoom = Math.floor(numberOfRooms / 2) + 1;
+        submitButtonContainer.style.gridColumn = `${middleRoom} / span 2`; 
+    } else {
+        let middleRoom = Math.ceil((numberOfRooms + 1) / 2)+1;
+        submitButtonContainer.style.gridColumn = `${middleRoom}`;
+    }
+
     // submitButton.onclick = handleSubmit(numberOfIceCreams);
     submitButton.onclick = () => handleSubmit(numberOfIceCreams);
 
@@ -104,6 +117,7 @@ let allFlavors=["Almond",
 
 }
 
+
 function isCorrectRoomConfig(roomsInfo){
     // let numberOfRooms=roomsInfo[0].length
     // let numberOfIcecreams=2**numberOfRooms
@@ -111,10 +125,33 @@ function isCorrectRoomConfig(roomsInfo){
     return roomsInfo.length!=Array.from(new Set(roomsInfo)).length
 }
 
+
+function displayToast(messageText, isFailure) {
+    Toastify({
+        text: messageText,
+        duration: 8000,
+        gravity: "top",
+        position: "right",
+        stopOnFocus: false,
+        style: {
+            background: isFailure ? "crimson" : "green",
+            color: "white",
+            fontWeight: "bold",
+        }
+    }).showToast();
+}
+
+
 //collect and check the checkboxes selected by the user
 function handleSubmit(numberOfIceCreams) {
+
+    //reset the highlight class before creating the binary string
+    var elements = document.getElementsByClassName('highlight');
+    if (elements.length){
+    elements[0].classList.remove("highlight");}
+
     let arr = [];
-    
+
     //go through each flavor and create a binary string of checked rooms
     for (let i = 0; i < numberOfIceCreams; i++) {
         let roomConfig = '';
@@ -123,26 +160,30 @@ function handleSubmit(numberOfIceCreams) {
             roomConfig += checkbox.checked ? '1' : '0';
         }
         arr.push(roomConfig);
+
+        //check the duplicate values for each row in real time
+        let dupIndex = findDupRows(arr, roomConfig);
+        if (dupIndex !== -1 && dupIndex !== i) {
+            displayToast("Wrong choices, revise binary tree concepts and take one more chance!!", true);
+            let dupRow = document.getElementById(`flavor-${dupIndex+1}`)
+            dupRow.classList.add("highlight")
+            return;
+        }
     }
 
     validateCombination(arr, numberOfRooms);    
 }
 
-// function findDupRows(rowString){
-//     for (let i = 0; i < numberOfIceCreams; i++) {
-//         let currRow = ""
-//         for (let j = 0; j < numberOfRooms; j++) {
-//           currRow += document.getElementById(`room_${j}-checkbox-${i}`).checked?'1':'0';
-//     }
 
-//     if (currRow == rowString) {
-//         return i;
-//     }
-//     }
+function findDupRows(arr, currRow){
+    for (let i=0;i<arr.length-1;i++) {
+        if (arr[i]===currRow) {
+            return i;
+        }
+    }
+    return -1;
+    }
 
-//     return False
-
-//     }
 
 // show a popup message if the selection is wrong or right
 function displayMessage(messageText, isSuccess) {
@@ -168,21 +209,21 @@ function displayMessage(messageText, isSuccess) {
     document.body.appendChild(modalOverlay);
 }
 
+
 //compare the user's selection with the correct combinations
 function validateCombination(userArr, numberOfRooms) {
     let correctArr = generateCorrectBinaryCombinations(numberOfRooms);
 
     let sortedUserArr = [...userArr].sort();
-    // console.log(sortedUserArr);
     let sortedCorrectArr = [...correctArr].sort();
-    // console.log(sortedCorrectArr);
 
     if (JSON.stringify(sortedUserArr) === JSON.stringify(sortedCorrectArr)) {
         displayMessage("Good job!", true);
     }else {
-        displayMessage("Wrong choices, revise binary tree concepts and take one more chance!", false);
+        // displayMessage("Wrong choices, revise binary tree concepts and take one more chance!", false);
     }
 }
+
 
 //generate all possible correct binary combinations for the given number of rooms
 function generateCorrectBinaryCombinations(numberOfRooms) {
@@ -195,6 +236,7 @@ function generateCorrectBinaryCombinations(numberOfRooms) {
 
     return correctArr;
 }
+
 
 function handleClick(e){
     console.log(e.currentTarget.id)
