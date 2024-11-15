@@ -12,6 +12,7 @@ const storyText = [
   { text: "How did she win her freedom for four more years?", emotion: "neutralMale" }
 ];
   
+
   const storyTextContainer = document.getElementById("story-text");
   const synth = window.speechSynthesis;
 
@@ -24,9 +25,11 @@ const storyText = [
     }
   }
   
+
   synth.addEventListener('voiceschanged', loadVoices);
   loadVoices();
   
+
   function speakWithEmotion(sentence, emotion) {
     let utterance = new SpeechSynthesisUtterance(sentence);
   
@@ -78,6 +81,7 @@ const storyText = [
     return utterance;
   } 
 
+
   function displaySentence(story, index) {
     const { text, emotion } = story[index];
   
@@ -103,12 +107,14 @@ const storyText = [
   };
   }
   
+
   function typeAndNarrateSentenceBySentence(story) {
   //start with the first sentence
     if (story.length > 0) {
       displaySentence(story, 0); 
     }
   }
+
 
   function gradualScroll(scrollAmount, callback) {
     let scrolled = 0;
@@ -127,11 +133,13 @@ const storyText = [
     }, interval);
   }
   
+
   function goToNextPage() {
     document.body.style.backgroundImage = 'none';
     window.location.href = "flavors.html";
   }
   
+
   window.onload = () => {
     alert('Click anywhere on the page to start the story');
   
@@ -139,4 +147,3 @@ const storyText = [
       typeAndNarrateSentenceBySentence(storyText);
     }, { once: true }); 
   };
-  
