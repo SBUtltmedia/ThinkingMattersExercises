@@ -7,31 +7,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Matching Game</title>
   <link rel="stylesheet" href="style.css">
-  <script src="resize.js"></script>
+  <!-- <script src="resize.js"></script> -->
 </head>
 
 <body>
   <div id="screen">
-    <h1>"Jam Yesterday Jam Tomorrow but never Jam Today"</h1>
-    <p>Drag the sentence with logical symbols over to matching English sentence</p>
-    <div class="symbols-container">
-      <h3>Symbols You Should Know</h3>
-      <div id="symbols2"></div>
+    <div class="top-container">
+      <p>"Jam Yesterday Jam Tomorrow but never Jam Today"</p>
+      <p>Given that <b>J abbreviates “Alice eats jam”</b>, match each symbolic sentence with the alphabetical lists of English translations. You may assume that each English sentence is paired once and only once. </p>
+      <div class="symbols-container">
+        <h3>Symbols You Should Know</h3>
+        <div id="symbols2"></div>
+      </div>
     </div>
     <main class="container">
       <div class="game-container">
-        <div>
           <ul class="draggable-list">
           </ul>
-        </div>
-        <div>
           <ul class="draggable-list">
           </ul>
-        </div>
-        <div>
+        <!-- <div>
           <div class="cheshire-cat-container" id="cat">
             <img src="redqueen.jpeg" />
-          </div>
+          </div> -->
           <div class="cat-message" id="cat-message"></div>
         </div>
       </div>

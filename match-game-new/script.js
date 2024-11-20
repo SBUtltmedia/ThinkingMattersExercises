@@ -47,7 +47,7 @@ function checkForMatch(selected, dropTarget) {
     return;
   }
   let match = selected[1] === dropTarget[1];
-  animateCat(match);
+  // animateCat(match);
   return match;
   // if(selected[1] === dropTarget[1]) {
   //   return true;
