@@ -24,6 +24,41 @@ body {
   /* font-family: fantasy; */
   /* color: #37474f; */
 /* } */
+#alice-and-queen {
+  transform: scale(5) translateY(25rem);
+}
+@keyframes taunt {
+  0% {
+    background-color: green;
+    transform: scale(1) translateY(5rem);
+  }
+
+  50% {
+    background-color: red;
+    transform: scale(1.1) translateY(10rem);
+  }
+
+  100% {
+    background-color: yellow;
+    transform: scale(1);
+  }
+
+}
+
+.focusonalice {
+  animation: queen-to-alice 1s forwards;
+}
+
+@keyframes queen-to-alice {
+  0% {
+    transform: scale(5) translateX(0) translateY(25rem);
+  }
+
+  100% {
+    transform: scale(5) translateX(25rem);
+  }
+}
+
 
 h1,
 h3,
