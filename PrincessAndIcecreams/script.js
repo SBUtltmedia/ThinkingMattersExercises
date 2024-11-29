@@ -147,3 +147,4 @@ const storyText = [
       typeAndNarrateSentenceBySentence(storyText);
     }, { once: true }); 
   };
+  

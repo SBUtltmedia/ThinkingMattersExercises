@@ -1,7 +1,11 @@
-let numberOfRooms=2
+let numberOfRooms=1
 let numberOfIceCreams=2**numberOfRooms
+let yayAudio, successAudio;
+
+
 
 addEventListener("DOMContentLoaded",() => init(numberOfRooms));
+
 
 
 //create the layout with flavors and checkboxes for each room
@@ -65,7 +69,7 @@ let allFlavors=["Almond",
     currentFlavors.forEach((flavor,id) => {
         let flavorDiv=Object.assign(document.createElement("div"),{
             innerHTML:flavor,
-            id: `flavor-${id+1}`,
+            id: `flavor_row_${id}`,
             className:"flavorClass"
         })
     flavorContainer.append(flavorDiv)
@@ -78,15 +82,19 @@ let allFlavors=["Almond",
         // console.log(roomId)
         // console.log("Here",i)
         let roomDiv = document.getElementById(`room_${i}`);
-        let checkboxContainer = Object.assign(document.createElement("div"), {
-            className: "checkbox-container"
+        // let checkboxContainer = Object.assign(document.createElement("div"), {
+        //     className: "checkbox-container"
+        // });
+        let checkboxWrapper = Object.assign(document.createElement("div"), {
+            id: `checkbox_wrapper_room_${i}_checkbox_row_${id}`,
+            className: "checkbox-wrapper"
         });
         let checkbox = Object.assign(document.createElement("input"), {
             type: "checkbox",
-            id: `room_${i}-checkbox-${id}`
+            id: `room_${i}_checkbox_row_${id}`
         });
-        checkboxContainer.appendChild(checkbox);
-        roomDiv.appendChild(checkboxContainer);
+        checkboxWrapper.appendChild(checkbox);
+        roomDiv.appendChild(checkboxWrapper);
     }
 
     });
@@ -99,15 +107,8 @@ let allFlavors=["Almond",
     submitButton.id = "submit-btn";
 
     // deciding mathematically how to posiiton the submit button in the middle of the rooms
-    if (numberOfRooms === 1) {
-        submitButtonContainer.style.gridColumn = `2`;
-    } else if (numberOfRooms % 2 === 0) {
-        let middleRoom = Math.floor(numberOfRooms / 2) + 1;
-        submitButtonContainer.style.gridColumn = `${middleRoom} / span 2`; 
-    } else {
-        let middleRoom = Math.ceil((numberOfRooms + 1) / 2)+1;
-        submitButtonContainer.style.gridColumn = `${middleRoom}`;
-    }
+    let middleRoom = Math.ceil(numberOfRooms / 2) + 1;
+    submitButtonContainer.style.gridColumn = numberOfRooms % 2 === 0 ? `${middleRoom} / span 2` : `${middleRoom}`; 
 
     // submitButton.onclick = handleSubmit(numberOfIceCreams);
     submitButton.onclick = () => handleSubmit(numberOfIceCreams);
@@ -118,6 +119,7 @@ let allFlavors=["Almond",
 }
 
 
+
 function isCorrectRoomConfig(roomsInfo){
     // let numberOfRooms=roomsInfo[0].length
     // let numberOfIcecreams=2**numberOfRooms
@@ -126,10 +128,34 @@ function isCorrectRoomConfig(roomsInfo){
 }
 
 
+// play audio depending on the scenario 
+function playAudio(param) {
+    let audio;
+    switch (param) {
+        case "success":
+            audio = new Audio('audio/success.mp3');
+            break;
+        case "yay":
+            audio = new Audio('audio/yay.mp3');
+            break;
+        case "error":
+            audio = new Audio('audio/error.mp3');
+            audio.currentTime = 0.41;
+            break;
+        default:
+    }
+    audio.play();
+    return audio;
+}
+
+
+
 function displayToast(messageText, isFailure) {
+    playAudio("error");
+
     Toastify({
         text: messageText,
-        duration: 8000,
+        duration: 2000,
         gravity: "top",
         position: "right",
         stopOnFocus: false,
@@ -137,9 +163,17 @@ function displayToast(messageText, isFailure) {
             background: isFailure ? "crimson" : "green",
             color: "white",
             fontWeight: "bold",
+            borderRadius: "5px",
+            padding: "15px 25px",
+            lineHeight: "1.5",
+            margin: "10px",
+            maxWidth: "300px",
+            wordWrap: "break-word",
+            opacity: "0.8"
         }
     }).showToast();
 }
+
 
 
 //collect and check the checkboxes selected by the user
@@ -147,7 +181,7 @@ function handleSubmit(numberOfIceCreams) {
 
     //reset the highlight class before creating the binary string
     var elements = document.getElementsByClassName('highlight');
-    if (elements.length){
+    while (elements.length > 0){
     elements[0].classList.remove("highlight");}
 
     let arr = [];
@@ -156,23 +190,29 @@ function handleSubmit(numberOfIceCreams) {
     for (let i = 0; i < numberOfIceCreams; i++) {
         let roomConfig = '';
         for (let j = 0; j < numberOfRooms; j++) {
-            let checkbox = document.getElementById(`room_${j}-checkbox-${i}`);
+            let checkbox = document.getElementById(`room_${j}_checkbox_row_${i}`);
             roomConfig += checkbox.checked ? '1' : '0';
         }
         arr.push(roomConfig);
 
         //check the duplicate values for each row in real time
         let dupIndex = findDupRows(arr, roomConfig);
+        console.log("duplicateindex", dupIndex)
         if (dupIndex !== -1 && dupIndex !== i) {
             displayToast("Wrong choices, revise binary tree concepts and take one more chance!!", true);
-            let dupRow = document.getElementById(`flavor-${dupIndex+1}`)
-            dupRow.classList.add("highlight")
+            let dupRow = document.querySelectorAll(`[id*="row_${dupIndex}"]`)
+            console.log(dupRow)
+            for(const row of Array.from(dupRow)){
+                console.log(row)
+                row.classList.add("highlight")
+            }
             return;
         }
     }
 
     validateCombination(arr, numberOfRooms);    
 }
+
 
 
 function findDupRows(arr, currRow){
@@ -182,17 +222,18 @@ function findDupRows(arr, currRow){
         }
     }
     return -1;
-    }
+}
 
 
-// show a popup message if the selection is wrong or right
+
+// show a popup message if the selection is right
 function displayMessage(messageText, isSuccess) {
     let modalOverlay = document.createElement("div");
     modalOverlay.setAttribute("id", "message-modal-overlay");
 
     let modalContent = document.createElement("div");
-    modalContent.className = "modal-content";
-    modalContent.classList.add(isSuccess ? "modal-success" : "modal-error");
+    modalContent.className = "modal-content modal-success"; 
+    // modalContent.classList.add(isSuccess ? "modal-success" : "modal-error");
 
     let message = document.createElement("p");
     message.innerText = messageText;
@@ -202,12 +243,43 @@ function displayMessage(messageText, isSuccess) {
     okButton.innerText = "OK";
     okButton.onclick = () => {
         document.body.removeChild(modalOverlay);
+        removeConfetti();
+        if (yayAudio) yayAudio.pause();
+        if (successAudio) successAudio.pause();
+
     };
 
     modalContent.appendChild(okButton);
     modalOverlay.appendChild(modalContent);
     document.body.appendChild(modalOverlay);
 }
+
+
+
+// party popup on successfully solving the game
+function createPopper(){
+    confetti({
+      particleCount: 1000,
+      spread: 100,
+      origin: { x: 0, y: 0.9 },
+    });
+  
+    confetti({
+      particleCount: 1000,
+      spread: 100,
+      origin: { x: 1, y: 0.9 },
+    });
+  }
+
+
+
+// to remove the confetti as soon as the perosn clicks ok
+// function removeConfetti() {
+//     document.querySelectorAll(".popper-container").forEach((container) => {
+//         container.remove();
+//     });
+// }
+
 
 
 //compare the user's selection with the correct combinations
@@ -218,11 +290,15 @@ function validateCombination(userArr, numberOfRooms) {
     let sortedCorrectArr = [...correctArr].sort();
 
     if (JSON.stringify(sortedUserArr) === JSON.stringify(sortedCorrectArr)) {
-        displayMessage("Good job!", true);
-    }else {
+        successAudio = playAudio("success");
+        yayAudio = playAudio("yay");
+        displayMessage("Good Job!", true);
+        createPopper();
+        }else {
         // displayMessage("Wrong choices, revise binary tree concepts and take one more chance!", false);
     }
 }
+
 
 
 //generate all possible correct binary combinations for the given number of rooms
@@ -236,6 +312,7 @@ function generateCorrectBinaryCombinations(numberOfRooms) {
 
     return correctArr;
 }
+
 
 
 function handleClick(e){
