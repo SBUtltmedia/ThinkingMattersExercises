@@ -1,5 +1,4 @@
 let numberOfRooms=2
-
 let numberOfIceCreams=2**numberOfRooms
 let yayAudio, successAudio;
 
