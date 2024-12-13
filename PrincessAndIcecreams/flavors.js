@@ -86,7 +86,8 @@ let allFlavors=["Almond",
         let flavorDiv=Object.assign(document.createElement("div"),{
             innerHTML:flavor,
             id: `flavor_row_${id}`,
-            className:"flavorClass"
+            className:"flavorClass",
+            style: `display: grid; grid-template-columns: repeat(${numberOfRooms+1}, 1fr)`
     })
         
     flavorContainer.append(flavorDiv)
@@ -113,12 +114,20 @@ let allFlavors=["Almond",
     }
 });
 
-    let submitButtonContainer = document.createElement("div");
-    submitButtonContainer.className = "submit-container";
+    let submitButtonContainer = Object.assign(document.createElement("div"),
+    {className: "submit-container",
+        style: `display: grid; grid-template-columns:1fr ${numberOfRooms}fr`
+    })
 
-    let submitButton = document.createElement("button");
-    submitButton.innerHTML = "Submit";
-    submitButton.id = "submit-btn";
+    let spacer = Object.assign(document.createElement("div"),
+    {className: "fClass"})
+
+    let centeredButton = Object.assign(document.createElement("div"),
+    {className: "center"})
+
+    let submitButton = Object.assign(document.createElement("div"),
+    {innerHTML: "Submit",
+    id: "submit-btn"})
 
     // deciding mathematically how to posiiton the submit button in the middle of the rooms
     // let middleRoom = Math.ceil(numberOfRooms / 2) + 1;
@@ -127,18 +136,21 @@ let allFlavors=["Almond",
     // ? `${middleRoom} / span 2` 
     // : `${middleRoom}`; 
 
-    let totalWidth = document.getElementById("game").offsetWidth;
-    let totalColumns = numberOfRooms + 1;
-    let columnWidth = totalWidth / totalColumns;
+    // let totalWidth = document.getElementById("game").offsetWidth;
+    // let totalColumns = numberOfRooms + 1;
+    // let columnWidth = totalWidth / totalColumns;
 
-    let middlePosition = (totalWidth / 2) + (columnWidth / 2);
+    // let middlePosition = (totalWidth / 2) + (columnWidth / 2);
 
-    submitButtonContainer.style.position = "relative";
-    submitButtonContainer.style.left = `${middlePosition*0.050}rem`;
+    // submitButtonContainer.style.position = "relative";
+    // submitButtonContainer.style.left = `${middlePosition*0.050}rem`;
+
 
 
     submitButton.onclick = () => handleSubmit(numberOfIceCreams);
-    submitButtonContainer.appendChild(submitButton);
+    submitButtonContainer.appendChild(spacer);
+    centeredButton.appendChild(submitButton);
+    submitButtonContainer.appendChild(centeredButton);
     roomContainer.appendChild(submitButtonContainer);
 }
 

@@ -53,6 +53,7 @@ function resizeWindow() {
 
     // Resize text based on stage height
     document.documentElement.style.fontSize = (scalingFactor) + "px";
+    // console.log(stageHeight)
     // document.getElementsByTagName("input")[0].style="transform: scale(stageHeight/10)"
 
     document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
@@ -61,10 +62,10 @@ function resizeWindow() {
         translateY(-${Math.floor(scalingFactor*0.085)}rem)`;
     });
 
-    document.querySelectorAll(".flavorClass").forEach((flavorClassElement) => {
-        flavorClassElement.style.display = 'grid';
-        flavorClassElement.style.gridTemplateColumns = `repeat(${numberOfRooms + 1}, 1fr)`;
-    });
+    // document.querySelectorAll(".flavorClass").forEach((flavorClassElement) => {
+    //     flavorClassElement.style.display = 'grid';
+    //     flavorClassElement.style.gridTemplateColumns = `repeat(${numberOfRooms + 1}, 1fr)`;
+    // });
 
     document.querySelectorAll(".headerClass").forEach((flavorClassElement) => {
         flavorClassElement.style.display = 'grid';
@@ -74,6 +75,7 @@ function resizeWindow() {
     // let flavorClass = document.querySelectorAll('.flavorClass');
 
     // flavorClass.setAttribute('style', 'display: grid; grid-template-columns: repeat(3, 1fr);')
+    // console.log("here",`repeat(${numberOfRooms})`)
     // flavorClass.style.setProperty('grid-template-columns', 'repeat(`${numberOfRooms}`, 1fr)');
 
 
