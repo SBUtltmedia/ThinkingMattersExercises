@@ -173,12 +173,12 @@ input[type="checkbox"] {
 
 /* submit button */
 .submit-container {
-  grid-column: span 2;
-  justify-self: center;
-  /* margin-top: 0.25rem; */
-  margin-top: 0.01vw;
-
+text-align: center;
 }
+
+/* div{
+  border: black 1px solid;
+} */
 
 #submit-btn {
   padding: 1vw 2vw;
@@ -186,6 +186,13 @@ input[type="checkbox"] {
   cursor: pointer;
   font-family:'Courier New', Courier, monospace;
   font-weight: bold;
+  border: black 1px solid;
+}
+
+.center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 /* modal for messages display */
