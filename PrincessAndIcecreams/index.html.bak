@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Indian Princess: Logic and Love</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+  <script type="module" src="flavors.js"></script>
+
+</head>
+<body>
+  <h1>The Indian Princess: Logic and Love</h1>
+
+  <div id="story-container" class="show">
+    <div id="story-text"></div>
+  </div>
+
+  <div id="current-page" >
+  <button id="nextPageBtn" class="hide" onclick="goToNextPage()">➡</button>
+</div>
+
+
+
+</body>
+</html>

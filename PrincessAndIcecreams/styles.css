@@ -1,23 +1,62 @@
-body { 
-    font-family: Arial, sans-serif; 
-    text-align: center; 
-    overflow-y: auto;  
-    background-image: url('images/princess.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: #333; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100rem;
-    margin: 0;
-    padding-top: 1.875rem;
-  }
-  
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fff;
+}
 
+#introduction {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh; 
+  text-align: center;
+  overflow: hidden;
+}
 
-  h1 {
+.image-container {
+  width: 100%;
+  height: 100%;
+}
+
+.responsive-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#story-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 1.25rem;
+  border-radius: 0.625rem; 
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2); 
+  max-width: 37.5rem; 
+  width: 90%;
+}
+
+#story-text {
+  font-size: 1.5rem;
+  line-height: 1.8;
+  color: #2C3E50;
+  font-family: 'Times New Roman', serif;
+  text-shadow: 0.0625rem 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1);
+  /* position: absolute;
+  width: 100%;
+  top: 100%; 
+  animation: scrollUp 5s linear infinite; */
+  position: relative;
+}
+
+h1 {
     font-family: 'Georgia', serif;
     font-size: 2.25rem;
     color: #4A235A;
@@ -26,53 +65,29 @@ body {
     background: rgba(255, 255, 255, 0.8); 
     padding: 0.625rem 1.25rem;
     border-radius: 0.5rem;
-  }
+}
 
+.hide {
+    display:none !important;
 
-
-  #story-container {
-    width: 60%;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 1.25rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.2);
-    text-align: center;
-    margin-top: 6.25rem;
-    max-height: 12.5rem;
-    overflow: hidden; 
-    position: relative;
-  }
+}
   
+.show {
+    display: block;
+    visibility: visible;
+}
 
-
-  #story-text {
-    font-size: 1.5rem;
-    line-height: 1.8;
-    color: #2C3E50;
-    font-family: 'Times New Roman', serif;
-    text-shadow: 0.0625rem 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1);
-    /* position: absolute;
-    width: 100%;
-    top: 100%; 
-    animation: scrollUp 5s linear infinite; */
-    position: relative;
-  }
-  
-
-
-  /*scroll animation to move text up*/
-  @keyframes scrollUp {
+/*scroll animation to move text up*/
+@keyframes scrollUp {
     0% {
       top: 100%;
     }
     100% {
       top: -100%;
     }
-  }
+}
 
-
-
-  #nextPageBtn {
+#nextPageBtn {
     position: fixed;
     bottom: 1.25rem;
     right: 1.25rem;
@@ -83,86 +98,95 @@ body {
     border: none;
     border-radius: 3.125rem;
     cursor: pointer;
-    display: none;
+    /* display: none; */
     z-index: 100;
-  }
+}
   
-  #nextPageBtn:hover {
+#nextPageBtn:hover {
     background-color: #7D3C98;
-  }
+}
   
+/* #game{
+  display: flex;
+  flex-direction: column;
+} */
 
+#gameRoom{
+  /* position: absolute; */
+  /* top: 50%; */
+  /* display: grid; */
+  gap: 0.05rem;
+  /* justify-content: center; */
+  /* transform: translateX(4%);*/
+}
 
-  /* styling for Flavors and Room page */
-  body.flavors-page {
+.headerClass {
+  display: inline-block;
+}
+
+#headerContainer {
+  font-family: "Special Elite", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+  
+/* styling for Flavors and Room page */
+body.flavors-page {
     background: none;  
     background-color: #fff;
 }
 
-.column {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-  }
-  
-  h2 {
+h2 {
       text-align: center;
-      margin-bottom:  0.625rem;
-      font-size: 1.5rem;
+      margin-top:  auto;
+      margin-bottom: 1em;
+      font-size: 2rem;
       font-weight: bold;
-  }
+}
 
-  #container {
+#container {
       /* display: grid;
       gap: 20px; */
       display: grid;
-      gap: 1.25rem;
+      gap: 1vw;
       justify-items: center;
+      width: 100%;
+      height: 100%;
+}
 
-  }
-
-
-  
-  input[type="checkbox"] {
+input[type="checkbox"] {
     margin: 0;
     padding: 0;
     border: none;
-    /* appearance: ; */
+    zoom: 1.5;
+    /* transform: scale(0.9); */
 }
 
-  .flavorClass, .dropdown-container, .checkbox-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.3125rem;
-    height: 1.875rem;
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    /* padding: 0.3125rem; */
+  height: 1.875rem;
+  /* display:inline-block; */
 }
-
-
-
- /* dropdown under every room */
-.dropdown-container {
-    margin-top: 0.625rem;
-}
-
-
 
 /* submit button */
 .submit-container {
-  /* grid-column: span 2; */
+  grid-column: span 2;
   justify-self: center;
-  margin-top: 1.25rem;
+  /* margin-top: 0.25rem; */
+  margin-top: 0.01vw;
+
 }
 
 #submit-btn {
-  padding: 0.625rem 1.25rem;
-  font-size: 1.25rem;
+  padding: 1vw 2vw;
+  font-size: 1.5rem;
   cursor: pointer;
   font-family:'Courier New', Courier, monospace;
   font-weight: bold;
 }
-
-
 
 /* modal for messages display */
 #message-modal-overlay {
@@ -213,7 +237,7 @@ body {
   font-size: 1.225rem;
   color: #155724;
   background-color: #fff;
-  border: 2px solid #155724;
+  border: 0.125rem solid #155724;
   border-radius: 0.5rem;
   cursor: pointer;
 }
@@ -223,26 +247,18 @@ body {
   color: #fff;
 }
 
-
-
 /*highlight duplicate first row*/
 .highlight{
   background-color: #dc143c;
+  /* padding: 0.01%; */
   /* font-size: 10rem; */
 } 
-
-
 
 /* style the text of flavors column*/
 .flavorClass {
   font-family: "Special Elite", system-ui;
   font-weight: 400;
   font-style: normal;
-}
-
-.column {
-  font-family: "Special Elite", serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: larger;
+  /* height: 1.875rem;
+  line-height: 1.5; */
 }

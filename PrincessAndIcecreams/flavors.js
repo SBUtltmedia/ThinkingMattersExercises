@@ -1,14 +1,22 @@
-let numberOfRooms=2
+const urlParams = new URLSearchParams(window.location.search);
+
+let numberOfRooms=Math.min(urlParams.get('numberOfRooms') || 2,5);
 let numberOfIceCreams=2**numberOfRooms
 let yayAudio, successAudio;
 
+// Iterate through all parameters
+for (const [key, value] of urlParams.entries()) {
+  console.log(key, value);
+}
+
+// Wait for the page to fully load then initialize the game and also adjust the window sizes.
+addEventListener("DOMContentLoaded",() => {
+    init(numberOfRooms);    
+    resizeWindow();
+});
 
 
-addEventListener("DOMContentLoaded",() => init(numberOfRooms));
-
-
-
-//create the layout with flavors and checkboxes for each room
+// Create the layout with flavors and checkboxes for each room
 function init(numberOfRooms){
 
 let allFlavors=["Almond",
@@ -42,46 +50,51 @@ let allFlavors=["Almond",
     "Sweet potato maple walnut",
     "Ube (Philippines, purple yam)",
     "Vietnamese Coffee"]
-    let flavorContainer = document.getElementById("flavorContainer")
-    let roomContainer = document.getElementById("container")
+    let flavorContainer =  Object.assign(document.createElement("div"), {
+        id: "flavorContainer"
+    });
 
-     //create a column for each room
+    let roomContainer = document.getElementById("gameRoom")
+
+    // Create header row
+    let headerContainer = Object.assign(document.createElement("div"), {
+        id: "headerContainer",
+        className: "headerClass",
+    });
+
+    let contentOfTheHeader = Object.assign(document.createElement("div"), {
+        innerHTML: "<h2>FLAVORS</h2>",
+        className: "roomHeaderClass",
+    });
+
+    headerContainer.appendChild(contentOfTheHeader);
+
     for(let i = 0 ; i < numberOfRooms ; i++){
-        let roomDiv = Object.assign(document.createElement("div"),{
+        let roomHeaderDiv = Object.assign(document.createElement("div"),{
             innerHTML : `<h2>ROOM ${i+1}</h2>`,
-            id : `room_${i}`,
-            className:"column"
+            className:"roomHeaderClass"
         })
-        roomContainer.append(roomDiv)
+        headerContainer.appendChild(roomHeaderDiv)
     }
 
-    //adjusting the 1 or more than 1 columns layout for each room
-    let parentContainer=document.getElementById("container")
-    let gridTemplateColumns = `2fr `;
-    for (let i = 0; i < numberOfRooms; i++) {
-        gridTemplateColumns += `1fr `;
-    }
-    parentContainer.setAttribute("style",`grid-template-columns:${gridTemplateColumns.trim()}`);
+    roomContainer.appendChild(headerContainer)
+    roomContainer.appendChild(flavorContainer)
 
-    //get only as many flavors as needed for the combinations on the basis of the number of rooms
-    let currentFlavors = allFlavors.slice(0, numberOfIceCreams); 
-
+    let currentFlavors = allFlavors.sort(() => Math.random() - 0.5).slice(0, numberOfIceCreams); 
+ 
     currentFlavors.forEach((flavor,id) => {
         let flavorDiv=Object.assign(document.createElement("div"),{
             innerHTML:flavor,
             id: `flavor_row_${id}`,
             className:"flavorClass"
-        })
+    })
+        
     flavorContainer.append(flavorDiv)
     flavorDiv.addEventListener('click',handleClick)
 
-    // console.log("current number of icecreams",2**numberOfRooms)
-
     for (let i = 0; i < numberOfRooms; i++) {
         let roomId = `room_${i}`
-        // console.log(roomId)
-        // console.log("Here",i)
-        let roomDiv = document.getElementById(`room_${i}`);
+        let roomDiv = document.getElementById(`${roomId}`);
         // let checkboxContainer = Object.assign(document.createElement("div"), {
         //     className: "checkbox-container"
         // });
@@ -94,10 +107,11 @@ let allFlavors=["Almond",
             id: `room_${i}_checkbox_row_${id}`
         });
         checkboxWrapper.appendChild(checkbox);
-        roomDiv.appendChild(checkboxWrapper);
-    }
+        // roomDiv.appendChild(checkboxWrapper);
+        flavorDiv.appendChild(checkboxWrapper);
 
-    });
+    }
+});
 
     let submitButtonContainer = document.createElement("div");
     submitButtonContainer.className = "submit-container";
@@ -107,17 +121,26 @@ let allFlavors=["Almond",
     submitButton.id = "submit-btn";
 
     // deciding mathematically how to posiiton the submit button in the middle of the rooms
-    let middleRoom = Math.ceil(numberOfRooms / 2) + 1;
-    submitButtonContainer.style.gridColumn = numberOfRooms % 2 === 0 ? `${middleRoom} / span 2` : `${middleRoom}`; 
+    // let middleRoom = Math.ceil(numberOfRooms / 2) + 1;
+    // console.log(middleRoom)
+    // submitButtonContainer.style.gridColumn = numberOfRooms % 2 === 0 
+    // ? `${middleRoom} / span 2` 
+    // : `${middleRoom}`; 
 
-    // submitButton.onclick = handleSubmit(numberOfIceCreams);
+    let totalWidth = document.getElementById("game").offsetWidth;
+    let totalColumns = numberOfRooms + 1;
+    let columnWidth = totalWidth / totalColumns;
+
+    let middlePosition = (totalWidth / 2) + (columnWidth / 2);
+
+    submitButtonContainer.style.position = "relative";
+    submitButtonContainer.style.left = `${middlePosition*0.050}rem`;
+
+
     submitButton.onclick = () => handleSubmit(numberOfIceCreams);
-
     submitButtonContainer.appendChild(submitButton);
-    parentContainer.appendChild(submitButtonContainer);
-
+    roomContainer.appendChild(submitButtonContainer);
 }
-
 
 
 function isCorrectRoomConfig(roomsInfo){
@@ -128,7 +151,7 @@ function isCorrectRoomConfig(roomsInfo){
 }
 
 
-// play audio depending on the scenario 
+// Play audio depending on the scenario 
 function playAudio(param) {
     let audio;
     switch (param) {
@@ -149,13 +172,13 @@ function playAudio(param) {
 }
 
 
-
+// Toast to raise if the answer submitted by the user is incorrect
 function displayToast(messageText, isFailure) {
     playAudio("error");
 
     Toastify({
         text: messageText,
-        duration: 2000,
+        duration: 3000,
         gravity: "top",
         position: "right",
         stopOnFocus: false,
@@ -169,24 +192,24 @@ function displayToast(messageText, isFailure) {
             margin: "10px",
             maxWidth: "300px",
             wordWrap: "break-word",
+            fontFamily: '"Special Elite", system-ui',
             opacity: "0.8"
         }
     }).showToast();
 }
 
 
-
-//collect and check the checkboxes selected by the user
+// Collect and check the checkboxes selected by the user
 function handleSubmit(numberOfIceCreams) {
 
-    //reset the highlight class before creating the binary string
+    // Reset the highlight class before creating the binary string
     var elements = document.getElementsByClassName('highlight');
     while (elements.length > 0){
     elements[0].classList.remove("highlight");}
 
     let arr = [];
 
-    //go through each flavor and create a binary string of checked rooms
+    // Go through each flavor and create a binary string of checked rooms
     for (let i = 0; i < numberOfIceCreams; i++) {
         let roomConfig = '';
         for (let j = 0; j < numberOfRooms; j++) {
@@ -195,24 +218,19 @@ function handleSubmit(numberOfIceCreams) {
         }
         arr.push(roomConfig);
 
-        //check the duplicate values for each row in real time
+        // Check the duplicate values for each row in real time
         let dupIndex = findDupRows(arr, roomConfig);
-        console.log("duplicateindex", dupIndex)
         if (dupIndex !== -1 && dupIndex !== i) {
             displayToast("Wrong choices, revise binary tree concepts and take one more chance!!", true);
             let dupRow = document.querySelectorAll(`[id*="row_${dupIndex}"]`)
-            console.log(dupRow)
             for(const row of Array.from(dupRow)){
-                console.log(row)
                 row.classList.add("highlight")
             }
             return;
         }
     }
-
     validateCombination(arr, numberOfRooms);    
 }
-
 
 
 function findDupRows(arr, currRow){
@@ -225,8 +243,7 @@ function findDupRows(arr, currRow){
 }
 
 
-
-// show a popup message if the selection is right
+// Show a popup message if the selection is right
 function displayMessage(messageText, isSuccess) {
     let modalOverlay = document.createElement("div");
     modalOverlay.setAttribute("id", "message-modal-overlay");
@@ -246,7 +263,6 @@ function displayMessage(messageText, isSuccess) {
         removeConfetti();
         if (yayAudio) yayAudio.pause();
         if (successAudio) successAudio.pause();
-
     };
 
     modalContent.appendChild(okButton);
@@ -255,8 +271,7 @@ function displayMessage(messageText, isSuccess) {
 }
 
 
-
-// party popup on successfully solving the game
+//  Party popup on successfully solving the game
 function createPopper(){
     confetti({
       particleCount: 1000,
@@ -269,20 +284,10 @@ function createPopper(){
       spread: 100,
       origin: { x: 1, y: 0.9 },
     });
-  }
+}
 
 
-
-// to remove the confetti as soon as the perosn clicks ok
-// function removeConfetti() {
-//     document.querySelectorAll(".popper-container").forEach((container) => {
-//         container.remove();
-//     });
-// }
-
-
-
-//compare the user's selection with the correct combinations
+// Compare the user's selection with the correct combinations
 function validateCombination(userArr, numberOfRooms) {
     let correctArr = generateCorrectBinaryCombinations(numberOfRooms);
 
@@ -300,8 +305,7 @@ function validateCombination(userArr, numberOfRooms) {
 }
 
 
-
-//generate all possible correct binary combinations for the given number of rooms
+// Generate all possible correct binary combinations for the given number of rooms
 function generateCorrectBinaryCombinations(numberOfRooms) {
     let correctArr = [];
 
@@ -309,10 +313,8 @@ function generateCorrectBinaryCombinations(numberOfRooms) {
         let binaryString = i.toString(2).padStart(numberOfRooms, '0');
         correctArr.push(binaryString);
     }
-
     return correctArr;
 }
-
 
 
 function handleClick(e){
