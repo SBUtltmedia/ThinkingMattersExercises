@@ -2,4 +2,5 @@
 [wordgolf](https://sbutltmedia.github.io/ThinkingMattersExercises/wordgolf) \
 [game](https://sbutltmedia.github.io/ThinkingMattersExercises/game/Twine) \
 [jampuzzle](https://sbutltmedia.github.io/ThinkingMattersExercises/match-game-new) \
-[princessandicecream](https://sbutltmedia.github.io/ThinkingMattersExercises/PrincessAndIcecreams/)
+[princessandicecream](https://sbutltmedia.github.io/ThinkingMattersExercises/PrincessAndIcecreams/) \
+[cardgame](https://sbutltmedia.github.io/ThinkingMattersExercises/Card_Game/)
