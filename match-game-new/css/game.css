@@ -22,7 +22,8 @@
 }
 
 .top-container {
-    height: fit-content
+    height: 30%;
+    padding-top: 1rem;
 }
 
 .top-container p {
@@ -30,11 +31,11 @@
     margin: 1rem;
 }
 
-h1,
+/* h1,
 h3,
 p {
   text-align: center;
-}
+} */
 
 .game-container {
     display: flex;
@@ -72,7 +73,7 @@ li:hover {
 li span {
     width: 1rem;
     height: 1rem;
-    margin: 0rem 0.25rem;
+    margin: auto;
     font-size: 1.3rem;
     display: inline-block;
 }
@@ -115,7 +116,7 @@ svg {
 
 .symbols-container {
     width: 80%;
-    margin: auto;
+    margin: 0 auto;
     height: fit-content;
     padding: 0px 10px;
 }
@@ -141,12 +142,14 @@ svg {
 .symbol-table td {
     padding: 0.3rem;
     border: 1px solid #ddd;
+    text-align: left;
 }
 
 .symbol-table th {
     background-color: rgb(5, 5, 170);
     color: white;
     font-weight: bold;
+    text-align: center;
 }
 
 .symbol-table tr:nth-child(even) {
