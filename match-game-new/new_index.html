@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Match Game</title>
+    <link rel="stylesheet" href="cutscene.css" />
+    <link rel="stylesheet" href="game.css" />
+  </head>
+  <body>
+    <div class="screen">
+      <div class="cutscene">
+        <div class="character-container">
+          <img
+            id="char1"
+            class="character active"
+            src="assets/alice_head.png"
+            alt="Character 1"
+          />
+          <img
+            id="char2"
+            class="character"
+            src="assets/redqueen_head.png"
+            alt="Character 2"
+          />
+        </div>
+        <div class="dialogue-box">
+          <p id="dialogue-text">
+            Character 1: Hello, welcome to the adventure!
+          </p>
+          <div class="audio">
+            <button>Audio</button>
+          </div>
+        </div>
+        <div class="buttons">
+        <button id="next-button">Next</button>
+        <button id="start-button">Start Game</button>
+        </div>
+      </div>
+      <div class="game hidden">
+        <h1>Game Area</h1>
+      </div>
+      <!-- <button id="end-cutscene">Start Game</button> -->
+    </div>
+    <script src="new_script.js"></script>
+    <script src="cutscene.js"></script>
+  </body>
+</html>
