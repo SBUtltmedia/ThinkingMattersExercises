@@ -1,53 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matching Game</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- <script src="resize.js"></script> -->
-</head>
-
-<body>
-  <div id="screen">
-    <div class="top-container">
-      <p>"Jam Yesterday Jam Tomorrow but never Jam Today"</p>
-      <p>Given that <b>J abbreviates “Alice eats jam”</b>, match each symbolic sentence with the alphabetical lists of English translations. You may assume that each English sentence is paired once and only once. </p>
-      <div class="symbols-container">
-        <h3>Symbols You Should Know</h3>
-        <div id="symbols2"></div>
-      </div>
-    </div>
-    
-    <main class="container">
-      <div class="game-container">
-          <ul class="draggable-list"></ul>
-          <ul class="draggable-list"></ul>
-          <!-- <div> -->
-          <div class="cheshire-cat-container" id="cat">
-            <img src="redqueen.jpeg" />
-          </div> -->
-          <div class="cat-message" id="cat-message"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Match Game</title>
+    <link rel="stylesheet" href="css/cutscene.css" />
+    <link rel="stylesheet" href="css/game.css" />
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+  </head>
+  <body>
+    <div class="screen">
+      <div class="cutscene" id="cutscene">
+        <div class="character-container">
+          <img
+            id="char1"
+            class="character active"
+            src="assets/images/alice_head.png"
+            alt="Character 1"
+          />
+          <img
+            id="char2"
+            class="character"
+            src="assets/images/redqueen_head.png"
+            alt="Character 2"
+          />
+        </div>
+        <div class="dialogue-box">
+          <p id="dialogue-text"></p>
+          <div class="audio">
+            <button>Audio</button>
+          </div>
+        </div>
+        <div class="buttons">
+        <button id="next-button">Next</button>
+        <button id="start-button">Start Game</button>
         </div>
       </div>
-   
-    </main>
-    <div id="endMessage">
-      <div class="end-game">
-        <svg class="close" onclick="closeModal()">
-          <use href="./icons.svg#close"></use>
-        </svg>
-        <h3>Well done!</h3>
-        <button class="play-btn" onclick="playAgain()">Play Again</button>
+      <div class="game hidden" id="game">
+        <div class="top-container">
+            <h1>"Jam Yesterday Jam Tomorrow but never Jam Today"</h1>
+            <p>Given that <b>J abbreviates “Alice eats jam”</b>, match each symbolic sentence with the alphabetical lists of English translations. You may assume that each English sentence is paired once and only once. </p>
+            <div class="symbols-container">
+              <h3>Symbols You Should Know</h3>
+              <div id="symbols2"></div>
+            </div>
+          </div>
+          <main class="container">
+            <div class="game-container">
+                <ul class="draggable-list">
+                </ul>
+                <ul class="draggable-list">
+                </ul>
+              <!-- <div>
+                <div class="cheshire-cat-container" id="cat">
+                  <img src="redqueen.jpeg" />
+                </div> -->
+                <div class="cat-message" id="cat-message"></div>
+              </div>
+            </div>
+          </main>
+      
+          <div id="endMessage">
+            <div class="end-game">
+              <svg class="close" onclick="closeModal()">
+                <use href="./icons.svg#close"></use>
+              </svg>
+              <h3>Well done!</h3>
+              <button class="play-btn" onclick="playAgain()">Play Again</button>
+            </div>
+          </div>
       </div>
-    </div> 
-  </div>
-
-  <script src="script.js"></script>
-  <!-- <script src="resize.js"></script> -->
-
-</body>
-
+      <!-- <button id="end-cutscene">Start Game</button> -->
+    </div>
+    <script src="js/cutscene.js"></script>
+    <script src="js/game.js"></script>
+  </body>
 </html>
