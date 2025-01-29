@@ -56,13 +56,14 @@ body {
 .character {
     width: 10rem;
     height: 10rem;
-    opacity: 0.5;
+    filter: saturate(0);
     transition: opacity 0.3s ease, transform 0.3s ease;
     border: 0.2rem solid var(--dark-green);
 }
 
 .active {
     opacity: 1;
+    filter: saturate(1);
     transform: scale(1.1);
 }
 
