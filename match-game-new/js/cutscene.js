@@ -76,18 +76,17 @@ function playAudio(speaker, index) {
   new Audio(`./assets/audio/${speaker.toUpperCase()}_${index}.wav`).play();
 }
 
-nextButton.addEventListener("click", () => {
-  currentDialogueIndex++;
-
-  if (currentDialogueIndex < dialogues.length) {
-    updateDialogue();
-  } else {
-    startButton.classList.toggle("hidden");
-    nextButton.classList.toggle("hidden");
-    skipButton.classList.toggle("hidden");
-  }
-});
-
+function runDialogue(){
+  setInterval(function() {
+    if (currentDialogueIndex < dialogues.length) {
+      updateDialogue();
+    } else {
+      startButton.classList.toggle("hidden");
+      skipButton.classList.toggle("hidden");
+    }
+    currentDialogueIndex++;
+  }, 7000);
+}
 
 [startButton, skipButton].forEach(function (element) {
   element.addEventListener("click", () => {
@@ -97,13 +96,8 @@ nextButton.addEventListener("click", () => {
   })
 });
 
-audioButton.addEventListener("click", () => {
-  // Figure out stopping old audio and continue new audio 
-  const audio = new Audio('./assets/audio/alice_1.wav');
-  audio.play();
-})
 
 
 
 // Initialize dialogue
-updateDialogue();
+runDialogue();
