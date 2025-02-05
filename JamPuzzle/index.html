@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Match Game</title>
+    <link rel="stylesheet" href="css/cutscene.css" />
+    <link rel="stylesheet" href="css/game.css" />
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+  </head>
+  <body>
+    <div class="screen">
+      <div class="cutscene" id="cutscene">
+        <div class="character-container">
+          <img
+            id="alice"
+            class="character active"
+            src="assets/images/alice_head.png"
+            alt="Character 1"
+          />
+          <img
+            id="queen"
+            class="character"
+            src="assets/images/redqueen_head.png"
+            alt="Character 2"
+          />
+        </div>
+        <div class="dialogue-box">
+          <p id="dialogue-text"></p>
+        </div>
+        <div class="buttons">
+        <button id="start-button">Start Game</button>
+        <button id="skip-button">Skip Dialogue</button>
+        </div>
+      </div>
+      <div class="game hidden" id="game">
+        <div class="top-container">
+            <h1>"Jam Yesterday Jam Tomorrow but never Jam Today"</h1>
+            <p>Given that <b>J abbreviates “Alice eats jam”</b>, match each symbolic sentence with the alphabetical lists of English translations. You may assume that each English sentence is paired once and only once. </p>
+            <div class="symbols-container">
+              <h3>Symbols You Should Know</h3>
+              <div id="symbols2"></div>
+            </div>
+          </div>
+            <div class="game-container">
+                <ul class="draggable-list">
+                </ul>
+                <ul class="draggable-list">
+                </ul>
+              <!-- <div>
+                <div class="cheshire-cat-container" id="cat">
+                  <img src="redqueen.jpeg" />
+                </div> -->
+                <div class="cat-message" id="cat-message"></div>
+              </div>
+            </div>
+      
+          <div id="endMessage">
+            <div class="end-game">
+              <svg class="close" onclick="closeModal()">
+                <use href="./icons.svg#close"></use>
+              </svg>
+              <h3>Well done!</h3>
+              <button class="play-btn" onclick="playAgain()">Play Again</button>
+            </div>
+          </div>
+      </div>
+      <!-- <button id="end-cutscene">Start Game</button> -->
+    </div>
+    <script src="js/cutscene.js"></script>
+    <script src="js/game.js"></script>
+  </body>
+</html>
