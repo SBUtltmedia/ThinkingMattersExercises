@@ -1,161 +1,201 @@
-body { 
-    font-family: Arial, sans-serif; 
-    text-align: center; 
-    overflow-y: auto;  
-    background-image: url('images/princess.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: #333; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    padding-top: 30px;
-  }
-  
-  h1 {
-    font-family: 'Georgia', serif;
-    font-size: 36px;
-    color: #4A235A;
-    text-shadow: 1px 1px 2px #ccc;
-    margin-bottom: 20px;
-    background: rgba(255, 255, 255, 0.8); 
-    padding: 10px 20px;
-    border-radius: 8px;
-  }
-  
-/*   
-  #story-container { 
-    width: 60%; 
-    background: rgba(255, 255, 255, 0.8); 
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    margin-top: 20px; 
-    max-height: 70vh;  
-    overflow-y: auto;  
-  }
-  
-  #story-text { 
-    font-size: 24px; 
-    line-height: 1.8; 
-    color: #2C3E50;
-    font-family: 'Times New Roman', serif;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-    height: 100px; /* Fixed height to display only one line
-    overflow: hidden; 
-  } */
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fff;
+}
 
-  #story-container {
-    width: 60%;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    margin-top: 100px;
-    max-height: 200px;
-    overflow: hidden; 
-    position: relative;
-  }
+#introduction {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh; 
+  text-align: center;
+  overflow: hidden;
+}
+
+.image-container {
+  width: 100%;
+  height: 100%;
+}
+
+.responsive-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#story-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 1.25rem;
+  border-radius: 0.625rem; 
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2); 
+  max-width: 37.5rem; 
+  width: 90%;
+}
+
+#story-text {
+  font-size: 1.5rem;
+  line-height: 1.8;
+  color: #2C3E50;
+  font-family: 'Times New Roman', serif;
+  text-shadow: 0.0625rem 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1);
+  /* position: absolute;
+  width: 100%;
+  top: 100%; 
+  animation: scrollUp 5s linear infinite; */
+  position: relative;
+}
+
+h1 {
+    font-family: 'Georgia', serif;
+    font-size: 2.25rem;
+    color: #4A235A;
+    text-shadow: 0.0625rem 0.0625rem 0.125rem #ccc;
+    margin-bottom: 1.25rem;
+    background: rgba(255, 255, 255, 0.8); 
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+}
+
+.hide {
+    display:none !important;
+
+}
   
-  #story-text {
-    font-size: 24px;
-    line-height: 1.8;
-    color: #2C3E50;
-    font-family: 'Times New Roman', serif;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-    /* position: absolute;
-    width: 100%;
-    top: 100%; 
-    animation: scrollUp 5s linear infinite; */
-    position: relative;
-  }
-  
-  /*scroll animation to move text up*/
-  @keyframes scrollUp {
+.show {
+    display: block;
+    visibility: visible;
+}
+
+/*scroll animation to move text up*/
+@keyframes scrollUp {
     0% {
       top: 100%;
     }
     100% {
       top: -100%;
     }
-  }
+}
 
-
-  #nextPageBtn {
+#nextPageBtn {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 1.25rem;
+    right: 1.25rem;
     background-color: #4A235A;
     color: white;
-    font-size: 35px;
-    padding: 25px 30px;
+    font-size: 2.1875rem;
+    padding: 1.5625rem 1.875rem;;
     border: none;
-    border-radius: 50px;
+    border-radius: 3.125rem;
     cursor: pointer;
-    display: none;
+    /* display: none; */
     z-index: 100;
-  }
+}
   
-  #nextPageBtn:hover {
+#nextPageBtn:hover {
     background-color: #7D3C98;
-  }
+}
   
-  /* styling for Flavors and Room page */
+/* #game{
+  display: flex;
+  flex-direction: column;
+} */
 
-  body.flavors-page {
+#gameRoom{
+  /* position: absolute; */
+  /* top: 50%; */
+  /* display: grid; */
+  gap: 0.05rem;
+  /* justify-content: center; */
+  /* transform: translateX(4%);*/
+}
+
+.headerClass {
+  display: inline-block;
+}
+
+#headerContainer {
+  font-family: "Special Elite", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+  
+/* styling for Flavors and Room page */
+body.flavors-page {
     background: none;  
     background-color: #fff;
 }
-  
-  .column {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-  }
-  
-  h2 {
+
+h2 {
       text-align: center;
-      margin-bottom: 10px;
-      font-size: 1.5em;
+      margin-top:  auto;
+      margin-bottom: 1em;
+      font-size: 2rem;
       font-weight: bold;
-  }
-  
-  #container {
-      display: grid;
-      gap: 20px;
-  }
-  
-  .flavorClass, .checkbox-container, .dropdown-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    height: 30px;
 }
- /* dropdown under every room */
-.dropdown-container {
-    margin-top: 10px;
+
+#container {
+      /* display: grid;
+      gap: 20px; */
+      display: grid;
+      gap: 1vw;
+      justify-items: center;
+      width: 100%;
+      height: 100%;
+}
+
+input[type="checkbox"] {
+    margin: 0;
+    padding: 0;
+    border: none;
+    zoom: 1.5;
+    /* transform: scale(0.9); */
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    /* padding: 0.3125rem; */
+  height: 1.875rem;
+  /* display:inline-block; */
 }
 
 /* submit button */
 .submit-container {
-  display: flex;       
-  justify-content: center;  
-  margin-top: 20px;       
+text-align: center;
 }
+
+/* div{
+  border: black 1px solid;
+} */
 
 #submit-btn {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 1vw 2vw;
+  font-size: 1.5rem;
   cursor: pointer;
+  font-family:'Courier New', Courier, monospace;
+  font-weight: bold;
+  border: black 1px solid;
 }
 
-/* modal for messages */
+.center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* modal for messages display */
 #message-modal-overlay {
   position: fixed;
   top: 0;
@@ -169,29 +209,63 @@ body {
   z-index: 1000;
 }
 
-/* modal content styling */
+/* modal content box styling */
 .modal-content {
   background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 2.8125rem;
+  border-radius: 1.25rem;
   text-align: center;
-  width: 300px;
+  width: 25rem;
 }
 
-/* Success and Error styles for modal content */
+/* style the "Good job!" text */
+.modal-content p {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #155724;
+  margin-bottom: 1.5rem;
+  font-family: 'Special Elite', serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* success style for modal content */
 .modal-success {
   background-color: #d4edda;
   color: #155724;
 }
 
-.modal-error {
-  background-color: #f8d7da;
-  color: #721c24;
-}
-
 /* OK button styling in modal */
 .modal-content button {
-  margin-top: 10px;
-  padding: 8px 12px;
+  margin-top: 0.625rem;
+  padding: 0.5rem 0.75rem;
   cursor: pointer;
+  font-family: 'Special Elite', serif;
+  font-size: 1.225rem;
+  color: #155724;
+  background-color: #fff;
+  border: 0.125rem solid #155724;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  background-color: #155724;
+  color: #fff;
+}
+
+/*highlight duplicate first row*/
+.highlight{
+  background-color: #dc143c;
+  /* padding: 0.01%; */
+  /* font-size: 10rem; */
+} 
+
+/* style the text of flavors column*/
+.flavorClass {
+  font-family: "Special Elite", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  /* height: 1.875rem;
+  line-height: 1.5; */
 }

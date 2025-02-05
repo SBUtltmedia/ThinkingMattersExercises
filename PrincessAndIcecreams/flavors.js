@@ -1,9 +1,22 @@
-let numberOfRooms=2
+const urlParams = new URLSearchParams(window.location.search);
+
+let numberOfRooms=Math.min(urlParams.get('numberOfRooms') || 2,5);
 let numberOfIceCreams=2**numberOfRooms
+let yayAudio, successAudio;
 
-addEventListener("DOMContentLoaded",() => init(numberOfRooms));
+// Iterate through all parameters
+for (const [key, value] of urlParams.entries()) {
+  console.log(key, value);
+}
 
-//create the layout with flavors and checkboxes for each room
+// Wait for the page to fully load then initialize the game and also adjust the window sizes.
+addEventListener("DOMContentLoaded",() => {
+    init(numberOfRooms);    
+    resizeWindow();
+});
+
+
+// Create the layout with flavors and checkboxes for each room
 function init(numberOfRooms){
 
 let allFlavors=["Almond",
@@ -37,72 +50,110 @@ let allFlavors=["Almond",
     "Sweet potato maple walnut",
     "Ube (Philippines, purple yam)",
     "Vietnamese Coffee"]
-    let flavorContainer = document.getElementById("flavorContainer")
-    let roomContainer = document.getElementById("container")
+    let flavorContainer =  Object.assign(document.createElement("div"), {
+        id: "flavorContainer"
+    });
 
-     //create a column for each room
+    let roomContainer = document.getElementById("gameRoom")
+
+    // Create header row
+    let headerContainer = Object.assign(document.createElement("div"), {
+        id: "headerContainer",
+        className: "headerClass",
+    });
+
+    let contentOfTheHeader = Object.assign(document.createElement("div"), {
+        innerHTML: "<h2>FLAVORS</h2>",
+        className: "roomHeaderClass",
+    });
+
+    headerContainer.appendChild(contentOfTheHeader);
+
     for(let i = 0 ; i < numberOfRooms ; i++){
-        let roomDiv = Object.assign(document.createElement("div"),{
+        let roomHeaderDiv = Object.assign(document.createElement("div"),{
             innerHTML : `<h2>ROOM ${i+1}</h2>`,
-            id : `room_${i}`,
-            className:"column"
+            className:"roomHeaderClass"
         })
-        roomContainer.append(roomDiv)
+        headerContainer.appendChild(roomHeaderDiv)
     }
 
-    //adjusting the 1 or more than 1 columns layout for each room
-    let parentContainer=document.getElementById("container")
-    let gridTemplateColumns = `2fr `;
-    for (let i = 0; i < numberOfRooms; i++) {
-        gridTemplateColumns += `1fr `;
-    }
-    parentContainer.setAttribute("style",`grid-template-columns:${gridTemplateColumns.trim()}`);
+    roomContainer.appendChild(headerContainer)
+    roomContainer.appendChild(flavorContainer)
 
-    //get only as many flavors as needed for the combinations on the basis of the number of rooms
-    let currentFlavors = allFlavors.slice(0, numberOfIceCreams); 
-
+    let currentFlavors = allFlavors.sort(() => Math.random() - 0.5).slice(0, numberOfIceCreams); 
+ 
     currentFlavors.forEach((flavor,id) => {
         let flavorDiv=Object.assign(document.createElement("div"),{
             innerHTML:flavor,
-            id: `flavor-${id+1}`,
-            className:"flavorClass"
-        })
+            id: `flavor_row_${id}`,
+            className:"flavorClass",
+            style: `display: grid; grid-template-columns: repeat(${numberOfRooms+1}, 1fr)`
+    })
+        
     flavorContainer.append(flavorDiv)
     flavorDiv.addEventListener('click',handleClick)
 
-    // console.log("current number of icecreams",2**numberOfRooms)
-
     for (let i = 0; i < numberOfRooms; i++) {
         let roomId = `room_${i}`
-        // console.log(roomId)
-        // console.log("Here",i)
-        let roomDiv = document.getElementById(`room_${i}`);
-        let checkboxContainer = Object.assign(document.createElement("div"), {
-            className: "checkbox-container"
+        let roomDiv = document.getElementById(`${roomId}`);
+        // let checkboxContainer = Object.assign(document.createElement("div"), {
+        //     className: "checkbox-container"
+        // });
+        let checkboxWrapper = Object.assign(document.createElement("div"), {
+            id: `checkbox_wrapper_room_${i}_checkbox_row_${id}`,
+            className: "checkbox-wrapper"
         });
         let checkbox = Object.assign(document.createElement("input"), {
             type: "checkbox",
-            id: `room_${i}-checkbox-${id}`
+            id: `room_${i}_checkbox_row_${id}`
         });
-        checkboxContainer.appendChild(checkbox);
-        roomDiv.appendChild(checkboxContainer);
+        checkboxWrapper.appendChild(checkbox);
+        // roomDiv.appendChild(checkboxWrapper);
+        flavorDiv.appendChild(checkboxWrapper);
+
     }
+});
 
-    });
+    let submitButtonContainer = Object.assign(document.createElement("div"),
+    {className: "submit-container",
+        style: `display: grid; grid-template-columns:1fr ${numberOfRooms}fr`
+    })
 
-    let submitButtonContainer = document.createElement("div");
-    submitButtonContainer.className = "submit-container";
+    let spacer = Object.assign(document.createElement("div"),
+    {className: "fClass"})
 
-    let submitButton = document.createElement("button");
-    submitButton.innerHTML = "Submit";
-    submitButton.id = "submit-btn";
-    // submitButton.onclick = handleSubmit(numberOfIceCreams);
+    let centeredButton = Object.assign(document.createElement("div"),
+    {className: "center"})
+
+    let submitButton = Object.assign(document.createElement("div"),
+    {innerHTML: "Submit",
+    id: "submit-btn"})
+
+    // deciding mathematically how to posiiton the submit button in the middle of the rooms
+    // let middleRoom = Math.ceil(numberOfRooms / 2) + 1;
+    // console.log(middleRoom)
+    // submitButtonContainer.style.gridColumn = numberOfRooms % 2 === 0 
+    // ? `${middleRoom} / span 2` 
+    // : `${middleRoom}`; 
+
+    // let totalWidth = document.getElementById("game").offsetWidth;
+    // let totalColumns = numberOfRooms + 1;
+    // let columnWidth = totalWidth / totalColumns;
+
+    // let middlePosition = (totalWidth / 2) + (columnWidth / 2);
+
+    // submitButtonContainer.style.position = "relative";
+    // submitButtonContainer.style.left = `${middlePosition*0.050}rem`;
+
+
+
     submitButton.onclick = () => handleSubmit(numberOfIceCreams);
-
-    submitButtonContainer.appendChild(submitButton);
-    parentContainer.appendChild(submitButtonContainer);
-
+    submitButtonContainer.appendChild(spacer);
+    centeredButton.appendChild(submitButton);
+    submitButtonContainer.appendChild(centeredButton);
+    roomContainer.appendChild(submitButtonContainer);
 }
+
 
 function isCorrectRoomConfig(roomsInfo){
     // let numberOfRooms=roomsInfo[0].length
@@ -111,47 +162,107 @@ function isCorrectRoomConfig(roomsInfo){
     return roomsInfo.length!=Array.from(new Set(roomsInfo)).length
 }
 
-//collect and check the checkboxes selected by the user
+
+// Play audio depending on the scenario 
+function playAudio(param) {
+    let audio;
+    switch (param) {
+        case "success":
+            audio = new Audio('audio/success.mp3');
+            break;
+        case "yay":
+            audio = new Audio('audio/yay.mp3');
+            break;
+        case "error":
+            audio = new Audio('audio/error.mp3');
+            audio.currentTime = 0.41;
+            break;
+        default:
+    }
+    audio.play();
+    return audio;
+}
+
+
+// Toast to raise if the answer submitted by the user is incorrect
+function displayToast(messageText, isFailure) {
+    playAudio("error");
+
+    Toastify({
+        text: messageText,
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        stopOnFocus: false,
+        style: {
+            background: isFailure ? "crimson" : "green",
+            color: "white",
+            fontWeight: "bold",
+            borderRadius: "5px",
+            padding: "15px 25px",
+            lineHeight: "1.5",
+            margin: "10px",
+            maxWidth: "300px",
+            wordWrap: "break-word",
+            fontFamily: '"Special Elite", system-ui',
+            opacity: "0.8"
+        }
+    }).showToast();
+}
+
+
+// Collect and check the checkboxes selected by the user
 function handleSubmit(numberOfIceCreams) {
+
+    // Reset the highlight class before creating the binary string
+    var elements = document.getElementsByClassName('highlight');
+    while (elements.length > 0){
+    elements[0].classList.remove("highlight");}
+
     let arr = [];
-    
-    //go through each flavor and create a binary string of checked rooms
+
+    // Go through each flavor and create a binary string of checked rooms
     for (let i = 0; i < numberOfIceCreams; i++) {
         let roomConfig = '';
         for (let j = 0; j < numberOfRooms; j++) {
-            let checkbox = document.getElementById(`room_${j}-checkbox-${i}`);
+            let checkbox = document.getElementById(`room_${j}_checkbox_row_${i}`);
             roomConfig += checkbox.checked ? '1' : '0';
         }
         arr.push(roomConfig);
-    }
 
+        // Check the duplicate values for each row in real time
+        let dupIndex = findDupRows(arr, roomConfig);
+        if (dupIndex !== -1 && dupIndex !== i) {
+            displayToast("Wrong choices, revise binary tree concepts and take one more chance!!", true);
+            let dupRow = document.querySelectorAll(`[id*="row_${dupIndex}"]`)
+            for(const row of Array.from(dupRow)){
+                row.classList.add("highlight")
+            }
+            return;
+        }
+    }
     validateCombination(arr, numberOfRooms);    
 }
 
-// function findDupRows(rowString){
-//     for (let i = 0; i < numberOfIceCreams; i++) {
-//         let currRow = ""
-//         for (let j = 0; j < numberOfRooms; j++) {
-//           currRow += document.getElementById(`room_${j}-checkbox-${i}`).checked?'1':'0';
-//     }
 
-//     if (currRow == rowString) {
-//         return i;
-//     }
-//     }
+function findDupRows(arr, currRow){
+    for (let i=0;i<arr.length-1;i++) {
+        if (arr[i]===currRow) {
+            return i;
+        }
+    }
+    return -1;
+}
 
-//     return False
 
-//     }
-
-// show a popup message if the selection is wrong or right
+// Show a popup message if the selection is right
 function displayMessage(messageText, isSuccess) {
     let modalOverlay = document.createElement("div");
     modalOverlay.setAttribute("id", "message-modal-overlay");
 
     let modalContent = document.createElement("div");
-    modalContent.className = "modal-content";
-    modalContent.classList.add(isSuccess ? "modal-success" : "modal-error");
+    modalContent.className = "modal-content modal-success"; 
+    // modalContent.classList.add(isSuccess ? "modal-success" : "modal-error");
 
     let message = document.createElement("p");
     message.innerText = messageText;
@@ -161,6 +272,9 @@ function displayMessage(messageText, isSuccess) {
     okButton.innerText = "OK";
     okButton.onclick = () => {
         document.body.removeChild(modalOverlay);
+        removeConfetti();
+        if (yayAudio) yayAudio.pause();
+        if (successAudio) successAudio.pause();
     };
 
     modalContent.appendChild(okButton);
@@ -168,23 +282,42 @@ function displayMessage(messageText, isSuccess) {
     document.body.appendChild(modalOverlay);
 }
 
-//compare the user's selection with the correct combinations
+
+//  Party popup on successfully solving the game
+function createPopper(){
+    confetti({
+      particleCount: 1000,
+      spread: 100,
+      origin: { x: 0, y: 0.9 },
+    });
+  
+    confetti({
+      particleCount: 1000,
+      spread: 100,
+      origin: { x: 1, y: 0.9 },
+    });
+}
+
+
+// Compare the user's selection with the correct combinations
 function validateCombination(userArr, numberOfRooms) {
     let correctArr = generateCorrectBinaryCombinations(numberOfRooms);
 
     let sortedUserArr = [...userArr].sort();
-    // console.log(sortedUserArr);
     let sortedCorrectArr = [...correctArr].sort();
-    // console.log(sortedCorrectArr);
 
     if (JSON.stringify(sortedUserArr) === JSON.stringify(sortedCorrectArr)) {
-        displayMessage("Good job!", true);
-    }else {
-        displayMessage("Wrong choices, revise binary tree concepts and take one more chance!", false);
+        successAudio = playAudio("success");
+        yayAudio = playAudio("yay");
+        displayMessage("Good Job!", true);
+        createPopper();
+        }else {
+        // displayMessage("Wrong choices, revise binary tree concepts and take one more chance!", false);
     }
 }
 
-//generate all possible correct binary combinations for the given number of rooms
+
+// Generate all possible correct binary combinations for the given number of rooms
 function generateCorrectBinaryCombinations(numberOfRooms) {
     let correctArr = [];
 
@@ -192,9 +325,9 @@ function generateCorrectBinaryCombinations(numberOfRooms) {
         let binaryString = i.toString(2).padStart(numberOfRooms, '0');
         correctArr.push(binaryString);
     }
-
     return correctArr;
 }
+
 
 function handleClick(e){
     console.log(e.currentTarget.id)
