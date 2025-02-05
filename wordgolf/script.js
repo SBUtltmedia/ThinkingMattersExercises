@@ -1,6 +1,7 @@
 $(function () {
-    new WordGolf()
+    new WordGolf();
 });
+
 
 let globalwords;
 
@@ -23,8 +24,6 @@ class WordGolf {
                 this.init();
             }
         }
-
-
     }
     async getWords() {
         let response = await fetch("dictionary.json");
@@ -35,42 +34,44 @@ class WordGolf {
         // console.log(findWordLadder("wheat", "bread", this.words))
         response = await fetch("levels.json");
         this.levels = await response.json();
-
-        // console.log(findWordLadder("pitch", "tents", this.words));
-        // for(let level of this.levels) {
-        //     let path = findWordLadder(level["from"], level["to"], this.words);
-        //     if(path=== undefined) {
-        //         continue;
-        //     } else {
-        //     level.par = path.length;
-        //     }
-        // }
-        // this.levels.sort((a,b) => {
-        //     if(a.par < b.par) {
-        //         return -1;
-        //     }
-        //     if(a.par > b.par) {
-        //         return 1;
-        //     }
-        //     return 0;
-        // })
-        // console.log(JSON.stringify(this.levels));
-
-        // console.log(this.levels);
-
-        // console.log(this.levels.length)
         this.init()
-
-
     }
+
+    getQueryParam(param, defaultValue) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.has(param) ? urlParams.get(param) : defaultValue;
+    }
+
+    updateQueryParam(param, value) {
+        const url = new URL(window.location);
+        const searchParams = new URLSearchParams(url.search);
+        searchParams.set(param, value);
+        url.search = searchParams.toString();
+        history.pushState({}, '', url); // Update the URL in the address bar
+    }
+
     init() {
+        let startWord = this.getQueryParam('from', null);  // Default to 1 if not found
+        let endWord = this.getQueryParam('to', null);  // Default to 0 if not found
+        let level = this.getQueryParam('sentence', null);  // Default to 'Normal'
+        let score = 0;
         document.querySelector("#dialog")?.remove();
+
+        console.log({startWord, endWord, level});
+
+        if (!startWord && !endWord && !level) {
+            document.getElementsByClassName("levels")[0].classList.remove('hidden');  // Show the div
+            this.showAvailableLevels();  // Show available levels if parameters are missing
+        } else {
+            document.getElementsByClassName("levels")[0].classList.add('hidden');  // Hide the div
+        }
+        
 
         // shows available levels
 
-        if(document.querySelector('.levels').children.length === 1) {
-            this.showAvailableLevels();
-        }
+        // if(document.querySelector('.levels').children.length === 1) {
+        //     this.showAvailableLevels();
+        // }
         console.log("current level: ", this.currentLevel);
         // Current level score
         this.curLevelScore = 0;

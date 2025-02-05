@@ -330,3 +330,7 @@ position:absolute;
   width: 0.8rem;
   height: 0.8rem;
 }
+
+.hidden {
+  display: none !important;
+}
