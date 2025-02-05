@@ -48,6 +48,8 @@ const gameDiv = document.getElementById("game");
 
 startButton.classList.add("hidden");
 let turn = 0;
+let audioInstances = [];
+let dialogueInterval;
 
 function updateDialogue() {
   const { speaker, text } = dialogues[currentDialogueIndex];
@@ -73,11 +75,19 @@ function updateDialogue() {
 
 
 function playAudio(speaker, index) {
-  new Audio(`./assets/audio/${speaker.toLowerCase()}_${index}.wav`).play();
+  const audio = new Audio(`./assets/audio/${speaker.toLowerCase()}_${index}.wav`);
+  audioInstances.push(audio); // Add the new audio instance to the array
+  audio.play();
+}
+
+function stopAllAudio() {
+  // Stop all active audio instances
+  audioInstances.forEach(audio => audio.pause());
+  audioInstances = []; // Clear the array
 }
 
 function runDialogue(){
-  setInterval(function() {
+  dialogueInterval = setInterval(function() {
     if (currentDialogueIndex < dialogues.length) {
       updateDialogue();
     } else {
@@ -90,13 +100,13 @@ function runDialogue(){
 
 [startButton, skipButton].forEach(function (element) {
   element.addEventListener("click", () => {
+    stopAllAudio();
+    clearInterval(dialogueInterval); 
     cutsceneDiv.classList.toggle('hidden');
     gameDiv.classList.toggle('hidden');
     startGame();
   })
 });
-
-
 
 
 // Initialize dialogue
