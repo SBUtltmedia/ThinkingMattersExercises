@@ -4,15 +4,15 @@ body {
     margin: 0;
     padding: 20px;
     min-height: 100vh;
-    background: 
-        radial-gradient(circle at 50% -100%, #b8c6db 45%, transparent 50%),
+    background-color:         #000000;
+
+        /* radial-gradient(circle at 50% -100%, #b8c6db 45%, transparent 50%),
         radial-gradient(circle at 100% 50%, #9bc5c3 20%, transparent 51%),
         radial-gradient(circle at 0% 80%, #c5b8db 35%, transparent 36%),
         radial-gradient(circle at 80% 100%, #a1c4fd 25%, transparent 26%),
-        radial-gradient(circle at 20% 50%, #bdc3c7 30%, transparent 31%),
-        #e2e2e2;
+        radial-gradient(circle at 20% 50%, #bdc3c7 30%, transparent 31%), */
     background-size: 200% 200%;
-    animation: bgShift 25s ease infinite;
+    /* animation: bgShift 25s ease infinite; */
 }
 
 @keyframes bgShift {
@@ -32,23 +32,7 @@ h1 {
     font-family: 'Special Elite', cursive;
     font-size: 2.25rem;
     letter-spacing: 0.125rem;
-    background: linear-gradient(
-        45deg, 
-        #FF0000,
-        #8B0000,
-        #FFD700,
-        #006400,
-        #00FF00,
-        #0000FF,
-        #191970,
-        #FF1493,
-        #800080
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: gradient 8s ease infinite;
-    background-size: 400% 400%;
+    color: #000080;
     text-shadow: 3px 3px 6px rgba(0,0,0,0.15);
     font-weight: bold;
 }
@@ -67,11 +51,6 @@ h1 {
     margin: 0.625rem 0;
 }
 
-.cell {
-    font-family: 'Special Elite', cursive;
-    background: #000000 !important;
-    color: white !important;
-}
 
 button {
     font-family: 'Special Elite', cursive;
@@ -95,10 +74,13 @@ button {
 }
 
 .cell {
+    font-family: 'Special Elite', cursive;
+    background: white !important;  /* Change default background to white */
+    color: black !important; /* Ensure text is visible */
     width: 5rem;
     height: 5rem;
-    background: #000000 !important;
-    color: white !important;
+    /* background: #000000 !important;
+    color: white !important; */
     font-size: 1.125rem;
     font-weight: bold;
     display: flex;
@@ -281,22 +263,9 @@ button {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
 h1:hover {
     transform: scale(1.02);
     transition: transform 0.3s ease;
-    animation: gradient 2s ease infinite;
 }
 
 .reset-button {
@@ -387,4 +356,35 @@ h1:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 400px;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
 }

@@ -25,16 +25,29 @@
     <div id="introduction">
       <div class="image-container">
         <img src="images/princess.jpg" class="responsive-image" />
+        <div class="button-container"> 
+          <button id="playButton" onclick="playSequence()">Play Audio Sequence</button>
+        </div>
     </div>    
     <div id="story-container" class="show">
-      <div id="story-text"></div>
+      <div id="story-text">
+        
+      </div>
     </div>
+
+    <div id="audio-container">
+      <video id="myAudio" nocontrols>
+        <source type="audio/mp3" src="tts/out/priya_0.wav">
+        <track label="English" kind="subtitles" srclang="en" src="story/priya_0.vtt" default>
+      </video>
+    </div>
+
+
     <div id="current-page" >
       <button id="nextPageBtn" onclick="goToNextPage()">➡</button> 
       <!-- <script>goToNextPage()</script> -->
     </div>
   </div>
-  
   </div>
 
 </body>

@@ -1,11 +1,61 @@
 const urlParams = new URLSearchParams(window.location.search);
+let phase = Math.min(urlParams.get('phase') || 1, 4);
 
-let phase=Math.min(urlParams.get('phase') || 1,4);
+const phaseInfo = [
+    { 
+        'description': 'PHASE 1: HOT', 
+        'instructions': 'Players take turns choosing cards from a set of nine, each containing a word. The objective is to be the first to collect three cards with words that share a common letter.' 
+    },
+    { 
+        'description': 'PHASE 2: ACE', 
+        'instructions': 'Players take turns choosing cards numbered Ace through 9. The objective is to be the first to collect three cards whose sum equals 15.' 
+    },
+    { 
+        'description': 'PHASE 3: Tic-Tac-Toe', 
+        'instructions': 'Players take turns placing Xs and Os on a standard 3×3 Tic-Tac-Toe board. The objective is to be the first to get three of your marks in a row - horizontally, vertically or diagonally, while strategically blocking your opponent.' 
+    },
+    { 
+        'description': 'PHASE 4: Magic Square', 
+        'instructions': 'This phase combines elements from the previous games. Players must recognize connections between words, numbers and patterns to form winning strategies. The key lies in identifying relationships, such as how three words sharing a common letter in "Hot" correspond to a sum of 15 in "Ace".' 
+    }
+];
 
 
-// Iterate through all parameters
-for (const [key, value] of urlParams.entries()) {
-  console.log(key, value);
+// Ensure DOM is fully loaded before switching phase and showing instructions
+window.addEventListener('DOMContentLoaded', () => {
+    setupUI()
+    switchToPhase(phase);
+
+    // Ensure modal is shown only after elements are available
+    const modal = document.getElementById('instructions-modal');
+    // if (modal && phase <= 3) {
+    //     showInstructions(phase); 
+    // }
+    
+});
+
+{/* <div class="phase-overlay" id="phase2-overlay">
+<button class="phase-button" onclick="switchToPhase(2)">PHASE 2: Number Mode</button>
+</div> */}
+
+function setupUI(){
+    for (const [i,val] of phaseInfo.entries()){
+        console.log("here",i+1)
+        let phaseOverlay = Object.assign(document.createElement('div'),
+        {className: "phase-overlay", 
+            id: `phase${i+1}-overlay`
+        })
+    
+        let phaseButton = Object.assign(document.createElement('button'),
+        {   className: "phase-button", 
+            innerHTML: val["description"]
+        })
+        phaseButton.addEventListener("click", () => switchToPhase(i + 1));
+    
+        phaseOverlay.appendChild(phaseButton)
+        document.getElementsByTagName("body")[0].appendChild(phaseOverlay)
+    }
+
 }
 
 
@@ -25,17 +75,13 @@ let availableNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 let playerNumbers = [];
 let computerNumbers = [];
 let gamesPlayed = 0;
-let gameMode = 'word';
 let currentPHASE = 1;
 const boardElement = document.getElementById('board');
 const gameStatus = document.getElementById('gameStatus');
 
-function createBoard() {
+function createBoard(phase) {
     boardElement.innerHTML = '';
-    boardElement.classList.remove('grid-layout');
-    if (gameMode === 'xo' || gameMode === 'isomorphic') {
-        boardElement.classList.add('grid-layout');
-    }
+    boardElement.classList.toggle('grid-layout', phase === 3 || phase === 4);
     
     const magicSquareOrder = [2, 7, 6, 9, 5, 1, 4, 3, 8];
     magicSquareOrder.forEach(num => {
@@ -43,17 +89,17 @@ function createBoard() {
         cell.classList.add('cell');
         cell.dataset.number = num;
         
-        switch(gameMode) {
-            case 'word':
+        switch(phase) {
+            case 1:
                 cell.textContent = wordBindings[num];
                 break;
-            case 'number':
+            case 2:
                 cell.textContent = num;
                 break;
-            case 'xo':
+            case 3:
                 cell.classList.add('xo-cell');
                 break;
-            case 'isomorphic':
+            case 4:
                 cell.classList.add('isomorphic-cell');
                 cell.innerHTML = `
                     <div class="main-symbol"></div>
@@ -131,16 +177,16 @@ function updateCellDisplay(cell, player) {
     cell.classList.add(`taken-${player}`);
     const symbol = player === 'player' ? 'X' : 'O';
 
-    switch(gameMode) {
-        case 'word':
-        case 'number':
+    switch(currentPHASE) {
+        case 1:
+        case 2:
             const currentContent = cell.textContent;
             cell.innerHTML = currentContent + `<span class="label">${player}</span>`;
             break;
-        case 'xo':
+        case 3:
             cell.textContent = symbol;
             break;
-        case 'isomorphic':
+        case 4:
             const mainSymbol = cell.querySelector('.main-symbol');
             mainSymbol.textContent = symbol;
             break;
@@ -214,14 +260,26 @@ function findBestMove() {
 
 function endGame() {
     gamesPlayed++;
-    if (gamesPlayed === 1) {
+
+    const urlPhase = urlParams.get('phase'); // Get phase from URL (null if not present)
+
+    if (urlPhase) {
+        return;
+    }
+
+    if (currentPHASE === 1) {
+        currentPHASE = 2;  // Move to Phase 2
         showPhaseTransition(2);
     } else if (currentPHASE === 2) {
+        currentPHASE = 3;  // Move to Phase 3
         showPhaseTransition(3);
     } else if (currentPHASE === 3) {
+        currentPHASE = 4;  // Move to Phase 4
         showPhaseTransition(4);
     }
 }
+
+
 
 function showPhaseTransition(phase) {
     setTimeout(() => {
@@ -229,58 +287,61 @@ function showPhaseTransition(phase) {
     }, 1000);
 }
 
+
 function switchToPhase(phase) {
-    const gameMode = document.getElementById('game-mode');
+    const gameModeElement = document.getElementById('game-mode');
     const board = document.querySelector('.board');
     
-    gameMode.style.animation = 'none';
+    gameModeElement.style.animation = 'none';
     board.classList.remove('show');
     
-    void gameMode.offsetWidth;
+    void gameModeElement.offsetWidth;
     
-    gameMode.style.animation = 'phaseEntrance 1.5s ease-out forwards';
+    gameModeElement.style.animation = 'phaseEntrance 1.5s ease-out forwards';
     
     setTimeout(() => {
         board.classList.add('show');
     }, 1000);
+
+    document.getElementById(`phase${phase}-overlay`).style.display = 'none';
+    gameModeElement.textContent = phaseInfo[phase - 1].description;
+    
+    resetGame(phase);
+    
+    // Show instructions when phase changes (except for Phase 4)
+    console.log("Current Phase:", phase);
+    // if (phase !== 4) {
+        showInstructions(phase);
+    //}
+
 }
 
-function switchToNumberMode() {
-    switchToPhase(2);
-    gameMode = 'number';
-    currentPHASE = 2;
-    document.getElementById('phase2-overlay').style.display = 'none';
-    document.getElementById('game-mode').textContent = 'PHASE 2: Number Mode';
-    resetGame();
+// Function to Display Instructions Modal
+function showInstructions(phase) {
+    const modal = document.getElementById('instructions-modal');
+    const title = document.getElementById('modal-title');
+    const text = document.getElementById('modal-text');
+    const closeButton = document.querySelector('.close-button');
+
+    title.textContent = phaseInfo[phase - 1].description;
+    text.textContent = phaseInfo[phase - 1].instructions;
+
+    modal.style.display = 'flex';
+
+    // Close modal when clicking the close button
+    closeButton.onclick = () => {
+        modal.style.display = 'none';
+    };
 }
 
-function switchToXOMode() {
-    switchToPhase(3);
-    gameMode = 'xo';
-    currentPHASE = 3;
-    document.getElementById('phase3-overlay').style.display = 'none';
-    document.getElementById('game-mode').textContent = 'PHASE 3: X/O Mode';
-    resetGame();
-}
 
-function switchToIsomorphicMode() {
-    switchToPhase(4);
-    gameMode = 'isomorphic';
-    currentPHASE = 4;
-    document.getElementById('phase4-overlay').style.display = 'none';
-    document.getElementById('game-mode').textContent = 'PHASE 4: Combined Mode';
-    resetGame();
-}
-
-function resetGame() {
+function resetGame(phase) {
     availableNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     playerNumbers = [];
     computerNumbers = [];
     gameStatus.textContent = '';
     boardElement.classList.remove('game-over');
-    createBoard();
+    createBoard(phase);
 }
 
-window.addEventListener('load', () => switchToPhase(1));
-
-createBoard();
+createBoard(phase);

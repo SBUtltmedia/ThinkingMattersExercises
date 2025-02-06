@@ -1,48 +1,26 @@
 {
     "problem_sets": {
         "alice": {
+            "questions": [
+                "yesterday all_pasts yesterday J",
+                "some_past all_pasts not J",
+                "all_pasts l J if yesterday not J r",
+                "all_pasts l J or yesterday J r",
+                "forevermore tomorrow not J",
+                "eventually l J and tomorrow J r",
+                "forevermore l J if tomorrow  forevermore not J r",
+                "forevermore l l J if tomorrow not J r and l not J if tomorrow J r r"
+            ],
             "answers": [
-                {
-                    "question": 1,
-                    "text": "Until the day before yesterday, Alice always had eaten jam.",
-                    "symbolism": "yesterday all_pasts yesterday J"
-                },
-                {
-                    "question": 2,
-                    "text": "Alice will eat jam every other day.",
-                    "symbolism": "forevermore tomorrow not J"
-                },
-                {
-                    "question": 3,
-                    "text": "Before a finite number of days ago, Alice had never eaten jam.",
-                    "symbolism": "some_past all_pasts not J"
-                },
-                {
-                    "question": 4,
-                    "text": "At some time in the future, Alice will eat jam two or more days in a row.",
-                    "symbolism": "eventually l J and tomorrow J r"
-                },
-                {
-                    "question": 5,
-                    "text": "Alice has never eaten jam two (or more) days in a row.",
-                    "symbolism": "all_pasts l J if yesterday not J r"
-                },
-                {
-                    "question": 6,
-                    "text": "Alice will eat jam at most once.",
-                    "symbolism": "forevermore l J if tomorrow  forevermore not J r"
-                },
-                {
-                    "question": 7,
-                    "text": "There has never been two or more days in a row in which Alice did not eat jam.",
-                    "symbolism": "all_pasts l J or yesterday J r"
-                },
-                {
-                    "question": 8,
-                    "text": "Alice will never eat jam after today.",
-                    "symbolism": "forevermore l l J if tomorrow not J r and l not J if tomorrow J r r"
-                }
+                {"question": 1, "text": "Until the day before yesterday, Alice always had eaten jam."},
+                {"question": 2, "text": "Alice will eat jam every other day."},
+                {"question": 3, "text": "Before a finite number of days ago, Alice had never eaten jam."},
+                {"question": 4, "text":  "At some time in the future, Alice will eat jam two or more days in a row."},
+                {"question": 5, "text": "Alice has never eaten jam two (or more) days in a row."},
+                {"question": 6, "text": "Alice will eat jam at most once."},
+                {"question": 7, "text": "There has never been two or more days in a row in which Alice did not eat jam."},
+                {"question": 8, "text": "Alice will never eat jam after today."}
             ]
         }
     }
-}
+}											

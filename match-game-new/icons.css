@@ -1,0 +1,17 @@
+.forevermore, .eventually, .tomorrow {
+    stroke: green;
+    stroke-width: 0.3rem;
+    fill: none;
+}
+
+.all_pasts, .some_past, .yesterday {
+    fill:red;
+}
+/* svg {
+    width: 10rem;
+} */
+svg {
+    margin: 0 0.05rem;
+    width: 1rem;
+    height: 1rem;
+}
