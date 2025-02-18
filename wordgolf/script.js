@@ -12,11 +12,11 @@ class WordGolf {
         this.getWords();
         this.totalScore = 0;
         this.callbacks = {
-            "Play Again": () => {
+            "Restart Game": () => {
                 this.currentLevel = 0;
                 this.init();
             },
-            "Try Level Again": () => {
+            "Try Again": () => {
                 this.init();
             },
             "Go To Next Level": () => {
@@ -66,6 +66,7 @@ class WordGolf {
             document.getElementsByClassName("levels")[0].classList.remove('hidden');  // Show the div
             this.showAvailableLevels();  // Show available levels if parameters are missing
         } else {
+            this.currentLevel = -1;
             document.getElementsByClassName("levels")[0].classList.add('hidden');  // Hide the div
             document.getElementsByClassName("game-area")[0].classList.add("game-area-center");
         }
@@ -186,13 +187,20 @@ class WordGolf {
         callback();
 
     }
+
     win(par) {
-        if(this.currentLevel === this.levels.length-1) {
-            this.makeModal({ div: ["Congrats!", `You completed this level in ${this.curLevelScore} attempts.`], button: ["Play Again", "g"] })
-        } else if(this.curLevelScore > par) {
-            this.makeModal({ div: [`You did not complete this level under par: ${par} attempts.`], button: ["Try Level Again"] })
+        if (this.currentLevel === -1) {
+            if (this.curLevelScore > par) {
+                this.makeModal({ div: [`You did not complete the game under par: ${par} attempts.`], button: ["Try Again"] });
+            } else {
+                this.makeModal({ div: ["Congrats!", `You completed the game in ${this.curLevelScore} attempts.`], button: ["Try Again"] });
+            }
+        } else if (this.currentLevel === this.levels.length - 1) {
+            this.makeModal({ div: ["Congrats!", `You completed this level in ${this.curLevelScore} attempts.`], button: ["Restart Game"] });
+        } else if (this.curLevelScore > par) {
+            this.makeModal({ div: [`You did not complete this level under par: ${par} attempts.`], button: ["Try Again"] });
         } else {
-            this.makeModal({ div: ["Congrats!", `You completed this level in ${this.curLevelScore} attempts.`], button: ["Try Level Again", "Go To Next Level"] })
+            this.makeModal({ div: ["Congrats!", `You completed this level in ${this.curLevelScore} attempts.`], button: ["Try Again", "Go To Next Level"] });
         }
     }
 
