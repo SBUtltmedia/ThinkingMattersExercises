@@ -1,14 +1,15 @@
 $(function () {
-    new WordGolf()
+    new WordGolf();
 });
+
 
 let globalwords;
 
 class WordGolf {
     constructor(startLevel = 0) {
         this.alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-        this.currentLevel = startLevel
-        this.getWords()
+        this.currentLevel = startLevel;
+        this.getWords();
         this.totalScore = 0;
         this.callbacks = {
             "Play Again": () => {
@@ -23,8 +24,6 @@ class WordGolf {
                 this.init();
             }
         }
-
-
     }
     async getWords() {
         let response = await fetch("dictionary.json");
@@ -35,55 +34,53 @@ class WordGolf {
         // console.log(findWordLadder("wheat", "bread", this.words))
         response = await fetch("levels.json");
         this.levels = await response.json();
-
-        // console.log(findWordLadder("pitch", "tents", this.words));
-        // for(let level of this.levels) {
-        //     let path = findWordLadder(level["from"], level["to"], this.words);
-        //     if(path=== undefined) {
-        //         continue;
-        //     } else {
-        //     level.par = path.length;
-        //     }
-        // }
-        // this.levels.sort((a,b) => {
-        //     if(a.par < b.par) {
-        //         return -1;
-        //     }
-        //     if(a.par > b.par) {
-        //         return 1;
-        //     }
-        //     return 0;
-        // })
-        // console.log(JSON.stringify(this.levels));
-
-        // console.log(this.levels);
-
-        // console.log(this.levels.length)
         this.init()
-
-
     }
+
+    getQueryParam(param, defaultValue) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.has(param) ? urlParams.get(param) : defaultValue;
+    }
+
+    updateQueryParam(param, value) {
+        const url = new URL(window.location);
+        const searchParams = new URLSearchParams(url.search);
+        searchParams.set(param, value);
+        url.search = searchParams.toString();
+        history.pushState({}, '', url); // Update the URL in the address bar
+    }
+
     init() {
+        this.startWord = this.getQueryParam("from") || this.levels[this.currentLevel]["from"];
+        this.endWord = this.getQueryParam("to") || this.levels[this.currentLevel]["to"];
+        this.description = this.getQueryParam("title") || this.levels[this.currentLevel]["title"];
+        this.par = this.getQueryParam("par") || this.levels[this.currentLevel]["par"]+1;
+
+        this.curLevelScore = 0;
+    
         document.querySelector("#dialog")?.remove();
 
-        // shows available levels
+        // console.log({startWord, endWord, description});
 
-        if(document.querySelector('.levels').children.length === 1) {
-            this.showAvailableLevels();
+        if (!this.getQueryParam("from") && !this.getQueryParam("to") && !this.getQueryParam("desc") && !this.getQueryParam("par")) {
+            document.getElementsByClassName("levels")[0].classList.remove('hidden');  // Show the div
+            this.showAvailableLevels();  // Show available levels if parameters are missing
+        } else {
+            document.getElementsByClassName("levels")[0].classList.add('hidden');  // Hide the div
+            document.getElementsByClassName("game-area")[0].classList.add("game-area-center");
         }
+        
         console.log("current level: ", this.currentLevel);
         // Current level score
-        this.curLevelScore = 0;
        
-        let par = this.levels[this.currentLevel]["par"]+1;
+        // let par = this.levels[this.currentLevel]["par"]+1;
         
         document.querySelectorAll("#history,#message,#correct,#picker").forEach(item => item.innerHTML = "");
         document.querySelector("#player-score").innerHTML = "Attempts: 0";
-        document.querySelector("#par").innerHTML = `Par: ${par}`
-        
-        // this.makeModal({ div: ["Congrats!", `You completed this level in ${this.curLevelScore} attempts.`], button: ["Play Again", "g"] })
+        document.querySelector("#par").innerHTML = `Par: ${this.par}`
 
-        let characters = this.levels[this.currentLevel]["from"].split("")
+        let characters = this.startWord.split("")  // TODO: have this work for both url and no url param
+        console.log(characters)
         characters.forEach(element => {
             // Figures out what letters are left to guess?
             let lettersLeft = this.alphabet.filter((letter) => letter != element.toUpperCase())
@@ -96,33 +93,32 @@ class WordGolf {
             $("#picker").append(sel)
 
         });
-        document.querySelector("#title").innerHTML = this.levels[this.currentLevel]["title"]
-        let startingWord = this.levels[this.currentLevel]["from"];
-        this.populate(startingWord);
-        this.makeSpan(startingWord);
-        // document.querySelector("#history").innerHTML += `<span class="hover">${startingWord.toUpperCase()}</span><br/>`
-        this.createDefinitionCard(startingWord.toUpperCase(), this.words[startingWord.toLowerCase()]);
+        document.querySelector("#title").innerHTML = this.description; // TODO: have this work for both url and no url param
+
+        this.populate(this.startWord); // TODO: have this work for both url and no url param
+        this.makeSpan(this.startWord); // TODO: have this work for both url and no url param
+
+        this.createDefinitionCard(this.startWord.toUpperCase(), this.words[this.startWord.toLowerCase()]);
         $("select").on("change", (selectObject) => {
             this.curLevelScore++;
             console.log("here in select");
             document.querySelector("#message").innerHTML = ""
+            
+             // Combines the selected letters into a word 
             let accum = ""
-
-            // Combines the selected letters into a word 
-            let newWord = $("select").each((i, obj) => accum += $(obj).val())
+            $("select").each((i, obj) => accum += $(obj).val())
             console.log(accum);
             // console.log(accum);
 
             if (Object.keys(this.words).includes(accum.toLowerCase())) {
                 // Check for win
-                if (accum.toLowerCase() === this.levels[this.currentLevel]["to"]) {
+                if (accum.toLowerCase() === this.endWord) {
                     console.log("win")
-                    this.win(par);
+                    this.win(this.par);
                 } else {
                     this.animateAnswer("animateRight");
                     let definit = this.words[accum.toLowerCase()];
                     this.makeSpan(accum);
-                   //document.querySelector("#history").innerHTML += `<span class= "hover">${accum}</span></br>`
                     this.createDefinitionCard(accum, definit);
                 }
             } else {
@@ -130,8 +126,7 @@ class WordGolf {
                 const last = spanElements[spanElements.length-1];
                 const divs = last.querySelectorAll('div');
                 const textContent = Array.from(divs).map(div => div.textContent).join('');
-                // let lastWord = $("#history span").toArray().reverse()[0]?.innerHTML || this.levels[this.currentLevel]["from"]
-                let lastWord = textContent || this.levels[this.currentLevel]["from"]
+                let lastWord = textContent || this.startWord;
                 console.log(lastWord);
                 document.querySelector("#message").innerHTML = `<br><span class="myred">${accum} is not a word in the dictionary </span><br/>`
                 

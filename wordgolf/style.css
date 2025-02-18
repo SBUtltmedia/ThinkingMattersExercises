@@ -312,6 +312,12 @@ dialog {
   left:33%;
 }
 
+.game-area-center {
+  left: 0%;
+  margin: 0.5rem;
+  width: 100%;
+}
+
 .header,#history,#picker {
   width: 90%;
 }
@@ -329,4 +335,8 @@ position:absolute;
 #tourButton > img {
   width: 0.8rem;
   height: 0.8rem;
+}
+
+.hidden {
+  display: none !important;
 }
