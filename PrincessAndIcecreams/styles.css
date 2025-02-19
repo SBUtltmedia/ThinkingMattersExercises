@@ -20,8 +20,35 @@ body {
 }
 
 .image-container {
+  position: relative;
   width: 100%;
   height: 100%;
+}
+
+/* play button for story */
+#playButton {
+  background-color: #4A235A;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+  font-family: 'Special Elite', serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+#playButton:hover {
+  background-color: #7D3C98;
+}
+
+.button-container {
+  position: absolute;
+  bottom: 26%;
+  align-items: center;
+  justify-content: center;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .responsive-image {
@@ -31,30 +58,48 @@ body {
 }
 
 #story-container {
+  display: flex;
   position: absolute;
-  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(255, 255, 255, 0.8);
   padding: 1.25rem;
-  border-radius: 0.625rem; 
+  /* border-radius: 0.6rem;  */
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2); 
-  max-width: 37.5rem; 
-  width: 90%;
+  max-width: 60%; 
+  height: 10%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 #story-text {
-  font-size: 1.5rem;
-  line-height: 1.8;
   color: #2C3E50;
   font-family: 'Times New Roman', serif;
-  text-shadow: 0.0625rem 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1);
-  /* position: absolute;
-  width: 100%;
-  top: 100%; 
-  animation: scrollUp 5s linear infinite; */
   position: relative;
+  width: 100%;
+  font-size: larger;
+  /* font-weight: bold; */
 }
+
+
+#myAudio{
+  width: 100%;
+}
+
+video{
+display: none;}
+
+video::cue {
+  color: #ffffff;
+  /* border: none; */
+  /* xwidth: 100%; */
+  align: start;
+  background-color: none;
+  font-size: 1rem;
+  font-family: 'Times New Roman', serif;
+}
+
 
 h1 {
     font-family: 'Georgia', serif;
@@ -66,6 +111,7 @@ h1 {
     padding: 0.625rem 1.25rem;
     border-radius: 0.5rem;
 }
+
 
 .hide {
     display:none !important;
@@ -130,6 +176,17 @@ h1 {
   font-style: normal;
 }
   
+/* stylign yes or no for selected flavor */
+#yesOrNoContainer {
+  display: grid;
+  /* grid-template-columns: repeat(auto-fit, minmax(45rem, 0.5fr)); */
+  text-align: center;
+  /* margin-top: 1rem; */
+  font-family: "Special Elite", system-ui;
+  color: #000000;
+  font-size: 1.1rem;
+}
+
 /* styling for Flavors and Room page */
 body.flavors-page {
     background: none;  
@@ -145,8 +202,6 @@ h2 {
 }
 
 #container {
-      /* display: grid;
-      gap: 20px; */
       display: grid;
       gap: 1vw;
       justify-items: center;
@@ -159,6 +214,7 @@ input[type="checkbox"] {
     padding: 0;
     border: none;
     zoom: 1.5;
+    display: none;
     /* transform: scale(0.9); */
 }
 
@@ -166,19 +222,21 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
   justify-content: center;
-    /* padding: 0.3125rem; */
   height: 1.875rem;
-  /* display:inline-block; */
+  align-self: center;
+
 }
+
+.checkbox-wrapper svg {
+  transform: translate(33%, 37%);
+}
+
 
 /* submit button */
 .submit-container {
 text-align: center;
 }
 
-/* div{
-  border: black 1px solid;
-} */
 
 #submit-btn {
   padding: 1vw 2vw;
@@ -218,7 +276,7 @@ text-align: center;
   width: 25rem;
 }
 
-/* style the "Good job!" text */
+/* style the "Good job" text */
 .modal-content p {
   font-size: 2rem;
   font-weight: bold;
@@ -257,8 +315,6 @@ text-align: center;
 /*highlight duplicate first row*/
 .highlight{
   background-color: #dc143c;
-  /* padding: 0.01%; */
-  /* font-size: 10rem; */
 } 
 
 /* style the text of flavors column*/
@@ -266,6 +322,9 @@ text-align: center;
   font-family: "Special Elite", system-ui;
   font-weight: 400;
   font-style: normal;
-  /* height: 1.875rem;
-  line-height: 1.5; */
+}
+
+
+.ghosted {
+  filter: grayscale(100%);
 }
