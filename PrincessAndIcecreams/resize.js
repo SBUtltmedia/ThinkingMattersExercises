@@ -72,6 +72,11 @@ function resizeWindow() {
         flavorClassElement.style.gridTemplateColumns = `repeat(${numberOfRooms + 1}, 1fr)`;
     });
 
+    // document.querySelectorAll(".yes-or-no-container").forEach((flavorClassElement) => {
+    //     flavorClassElement.style.display = 'grid';
+    //     flavorClassElement.style.gridTemplateColumns = `repeat(${numberOfRooms}, 3fr)`;
+    // });
+
     // let flavorClass = document.querySelectorAll('.flavorClass');
 
     // flavorClass.setAttribute('style', 'display: grid; grid-template-columns: repeat(3, 1fr);')

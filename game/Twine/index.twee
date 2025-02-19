@@ -40,10 +40,11 @@ importScripts(['js/script.js'])
 		$(document).on(':passagedisplay', function (ev) {
 			makeDoors(passage());
 		});
-	}).then(() => {importScripts('js/utils.js','js/collidable.js','js/inits.js','js/dialogs.js', 'js/macros.js');setTimeout(function(){
+	}).then(() => {importScripts('js/utils.js','js/collidable.js','js/inits.js','js/dialogs.js');setTimeout(function(){
     LoadScreen.unlock(lockID);
 }, 500);});
 	// .then(importScripts('js/wordgolf.js'))
+
 
 /* OLD */
 // $(document).on(':passagestart', function (ev) {
@@ -61,10 +62,15 @@ $(document).on(':passageinit', function (ev) {
     This demonstrates that the 'passagestart' event comes before
      the PassageHeader prepending.
 */
+$(document).on(':passagestart', function (eventObject) {
+	console.log('user script');
+
+});
 
 
 :: StoryInit {"position":"100,100","size":"100,100"}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/intro.js" charset="utf-8"></script>
+
 
 :: PassageHeader {"position":"100,100","size":"100,100"}
 <div id="stage" class="screen" data-intro='Hello step one!'>
@@ -91,26 +97,19 @@ player = document.getElementById('player');
 console.log("player", player.style);
 player.style.left = "5%";
 player.style.top = "5%";
-
 // document.getElementById("stage").append(Object.assign(document.createElement('div'),{"id":"box1","className":"collidable"}));
 </script>
 
 <<print passage()>>
-/* <<run addObjects($PC)>> */
 
 
 :: 0_0 {"position":"1100,725","size":"100,100"}
 <script>
 	addCharacter("godel_0");
-
+	addCharacter("npc1");
+	console.log('fix');
 </script>
 <div id="enter-dialog">Welcome</div>
-<<object "tree" "position:5%,5%" "img/tree.svg">>
-<<object "house" "position:15%,5%" "img/house.svg">>
-/* <<set $PC to [
-    {name: "tree", source: "img/tree.svg"},
-	{name: "house", source: "img/house.svg"}
-  	]>> */
 
 
 :: -5_-5 {"position":"475,100","size":"100,100"}
@@ -281,10 +280,6 @@ player.style.top = "5%";
 :: 0_1 {"position":"1225,725","size":"100,100"}
 /* <<set $dialog=["One line of dialog"]>> */
 <script>addCharacter("npc1");</script>
-<<set $PC to [
-	{name: "house", source: "img/house.svg"},
-	{name: "school", source: "img/school.svg"}
-  	]>>
 
 <div id="enter-dialog">Hello from new york</div>
 

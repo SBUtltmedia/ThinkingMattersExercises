@@ -18,6 +18,12 @@
     background-color: beige;
     /* opacity:0; */
 }
+
+#npc1{
+    top: 20% !important;;
+
+}
+
 #npc1, #godel_0{
     background-image: url('../img/einstein.png  ');
     left:50%;
@@ -168,9 +174,3 @@ div.clickEffect {
     width: 1rem;
     height: 1rem;
 } */
-
-
-.environment {
-    width: 1.5rem;
-    height: 1.5rem;
-}

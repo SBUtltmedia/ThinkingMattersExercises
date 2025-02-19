@@ -16,23 +16,34 @@
         <button class="reset-button" onclick="resetGame()">Reset GAME</button>
     </div>
 
-    <div class="phase-overlay" id="phase2-overlay">
-        <button class="phase-button" onclick="switchToNumberMode()">PHASE 2: Number Mode</button>
+    <!-- <div class="phase-overlay" id="phase2-overlay">
+        <button class="phase-button" onclick="switchToPhase(2)">PHASE 2: Number Mode</button>
     </div>
 
     <div class="phase-overlay" id="phase3-overlay">
-        <button class="phase-button" onclick="switchToXOMode()">Level 3: Tic Tac Toe</button>
-    </div>
+        <button class="phase-button" onclick="switchToPhase(3)">Phase 3: Tic Tac Toe</button>
+    </div> -->
 
     <div class="phase-overlay" id="phase4-overlay">
         <div class="phase2-content">
-            <h2>The Complete Isomorphism!</h2>
+            <!-- <h2>The Complete Isomorphism!</h2>
             <p>Let's see all three representations at once:</p>
             <p>Each cell will show the X/O symbol, its corresponding number, and word!</p>
+             -->
             <div class="magic-square" id="magic-square"></div>
-            <button onclick="switchToIsomorphicMode()">Try Combined Mode</button>
+            <button onclick="switchToPhase(4)">Try Combined Mode</button>
         </div>
     </div>
+
+    <!-- Game Instructions Modal -->
+    <div id="instructions-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-text"></p>
+        </div>
+    </div>
+
 
     <script src="game.js"></script>
 </body>
