@@ -75,6 +75,20 @@ function addEventListeners() {
     item.addEventListener('dragover', dragOver);
     item.addEventListener('dragleave', dragLeave);
   })
+
+  document.getElementById('toggle-symbols-btn').addEventListener('click', function() {
+    const symbolsContainer = document.getElementById('symbols-container');
+    
+    // Toggle visibility
+    if (symbolsContainer.classList.contains('hidden')) {
+        symbolsContainer.classList.remove('hidden');
+        this.textContent = 'Hide Symbols'; // Change button text
+        console.log('showing symbols');
+    } else {
+        symbolsContainer.classList.add('hidden');
+        this.textContent = 'Show Symbols';
+    }
+});
 }
 
 function closeModal() {
@@ -322,6 +336,8 @@ function shuffleArray(array) {
   }
   return array;
 }
+
+
 
 
 async function startGame() {

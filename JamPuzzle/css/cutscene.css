@@ -54,17 +54,30 @@ body {
 }
 
 .character {
-    width: 10rem;
-    height: 10rem;
+    width: 20rem;
+    height: 20rem;
     filter: saturate(0);
     transition: opacity 0.3s ease, transform 0.3s ease;
     border: 0.2rem solid var(--dark-green);
+}
+.queen {
+    background-image: url("../assets/images/redqueen.jpeg");
+    background-size: 200%;
+    background-position: 80% 35%;
+    background-repeat: no-repeat;
+}
+
+.alice {
+    background-image: url("../assets/images/redqueen.jpeg");
+    background-size: 300%; 
+    background-position: 20% 50%;
+    background-repeat: no-repeat;
 }
 
 .active {
     opacity: 1;
     filter: saturate(1);
-    transform: scale(1.1);
+    transform: scale(1.15);
 }
 
 .dialogue-box {

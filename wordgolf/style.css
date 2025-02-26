@@ -207,13 +207,13 @@ select {
 
 
 /*   Open state of the dialog  */
-dialog[open] {
+/* dialog[open] {
   opacity: 1;
   transform: scaleY(1);
-}
+} */
 
 /*   Closed state of the dialog   */
-dialog {
+/* dialog {
   opacity: 0;
   transform: scaleY(0);
   transition:
@@ -221,24 +221,22 @@ dialog {
     transform 0.7s ease-out,
     overlay 0.7s ease-out allow-discrete,
     display 0.7s ease-out allow-discrete;
-  /* Equivalent to
-  transition: all 0.7s allow-discrete; */
   position: absolute;
   left: -5%;
   top: 500%;
   width: 15rem;
   z-index: 20;
-}
+} */
 
 /*   Before-open state  */
 /* Needs to be after the previous dialog[open] rule to take effect,
     as the specificity is the same */
-@starting-style {
+/* @starting-style {
   dialog[open] {
     opacity: 0;
     transform: scaleY(0);
   }
-}
+} */
 
 
 .levels, .definition {
@@ -312,6 +310,12 @@ dialog {
   left:33%;
 }
 
+.game-area-center {
+  left: 0%;
+  margin: 0.5rem;
+  width: 100%;
+}
+
 .header,#history,#picker {
   width: 90%;
 }
@@ -329,4 +333,8 @@ position:absolute;
 #tourButton > img {
   width: 0.8rem;
   height: 0.8rem;
+}
+
+.hidden {
+  display: none !important;
 }
