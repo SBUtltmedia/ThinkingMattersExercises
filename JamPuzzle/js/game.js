@@ -8,7 +8,7 @@ let selectedId;
 let dropTargetId;
 
 // counter for correct phrases
-let matchingCounter = 0;
+let matchingCounter = 7;
 
 let draggableListItems;
 function dragStart() {
@@ -60,7 +60,7 @@ function checkForMatch(selected, dropTarget) {
 function playAgain() {
   matchingCounter = 0;
   endMessage.style.display = 'none';
-  document.querySelector('.show-modal').remove();
+  document.querySelector('.show-modal')?.remove();
   draggableListItems.forEach(item => {
     document.getElementById(item.id).style.display = 'block';
   })

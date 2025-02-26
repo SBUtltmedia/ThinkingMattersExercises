@@ -204,6 +204,47 @@ svg {
     background: #6b1d3e;
 }
 
+#endMessage {
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+}
+  
+.end-game {
+    background: #f4e1d2; /* Light pastel pink to lavender gradient */
+    width: 350px;
+    max-width: 80%;
+    padding: 40px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+    position: relative;
+    font-family: 'Georgia', serif;
+    border: 5px solid #d4af37; /* Gold border */
+    transform: translate(37.5vw, 50vh);
+  }
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  fill: #d4af37; /* Gold color */
+  transition: transform 0.3s ease;
+    
+}
+
+.close:hover {
+    transform: rotate(215deg); /* Rotate when hovered */
+  }
+
 /* Responsive Styling */
 @media (max-width: 768px) {
     h1 {
