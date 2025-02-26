@@ -7,7 +7,7 @@ let userSelectedFlavor = null;
 
 // Iterate through all parameters
 for (const [key, value] of urlParams.entries()) {
-  console.log(key, value);
+//   console.log(key, value);
 }
 
 // Store values globally so other scripts can access them
@@ -108,22 +108,34 @@ function init(numberOfRooms){
 
 
     let currentFlavors = allFlavors.sort(() => Math.random() - 0.5).slice(0, numberOfIceCreams); 
+
+
  
     currentFlavors.forEach((flavor,id) => {
-        let flavorDiv=Object.assign(document.createElement("div"),{
+        let flavorName = Object.assign(document.createElement("div"),{
+            className: "flavorName",
             innerHTML:flavor[0],
+            id: `flavor_name_${id}`
+        })
+
+        let flavorDiv=Object.assign(document.createElement("div"),{
+
+            // innerHTML:flavor[0],
             id: `flavor_row_${id}`,
             className:"flavorClass",
             style: `display: grid; grid-template-columns: repeat(${numberOfRooms+1}, 1fr)`,
     })
-    flavorDiv.style.cursor = "pointer";    
+
+
+    flavorDiv.style.cursor = "pointer";   
+    flavorDiv.append(flavorName) 
     flavorContainer.append(flavorDiv)
     
     flavorDiv.addEventListener("click", () => handleFlavorClick(flavorDiv, flavor));
 
     for (let i = 0; i < numberOfRooms; i++) {
         let roomId = `room_${i}`
-        let roomDiv = document.getElementById(`${roomId}`);
+        // let roomDiv = document.getElementById(`${roomId}`);
         let checkboxWrapper = Object.assign(document.createElement("div"), {
             id: `checkbox_wrapper_room_${i}_checkbox_row_${id}`,
             className: "checkbox-wrapper"
@@ -140,8 +152,15 @@ function init(numberOfRooms){
 
         let svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         svgElement.setAttribute("viewBox", "0 0 208 334");
-        svgElement.style.width = "6rem";
-        svgElement.classList.add("ghosted");
+        // svgElement.setAttribute("preserveAspectRatio","none")
+        svgElement.style.width = "7rem";
+        // svgElement.style.height = "100%"
+        svgElement.style.setProperty("--filter-mode", "url(#grayscale)"); // Correct way
+        // console.log(svgElement.style.getPropertyValue("--filter-mode"))
+
+        let useElement = Object.assign(document.createElementNS("http://www.w3.org/2000/svg", "use"), {
+            setAttribute: function(name, value) { this.setAttributeNS(null, name, value); }
+        });
 
         checkboxWrapper.addEventListener("click",(e)=>{
 
@@ -150,31 +169,26 @@ function init(numberOfRooms){
             // console.log(checkbox.checked)
             checkbox.checked = !checkbox.checked;
             let cone = document.getElementById(coneId)
-            cone.classList.toggle("ghosted");
-
+            // cone.classList.toggle("ghosted");
             let selectedFlavor = String(flavor).split(",")[0].trim();
             // console.log("selectedflavour ", selectedFlavor)
             let flavorEntry = allFlavors.find(entry => entry[0] === selectedFlavor);
-            console.log(flavorEntry, "EUREKA");
-            // let coneColor = flavorEntry[1];
+            // console.log(flavorEntry, "EUREKA");
+            let coneColor = flavorEntry[1];
             // console.log(flavorEntry[1], "conecolour")
-            let coneColor = flavorEntry ? flavorEntry[1] : "#FFC0CB";
-            useElement.setAttribute("style", `--color_fill: ${coneColor};`);
+            // let coneColor = flavorEntry ? flavorEntry[1] : "#FFC0CB";
+            useElement.style.setProperty("--color_fill", coneColor);
+            // new toggle
+            let currentFilter = svgElement.style.getPropertyValue("--filter-mode");
+            svgElement.style.setProperty("--filter-mode", currentFilter === "url(#grayscale)" ? "none" : "url(#grayscale)");
 
         })
-        
-        let useElement = Object.assign(document.createElementNS("http://www.w3.org/2000/svg", "use"), {
-            setAttribute: function(name, value) { this.setAttributeNS(null, name, value); }
-        });
-
-        
-        // Setting attributes
         useElement.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "icecream.svg#cone");
         svgElement.setAttribute("id", coneId);
-        // useElement.setAttribute("style","--color_fill: purple;")
-        // Appending <use> to <svg>
         svgElement.appendChild(useElement);
-        
+
+
+
         checkboxWrapper.appendChild(checkbox);
         checkboxWrapper.appendChild(svgElement);
         flavorDiv.appendChild(checkboxWrapper);
@@ -214,7 +228,7 @@ function handleFlavorClick(flavorDiv, flavor) {
 
     // save the user's selected flavor
     userSelectedFlavor = flavor;
-    console.log("Selected flavor:", userSelectedFlavor);
+    // console.log("Selected flavor:", userSelectedFlavor);
 }
 
 
@@ -287,7 +301,7 @@ function clickFLavorEnd() {
 // Logic to verify user's flavor selection
 function handleFlavor(event) {
     userSelectedFlavor = event.target.textContent.trim();
-    console.log("User selected flavor:", userSelectedFlavor);
+    // console.log("User selected flavor:", userSelectedFlavor);
 
     // Check if the selected flavor matches the backend-selected flavor, if yes then success and yay
     if (userSelectedFlavor === backendSelectedFlavor) {
@@ -362,10 +376,13 @@ function displayYesOrNoForSelectedFlavor(numberOfIceCreams, yesOrNoContainer) {
 function handleSubmit(numberOfIceCreams) {
 
     // Reset the highlight class before creating the binary string
-    var elements = document.getElementsByClassName('highlight');
-    while (elements.length > 0) {
-        elements[0].classList.remove("highlight");
-    }
+    // var elements = document.getElementsByClassName('highlight');
+    // while (elements.length > 0) {
+    //     elements[0].classList.remove("highlight");
+    // }
+
+    document.querySelectorAll(".highlight").forEach(el => el.classList.remove("highlight"));
+
 
     let arr = [];
     let yesOrNoContainer = document.getElementById("yesOrNoContainer");
@@ -386,13 +403,18 @@ function handleSubmit(numberOfIceCreams) {
         if (dupIndex !== -1 && dupIndex !== i) {
             displayToast("Wrong choices, revise binary tree concepts and take one more chance!!",true);
 
-            let dupRow = document.querySelectorAll(`[id*="row_${dupIndex}"]`);
+            // let dupRow = document.querySelectorAll(`[id*="row_${dupIndex}"]`);
+            let dupRow = document.querySelectorAll(`#flavor_name_${dupIndex}`);
             for (const row of Array.from(dupRow)) {
                 row.classList.add("highlight");
             }
             return;
         }
     }
+
+    //If you do it this way then you may get lucky but your wishes may not be guaranteed. 
+    // As you said there is a way to distrubute the icecream, to ensure you get what you want.
+    // A trick is to make evry icecream "UNIQUE" distributed among the rooms. 
 
     validateCombination(arr, numberOfRooms)
 
@@ -481,7 +503,7 @@ function selectRandomFlavor(numberOfIceCreams) {
     const selectedFlavorElement = shuffledFlavors[0];
 
     backendSelectedFlavor = selectedFlavorElement.textContent.trim();
-    console.log("Backend-selected flavor:", backendSelectedFlavor);
+    // console.log("Backend-selected flavor:", backendSelectedFlavor);
   }
 
   //fisher yate algorithm
