@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Playfair+Display:wght@500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+}
+
+
+.screen {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    background-color: #f4e1d2;
+    color: #4a2f27;
+    font-family: 'Playfair Display', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+/* Hide elements when needed */
+.hidden {
+    display: none;
+}
+
+h1 {
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 1vh;
+    color: #6b1d3e;
+}
+
+p {
+    font-size: 1rem;
+    text-align: center;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.top-container {
+    background: #ecc7b6;
+    border: 3px solid #9d3c72;
+    padding: 0.8rem;
+    border-radius: 12px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    margin: 15px auto;
+    text-align: center;
+    width: 95%;
+    max-width: 60vw;
+    max-height: 30vh;
+}
+
+.symbols-container {
+    position: absolute;
+    top: 10vh;
+    right: 0vw;
+    background: #fff3e6;
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 1vh 1vw;
+    width: 300px;
+    max-width: 35vw;
+    border: 2px solid #9d3c72;
+}
+
+/* Make tables scrollable on small screens */
+.symbol-table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto;
+    display: block;
+}
+
+.symbol-table th, .symbol-table td {
+    padding: 0.5rem;
+    border: 2px solid #9d3c72;
+    font-size: 1rem;
+    word-wrap: break-word;
+}
+
+.symbol-table th {
+    background: linear-gradient(135deg, #6b1d3e, #9d3c72);
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.symbol-table td {
+    text-align: left;
+}
+
+.symbol-table tr:nth-child(even) {
+    background-color: #fbe1d6;
+}
+
+.symbol-table tr:nth-child(odd) {
+    background-color: #fdf3e7;
+}
+
+.symbol-table tr:hover {
+    background-color: #e8bbbc;
+    transition: 0.3s;
+}
+
+svg {
+    /* margin: 0 0.05rem; */
+    width: 1rem;
+    height: 1rem;
+    margin: 0rem 0.25rem;
+    overflow: visible;
+    transform: translate(0rem, 0.1rem)
+}
+  
+.forevermore,
+.eventually,
+.tomorrow {
+    stroke: blue;
+    stroke-width: 0.5rem;
+    fill: none;
+}
+
+.tomorrow,
+.r {
+    transform: translate(1rem) scale(-1, 1);
+}
+
+.all_pasts,
+.some_past,
+.yesterday {
+    fill: brown;
+}
+
+/* Adjust Game Container Layout */
+.game-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.draggable-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 10px;
+    width: 40%;
+    height: 100%;
+    gap: 5%;
+}
+
+.draggable-list li {
+    background: #e4b6c5;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border: 2px solid #6b1d3e;
+    cursor: grab;
+    /* font-size: 1rem; */
+    text-align: center;
+}
+
+.draggable-list li:hover {
+    background: #f1d1dc;
+}
+
+.draggable-list li span {
+    width: 1vw;
+    height: 1vh;
+    margin: auto;
+    font-size: 1.3rem;
+    display: inline-block;
+}
+
+
+.toggle-btn {
+    position: absolute;
+    top:30px;
+    right: 30px;
+    background: #9d3c72;
+    color: white;
+    font-size: fit-content;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+    height: fit-content;
+}
+
+.toggle-btn:hover {
+    background: #6b1d3e;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    .game-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .draggable-list {
+        width: 90%;
+    }
+
+    .cheshire-cat-container img {
+        width: 80px;
+    }
+
+    .symbol-table th, .symbol-table td {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.3rem;
+    }
+
+    .top-container {
+        padding: 0.5rem;
+    }
+
+    .draggable-list li {
+        font-size: 0.9rem;
+    }
+}
