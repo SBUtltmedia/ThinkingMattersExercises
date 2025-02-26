@@ -104,6 +104,7 @@ function runDialogue(){
     clearInterval(dialogueInterval); 
     cutsceneDiv.classList.toggle('hidden');
     gameDiv.classList.toggle('hidden');
+    document.getElementById("toggle-symbols-btn").classList.toggle('hidden');
     startGame();
   })
 });
