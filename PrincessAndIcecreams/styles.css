@@ -19,6 +19,26 @@ body {
   overflow: hidden;
 }
 
+.border-container {
+  width: 100%;
+  height: 5rem;
+  position: fixed;
+  left: 0;
+  background-image: url('images/bordertile.jpg');
+  background-size: auto 100%;
+  background-repeat: repeat-x;
+}
+
+#topBorderContainer {
+  transform: scaleY(-1);
+  top: 0;
+}
+
+#bottomBorderContainer {
+  bottom: 0;
+}
+
+
 .image-container {
   position: relative;
   width: 100%;
@@ -158,10 +178,15 @@ h1 {
 } */
 
 #gameRoom{
+  width: 90%;
+  /* height: 90%; */
+  left: 8%;
+  top: 20%;
+  position: absolute;
   /* position: absolute; */
   /* top: 50%; */
   /* display: grid; */
-  gap: 0.05rem;
+  /* gap: 0.05rem; */
   /* justify-content: center; */
   /* transform: translateX(4%);*/
 }
@@ -184,13 +209,14 @@ h1 {
   /* margin-top: 1rem; */
   font-family: "Special Elite", system-ui;
   color: #000000;
-  font-size: 1.1rem;
+  font-size: 1.1em;
 }
 
 /* styling for Flavors and Room page */
 body.flavors-page {
     background: none;  
-    background-color: #fff;
+    background-color: #F1E3A4;
+    /* opacity: 0.2; */
 }
 
 h2 {
@@ -203,8 +229,8 @@ h2 {
 
 #container {
       display: grid;
-      gap: 1vw;
-      justify-items: center;
+      gap: 1em;
+      /* justify-items: center; */
       width: 100%;
       height: 100%;
 }
@@ -222,7 +248,7 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 1.875rem;
+  height: 1.875em;
   align-self: center;
 
 }
@@ -320,7 +346,7 @@ text-align: center;
 /* style the text of flavors column*/
 .flavorClass {
   font-family: "Special Elite", system-ui;
-  font-weight: 400;
+  /* font-weight: 400; */
   font-style: normal;
 }
 
