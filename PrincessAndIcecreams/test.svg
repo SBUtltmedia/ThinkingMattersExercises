@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<svg id="Icons" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+    <defs>
+        <filter id="brightnessFilter">
+            <feFlood flood-color="blue" result="flood"/>
+            <feComposite in="flood" in2="SourceAlpha" operator="in"/>
+        </filter>
+    </defs>
+
+<symbol id="cone" >
+<g>
+  <circle fill="var(--color_fill)"  filter="brightness:(.2)" cx="20" cy="20" r="20" style="filter: brightness(.001);"/>
+</g>
+</symbol>
+
+<style>
+    #cone {
+        filter: url(brightnessFilter)
+    }
+</style>
+
+
+
+
+</svg>

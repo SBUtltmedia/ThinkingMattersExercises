@@ -1,165 +1,68 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve">
+<?xml version="1.0" encoding="UTF-8"?>
 
+<svg id="Icons" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.51 44.2">
 <defs>
-<style type="text/css">
-	.ghosted{filter: saturate(0);}
-	#cone.st0{opacity:0.15;fill:#45413C;}
-	#cone.st1{fill:#FFE500;}
-	#cone.st2{fill:#EBCB00;}
-	#cone.st3{fill:none;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st4{fill:#FFAA54;}
-	#cone.st5{fill:#FF8A14;}
-	#cone.st6{fill:#FFB0CA;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st7{fill:#FF87AF;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st8{fill:#FFCC99;}
-	#cone.st37{filter: brightness(0.75);}
-	#cone.st10{fill:#F0F0F0;}
-	#cone.st11{fill:#BF8256;}
-	#cone.st12{fill:#915E3A;}
-	#cone.st13{fill:#DEA47A;}
-	#cone.st14{fill:#F0D5A8;}
-	#cone.st15{fill:#DEBB7E;}
-	#cone.st16{fill:#F7E5C6;}
-	#cone.st17{fill:#FF8A14;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st18{fill:#FFF5E3;}
-	#cone.st19{fill:#FFF48C;}
-	#cone.st20{fill:#FFFACF;}
-	#cone.st21{fill:#FFFCE5;}
-	#cone.st22{fill:#FF87AF;}
-	#cone.st23{fill:#FFB0CA;}
-	#cone.st24{fill:#FFE500;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st25{fill:#9CEB60;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st26{fill:#FFFACF;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st27{fill:#00F5BC;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st28{fill:#BF8256;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st29{fill:#FFE3CF;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st30{fill:#FF6242;}
-	#cone.st31{fill:#FF866E;}
-	#cone.st32{fill:none;stroke:#E04122;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st33{fill:#FFFEF2;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st34{fill:#FF6242;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st35{fill:#FFA694;}
-	#cone.st36{fill:#FFFFFF;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st38{fill:#FF6196;}
-	#cone.st39{fill:#B89558;}
-	#cone.st40{fill:none;stroke:#915E3A;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st41{fill:#DEBB7E;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st42{fill:#6DD627;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st43{fill:#E5F8FF;}
-	#cone.st44{fill:#E8F4FA;}
-	#cone.st45{fill:#E8F4FA;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st46{fill:#FFCCDD;}
-	#cone.st47{fill:#E5F8FF;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st48{fill:#00B8F0;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st49{fill:#00B8F0;}
-	#cone.st50{fill:#4ACFFF;}
-	#cone.st51{fill:#E04122;}
-	#cone.st52{fill:#E04122;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st53{fill:#87898C;}
-	#cone.st54{fill:#BDBEC0;}
-	#cone.st55{fill:#656769;}
-	#cone.st56{fill:#525252;}
-	#cone.st57{fill:#FFF48C;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st58{fill:#6DD627;}
-	#cone.st59{fill:#EB6D00;}
-	#cone.st60{fill:#46B000;}
-	#cone.st61{fill:#80DDFF;}
-	#cone.st62{fill:#DAEDF7;}
-	#cone.st63{fill:#BF8DF2;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st64{fill:#9F5AE5;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st65{fill:#C8FFA1;}
-	#cone.st66{fill:#E4FFD1;}
-	#cone.st67{fill:#9CEB60;}
-	#cone.st68{fill:#E5FEFF;}
-	#cone.st69{fill:#B8ECFF;}
-	#cone.st70{fill:#E0E0E0;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st71{fill:#E0E0E0;}
-	#cone.st72{fill:none;stroke:#4F4B45;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st73{fill:none;stroke:#4F4B45;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st74{fill:#E0366F;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st75{fill:none;stroke:#45413C;stroke-miterlimit:10;}
-	#cone.st76{fill:#FF866E;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st77{fill:#45413C;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st78{fill:#9F5AE5;}
-	#cone.st79{fill:#803EC2;}
-	#cone.st80{fill:#803EC2;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st81{fill:#BF8DF2;}
-	#cone.st82{fill:#FFAA54;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st83{fill:none;stroke:#45413C;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st84{fill:#FFCCDD;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st85{fill:#FF6196;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st86{fill:#FFE5EE;}
-	#cone.st87{fill:#F7E5C6;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st88{fill:#E5FFF9;}
-	#cone.st89{fill:none;stroke:#45413C;stroke-width:1.0064;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st90{fill:#4AEFF7;}
-	#cone.st91{fill:#A6FBFF;}
-	#cone.st92{fill:#E5FEFF;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st93{fill:#46B000;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st94{fill:#FFFFFF;stroke:#45413C;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st95{fill:#FFFFFF;stroke:#45413C;stroke-miterlimit:10;}
-	#cone.st96{fill:#009FD9;}
-	#cone.st97{fill:#00DFEB;}
-	#cone.st98{fill:#C0DCEB;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st99{fill:#00DFEB;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st100{fill:#FFE5EE;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st101{fill:#8CA4B8;}
-	#cone.st102{fill:#ADC4D9;}
-	#cone.st103{fill:#656769;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st104{fill:#F0F0F0;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st105{fill:#C0DCEB;}
-	#cone.st106{fill:#45413C;}
-	#cone.st107{fill:#FFCABF;}
-	#cone.st108{fill:#87898C;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	#cone.st109{fill:#EBCB00;stroke:#45413C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+<!-- <filter id="filter_id">
+   <feComponentTransfer>
+        <feFuncR type="linear" slope="0.5"></feFuncR>
+        <feFuncG type="linear" slope="0.5"></feFuncG>
+        <feFuncB type="linear" slope="0.5"></feFuncB>
+    </feComponentTransfer>
+</filter> -->
+<!-- <filter id="grayscale">
+    <feColorMatrix type="saturate" values="0.10"/>
+</filter> -->
+
+<!-- <filter id="filter_id" x="5.54736" y="0" width="20" height="80.0002" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="10" result="effect1_foregroundBlur_326_868"/>
+</filter> -->
+
+
+<symbol id ="cone" >
+  <g id="_x3C_CompleteGroup_x3E_">
+    <ellipse id="_x3C_ShadowPath_x3E_" cx="12.9" cy="42.7" rx="9.5" ry="1.5" style="fill: #45413c; isolation: isolate; opacity: .15;"/>
+    <g id="_x3C_IceCreamGroup_x3E_">
+      <g id="_x3C_ConeGroup_x3E_">
+        <g id="_x3C_ConeTopGroup_x3E_">
+          <path id="_x3C_ConeTopFill_x3E_" d="M19.9,29.1H5.9c-.4,0-.8-.3-.9-.7l-.9-3.6c-.1-.6.3-1.1.9-1.1h15.8c.6,0,1,.6.9,1.1l-.9,3.6c-.1.4-.5.7-.9.7Z" style="fill: #f0d5a8;"/>
+          <path id="_x3C_ConeTopHighlightFill_x3E_" d="M4.4,25.9h17l.3-1.1c.1-.6-.3-1.1-.9-1.1H5c-.6,0-1,.6-.9,1.1l.3,1.1Z" style="fill: #f7e5c6;"/>
+          <path id="_x3C_ConeTopStroke_x3E_" d="M19.9,29.1H5.9c-.4,0-.8-.3-.9-.7l-.9-3.6c-.1-.6.3-1.1.9-1.1h15.8c.6,0,1,.6.9,1.1l-.9,3.6c-.1.4-.5.7-.9.7Z" style="fill: none; stroke: #45413c; stroke-linecap: round; stroke-linejoin: round;"/>
+        </g>
+        <g id="_x3C_ConeBottomGroup_x3E_">
+          <path id="_x3C_ConeBottomFill_x3E_" d="M15.1,42.7h-4.3c-1.4,0-2.5-1-2.7-2.4l-1.5-11.2h12.7l-1.5,11.2c-.2,1.4-1.4,2.4-2.7,2.4Z" style="fill: #f0d5a8;"/>
+          <polygon id="_x3C_ConeBottomShadowFill_x3E_" points="18.9 31.4 19.3 29.1 6.5 29.1 6.9 31.4 18.9 31.4" style="fill: #debb7e;"/>
+          <path id="_x3C_ConeBottomStroke_x3E_" d="M15.1,42.7h-4.3c-1.4,0-2.5-1-2.7-2.4l-1.5-11.2h12.7l-1.5,11.2c-.2,1.4-1.4,2.4-2.7,2.4Z" style="fill: none; stroke: #45413c; stroke-linecap: round; stroke-linejoin: round;"/>
+        </g>
+      </g>
+      <g id="_x3C_IceCreamGroup_x3E_-2" data-name="_x3C_IceCreamGroup_x3E_">
+        <g id="_x3C_IceCreamBaseGroup_x3E_">
+          <path id="_x3C_IceCreamBaseFill_x3E_" d="M21.9,14c.3-.5.5-1.1.5-1.7,0-1.8-1.4-3.2-3.2-3.2h-1.2c.4-.5.7-1.1.7-1.8,0-1.5-1.2-2.7-2.7-2.7h-1.4c-2,0-3.4-2.2-2.4-4.1-3,.3-5.4,2.8-5.4,5.9,0,.8.2,2.1.5,2.7h-.9c-1.8,0-3.2,1.4-3.2,3.2,0,.6.2,1.2.5,1.7-1.9.7-3.2,2.5-3.2,4.7,0,2.8,2.2,5,5,5h14.5c2.8,0,5-2.2,5-5,.1-2.2-1.2-4-3.1-4.7Z" style="filter: brightness(0.75);"/>
+          <path id="_x3C_IceCreamBaseHighlightFill_x3E_" d="M3.4,20.5c0-2.1,1.3-3.9,3.2-4.7-.3-.5-.5-1.1-.5-1.7,0-1.8,1.4-3.2,3.2-3.2h.9c-.3-.7-.5-1.9-.5-2.7,0-2.1,1.1-3.9,2.7-4.9-.5-.8-.6-1.8,0-2.8-3,.3-5.4,2.8-5.4,5.9,0,.8.2,2.1.5,2.7h-.9c-1.8,0-3.2,1.4-3.2,3.2,0,.6.2,1.2.5,1.7-1.9.7-3.2,2.5-3.2,4.7s1.6,4.3,3.7,4.8c-.6-.9-1-1.9-1-3Z"  style="fill:var(--color_fill); "/>
+          <path id="_x3C_IceCreamBaseStroke_x3E_" d="M21.9,14c.3-.5.5-1.1.5-1.7,0-1.8-1.4-3.2-3.2-3.2h-1.2c.4-.5.7-1.1.7-1.8,0-1.5-1.2-2.7-2.7-2.7h-1.4c-2,0-3.4-2.2-2.4-4.1-3,.3-5.4,2.8-5.4,5.9,0,.8.2,2.1.5,2.7h-.9c-1.8,0-3.2,1.4-3.2,3.2,0,.6.2,1.2.5,1.7-1.9.7-3.2,2.5-3.2,4.7,0,2.8,2.2,5,5,5h14.5c2.8,0,5-2.2,5-5,.1-2.2-1.2-4-3.1-4.7Z" style="fill: none; stroke: #45413c; stroke-linecap: round; stroke-linejoin: round;"/>
+        </g>
+        <path id="_x3C_Drip3_x3E_" d="M20.6,17.3v1.4c0,.8-.6,1.4-1.4,1.4s-1.4-.6-1.4-1.4v-3.2" style="fill: none; stroke: #45413c; stroke-linecap: round; stroke-linejoin: round;"/>
+        <path id="_x3C_Drip2_x3E_" d="M12.4,11.8v2.3c0,.8-.6,1.4-1.4,1.4s-1.4-.6-1.4-1.4v-.9" style="fill: none; stroke: #45413c; stroke-linecap: round; stroke-linejoin: round;"/>
+        <g id="_x3C_Drip1Group_x3E_">
+          <path id="_x3C_Drip1Fill_x3E_" d="M8.8,22.7v2.3c0,.8-.6,1.4-1.4,1.4s-1.4-.6-1.4-1.4v-2.3h2.8Z"  style="fill:var(--color_fill);"/>
+          <path id="_x3C_Drip1Stroke_x3E_" d="M8.8,23.6v1.4c0,.8-.6,1.4-1.4,1.4s-1.4-.6-1.4-1.4v-2.3" style="fill: none; stroke: #45413c; stroke-linecap: round; stroke-linejoin: round;"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  </symbol>
+  </defs>
+    <use
+     href="#cone"
+  > </use>
+
+<style>
+
+    #_x3C_IceCreamBaseFill_x3E_ {
+         filter: brightness(1.75);
+    }
+
 </style>
 
-<symbol id ="cone">
-<g id="XMLID_13692_">
-	<ellipse id="XMLID_13713_" class="st0" cx="24" cy="45.5" rx="9.5" ry="1.5"/>
-	<g id="XMLID_13693_">
-		<g id="XMLID_13704_">
-			<g id="XMLID_13709_">
-				<path id="XMLID_13712_" class="st14" d="M31,31.9H17c-0.4,0-0.8-0.3-0.9-0.7l-0.9-3.6c-0.1-0.6,0.3-1.1,0.9-1.1h15.8
-					c0.6,0,1,0.6,0.9,1.1l-0.9,3.6C31.8,31.6,31.4,31.9,31,31.9z"/>
-				<path id="XMLID_13711_" class="st16" d="M15.5,28.7h17l0.3-1.1c0.1-0.6-0.3-1.1-0.9-1.1H16.1c-0.6,0-1,0.6-0.9,1.1L15.5,28.7z"
-					/>
-				<path id="XMLID_13710_" class="st3" d="M31,31.9H17c-0.4,0-0.8-0.3-0.9-0.7l-0.9-3.6c-0.1-0.6,0.3-1.1,0.9-1.1h15.8
-					c0.6,0,1,0.6,0.9,1.1l-0.9,3.6C31.8,31.6,31.4,31.9,31,31.9z"/>
-			</g>
-			<g id="XMLID_13705_">
-				<path id="XMLID_13708_" class="st14" d="M26.2,45.5h-4.3c-1.4,0-2.5-1-2.7-2.4l-1.5-11.2h12.7l-1.5,11.2
-					C28.7,44.5,27.5,45.5,26.2,45.5z"/>
-				<polygon id="XMLID_13707_" class="st15" points="30,34.2 30.4,31.9 17.6,31.9 18,34.2 				"/>
-				<path id="XMLID_13706_" class="st3" d="M26.2,45.5h-4.3c-1.4,0-2.5-1-2.7-2.4l-1.5-11.2h12.7l-1.5,11.2
-					C28.7,44.5,27.5,45.5,26.2,45.5z"/>
-			</g>
-		</g>
-		<g id="XMLID_13694_">
-			<g id="XMLID_13700_">
-				<path id="XMLID_13703_" style="fill:var(--color_fill);;" class="st9 st37" d="M33,16.8c0.3-0.5,0.5-1.1,0.5-1.7c0-1.8-1.4-3.2-3.2-3.2h-1.2c0.4-0.5,0.7-1.1,0.7-1.8
-					c0-1.5-1.2-2.7-2.7-2.7l-1.4,0c-2,0-3.4-2.2-2.4-4.1c-3,0.3-5.4,2.8-5.4,5.9c0,0.8,0.2,2.1,0.5,2.7h-0.9c-1.8,0-3.2,1.4-3.2,3.2
-					c0,0.6,0.2,1.2,0.5,1.7c-1.9,0.7-3.2,2.5-3.2,4.7c0,2.8,2.2,5,5,5h14.5c2.8,0,5-2.2,5-5C36.2,19.3,34.9,17.5,33,16.8z"/>
-				<path id="XMLID_13702_" style="fill:var(--color_fill);" class="st9" d="M14.5,23.3c0-2.1,1.3-3.9,3.2-4.7c-0.3-0.5-0.5-1.1-0.5-1.7c0-1.8,1.4-3.2,3.2-3.2h0.9
-					C21,13,20.8,11.8,20.8,11c0-2.1,1.1-3.9,2.7-4.9c-0.5-0.8-0.6-1.8,0-2.8c-3,0.3-5.4,2.8-5.4,5.9c0,0.8,0.2,2.1,0.5,2.7h-0.9
-					c-1.8,0-3.2,1.4-3.2,3.2c0,0.6,0.2,1.2,0.5,1.7c-1.9,0.7-3.2,2.5-3.2,4.7c0,2.3,1.6,4.3,3.7,4.8C14.9,25.4,14.5,24.4,14.5,23.3z
-					"/>
-				<path id="XMLID_13701_" class="st3" d="M33,16.8c0.3-0.5,0.5-1.1,0.5-1.7c0-1.8-1.4-3.2-3.2-3.2h-1.2c0.4-0.5,0.7-1.1,0.7-1.8
-					c0-1.5-1.2-2.7-2.7-2.7l-1.4,0c-2,0-3.4-2.2-2.4-4.1c-3,0.3-5.4,2.8-5.4,5.9c0,0.8,0.2,2.1,0.5,2.7h-0.9c-1.8,0-3.2,1.4-3.2,3.2
-					c0,0.6,0.2,1.2,0.5,1.7c-1.9,0.7-3.2,2.5-3.2,4.7c0,2.8,2.2,5,5,5h14.5c2.8,0,5-2.2,5-5C36.2,19.3,34.9,17.5,33,16.8z"/>
-			</g>
-			<path id="XMLID_13699_" class="st3" d="M31.7,20.1v1.4c0,0.8-0.6,1.4-1.4,1.4c-0.8,0-1.4-0.6-1.4-1.4v-3.2"/>
-			<path id="XMLID_13698_" class="st3" d="M23.5,14.6v2.3c0,0.8-0.6,1.4-1.4,1.4s-1.4-0.6-1.4-1.4V16"/>
-			<g id="XMLID_13695_">
-				<path id="XMLID_13697_" style="fill:var(--color_fill);" class="st9 st37" d="M19.9,25.5v2.3c0,0.8-0.6,1.4-1.4,1.4s-1.4-0.6-1.4-1.4v-2.3H19.9z"/>
-				<path id="XMLID_13696_" class="st3" d="M19.9,26.4v1.4c0,0.8-0.6,1.4-1.4,1.4s-1.4-0.6-1.4-1.4v-2.3"/>
-			</g>
-		</g>
-	</g>
-</g>
-</symbol>
-</defs>
 </svg>
