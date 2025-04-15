@@ -24,42 +24,79 @@ addEventListener("DOMContentLoaded", () => {
 });
 
 
+// ✅ Keep this in flavors.js
+window.allFlavors = [
+    ["Almond", "#D2B48C"], 
+    ["Bastani Sonnati (Persian)", "#FFD700"],
+    ["Butter Pecan", "#FFF5E1"],
+    ["Cayenne Chocolate", "#5C4033"],
+    ["Chocolate Chip Cookie Dough", "#EED9C4"],
+    ["Coconut Almond Chip", "#FFFFFF"],
+    ["Dulce de Leche", "#C19A6B"],
+    ["English Toffee", "#8B4513"],
+    ["Goat Cheese Beet Swirl", "#FFFFFF"],
+    ["Green Tea Ice Cream", "#98FB98"],
+    ["Honey Avocado", "#FFC30B"],
+    ["Honeyjack and Coke", "#654321"],
+    ["Huckleberry", "#800080"],
+    ["Jalapeño", "#008000"],
+    ["Lavender Honey", "#D8BFD8"],
+    ["Les Bourgeois and Ghirardelli", "#4B382A"],
+    ["Madagascar Vanilla", "#FAEBD7"],
+    ["Mango", "#FFA500"],
+    ["Mint Chocolate Chip", "#98FB98"],
+    ["Moose Tracks", "#EED9C4"],
+    ["Passion Fruit", "#FF7518"],
+    ["Pistachio", "#A7C796"],
+    ["Peanut Butter", "#D2B48C"],
+    ["Pralines and Cream", "#FFF5E1"],
+    ["Red Velvet", "#C71585"],
+    ["Rum Raisin", "#FFF5E1"],
+    ["Spumoni", "#008000"],
+    ["Strawberry", "#FFC0CB"],
+    ["Sweet Potato Maple Walnut", "#D2691E"],
+    ["Ube (Philippines, Purple Yam)", "#6A0DAD"],
+    ["Vietnamese Coffee", "#D2B48C"]
+];
+
+
+
 // Create the layout with flavors and checkboxes for each room
 function init(numberOfRooms){
 
-    let allFlavors = [
-        ["Almond", "#D2B48C"], // Light Brown
-        ["Bastani Sonnati (Persian)", "#FFD700"], // Yellow
-        ["Butter Pecan", "#FFF5E1"], // Cream
-        ["Cayenne Chocolate", "#5C4033"], // Dark Brown
-        ["Chocolate Chip Cookie Dough", "#EED9C4"], // Beige
-        ["Coconut Almond Chip", "#FFFFFF"], // White
-        ["Dulce de Leche", "#C19A6B"], // Caramel
-        ["English Toffee", "#8B4513"], // Brown
-        ["Goat Cheese Beet Swirl", "#FFFFFF"], // White
-        ["Green Tea Ice Cream", "#98FB98"], // Light Green
-        ["Honey Avocado", "#FFC30B"], // Dark Yellow
-        ["Honeyjack and Coke", "#654321"], // Dark Brown
-        ["Huckleberry", "#800080"], // Purple
-        ["Jalapeño", "#008000"], // Green
-        ["Lavender Honey", "#D8BFD8"], // Light Purple
-        ["Les Bourgeois and Ghirardelli", "#4B382A"], // Dark Brown
-        ["Madagascar Vanilla", "#FAEBD7"], // Pale Yellow
-        ["Mango", "#FFA500"], // Orange
-        ["Mint Chocolate Chip", "#98FB98"], // Light Green
-        ["Moose Tracks", "#EED9C4"], // Beige
-        ["Passion Fruit", "#FF7518"], // Orange
-        ["Pistachio", "#A7C796"], // Pale Green
-        ["Peanut Butter", "#D2B48C"], // Light Brown
-        ["Pralines and Cream", "#FFF5E1"], // Cream
-        ["Red Velvet", "#C71585"], // Red
-        ["Rum Raisin", "#FFF5E1"], // Cream
-        ["Spumoni", "#008000"], // Green
-        ["Strawberry", "#FFC0CB"], // Pink
-        ["Sweet Potato Maple Walnut", "#D2691E"], // Orange
-        ["Ube (Philippines, Purple Yam)", "#6A0DAD"], // Dark Purple
-        ["Vietnamese Coffee", "#D2B48C"] // Light Brown
-    ];    
+    // let allFlavors = [
+    //     ["Almond", "#D2B48C"], // Light Brown
+    //     ["Bastani Sonnati (Persian)", "#FFD700"], // Yellow
+    //     ["Butter Pecan", "#FFF5E1"], // Cream
+    //     ["Cayenne Chocolate", "#5C4033"], // Dark Brown
+    //     ["Chocolate Chip Cookie Dough", "#EED9C4"], // Beige
+    //     ["Coconut Almond Chip", "#FFFFFF"], // White
+    //     ["Dulce de Leche", "#C19A6B"], // Caramel
+    //     ["English Toffee", "#8B4513"], // Brown
+    //     ["Goat Cheese Beet Swirl", "#FFFFFF"], // White
+    //     ["Green Tea Ice Cream", "#98FB98"], // Light Green
+    //     ["Honey Avocado", "#FFC30B"], // Dark Yellow
+    //     ["Honeyjack and Coke", "#654321"], // Dark Brown
+    //     ["Huckleberry", "#800080"], // Purple
+    //     ["Jalapeño", "#008000"], // Green
+    //     ["Lavender Honey", "#D8BFD8"], // Light Purple
+    //     ["Les Bourgeois and Ghirardelli", "#4B382A"], // Dark Brown
+    //     ["Madagascar Vanilla", "#FAEBD7"], // Pale Yellow
+    //     ["Mango", "#FFA500"], // Orange
+    //     ["Mint Chocolate Chip", "#98FB98"], // Light Green
+    //     ["Moose Tracks", "#EED9C4"], // Beige
+    //     ["Passion Fruit", "#FF7518"], // Orange
+    //     ["Pistachio", "#A7C796"], // Pale Green
+    //     ["Peanut Butter", "#D2B48C"], // Light Brown
+    //     ["Pralines and Cream", "#FFF5E1"], // Cream
+    //     ["Red Velvet", "#C71585"], // Red
+    //     ["Rum Raisin", "#FFF5E1"], // Cream
+    //     ["Spumoni", "#008000"], // Green
+    //     ["Strawberry", "#FFC0CB"], // Pink
+    //     ["Sweet Potato Maple Walnut", "#D2691E"], // Orange
+    //     ["Ube (Philippines, Purple Yam)", "#6A0DAD"], // Dark Purple
+    //     ["Vietnamese Coffee", "#D2B48C"] // Light Brown
+    // ];    
     let flavorContainer =  Object.assign(document.createElement("div"), {
         id: "flavorContainer"
     });
@@ -87,6 +124,12 @@ function init(numberOfRooms){
         headerContainer.appendChild(roomHeaderDiv)
     }
 
+    let topBorderContainer = Object.assign(document.createElement("div"), {
+        id: "topBorderContainer",
+        className: "border-container"
+    });
+    
+
     let yesOrNoContainer =  Object.assign(document.createElement("div"), {
         id: "yesOrNoContainer",
         className: "yes-or-no-container"
@@ -99,11 +142,21 @@ function init(numberOfRooms){
 
     });
 
+    let bottomBorderContainer = Object.assign(document.createElement("div"), {
+        id: "bottomBorderContainer",
+        className: "border-container"
+    });
+
+
+    roomContainer.appendChild(topBorderContainer)
 
     roomContainer.appendChild(headerContainer)
     roomContainer.appendChild(flavorContainer)
     roomContainer.appendChild(yesOrNoContainer)
-    yesOrNoContainer.appendChild(kingChoiceText);
+    yesOrNoContainer.appendChild(kingChoiceText)
+
+    roomContainer.appendChild(bottomBorderContainer)
+
 
 
 
@@ -144,16 +197,25 @@ function init(numberOfRooms){
         let checkboxId = `room_${i}_checkbox_row_${id}`
         let coneId = `${checkboxId}_cone`
 
-        let checkbox = Object.assign(document.createElement("input"), {
-            type: "checkbox",
-            id: checkboxId
-        });
+        // let checkbox = Object.assign(document.createElement("input"), {
+        //     type: "checkbox",
+        //     id: checkboxId
+        // });
+        let checkbox = document.createElement("svg-checkbox");
+        checkbox.setAttribute("id", checkboxId);
+        checkbox.setAttribute("name", "roomCheckbox");
+        checkbox.setAttribute("value", flavor[0]); 
+        
+        // Instead of appending new checkboxes, attach functionality to the existing cone
+        checkboxWrapper.appendChild(checkbox);
+        
+        
 
 
         let svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         svgElement.setAttribute("viewBox", "0 0 208 334");
         // svgElement.setAttribute("preserveAspectRatio","none")
-        svgElement.style.width = "7rem";
+        svgElement.style.width = "7em";
         // svgElement.style.height = "100%"
         svgElement.style.setProperty("--filter-mode", "url(#grayscale)"); // Correct way
         // console.log(svgElement.style.getPropertyValue("--filter-mode"))
@@ -162,34 +224,34 @@ function init(numberOfRooms){
             setAttribute: function(name, value) { this.setAttributeNS(null, name, value); }
         });
 
-        checkboxWrapper.addEventListener("click",(e)=>{
+        // checkboxWrapper.addEventListener("click",(e)=>{
 
-            // console.log(e.currentTarget)
-            let checkbox = document.getElementById(e.currentTarget.id.split("checkbox_wrapper_")[1])
-            // console.log(checkbox.checked)
-            checkbox.checked = !checkbox.checked;
-            let cone = document.getElementById(coneId)
-            // cone.classList.toggle("ghosted");
-            let selectedFlavor = String(flavor).split(",")[0].trim();
-            // console.log("selectedflavour ", selectedFlavor)
-            let flavorEntry = allFlavors.find(entry => entry[0] === selectedFlavor);
-            // console.log(flavorEntry, "EUREKA");
-            let coneColor = flavorEntry[1];
-            // console.log(flavorEntry[1], "conecolour")
-            // let coneColor = flavorEntry ? flavorEntry[1] : "#FFC0CB";
-            useElement.style.setProperty("--color_fill", coneColor);
-            // new toggle
-            let currentFilter = svgElement.style.getPropertyValue("--filter-mode");
-            svgElement.style.setProperty("--filter-mode", currentFilter === "url(#grayscale)" ? "none" : "url(#grayscale)");
+        //     // console.log(e.currentTarget)
+        //     let checkbox = document.getElementById(e.currentTarget.id.split("checkbox_wrapper_")[1])
+        //     // console.log(checkbox.checked)
+        //     checkbox.checked = !checkbox.checked;
+        //     let cone = document.getElementById(coneId)
+        //     // cone.classList.toggle("ghosted");
+        //     let selectedFlavor = String(flavor).split(",")[0].trim();
+        //     // console.log("selectedflavour ", selectedFlavor)
+        //     let flavorEntry = allFlavors.find(entry => entry[0] === selectedFlavor);
+        //     // console.log(flavorEntry, "EUREKA");
+        //     let coneColor = flavorEntry[1];
+        //     // console.log(flavorEntry[1], "conecolour")
+        //     // let coneColor = flavorEntry ? flavorEntry[1] : "#FFC0CB";
+        //     useElement.style.setProperty("--color_fill", coneColor);
+        //     // new toggle
+        //     let currentFilter = svgElement.style.getPropertyValue("--filter-mode");
+        //     svgElement.style.setProperty("--filter-mode", currentFilter === "url(#grayscale)" ? "none" : "url(#grayscale)");
 
-        })
+        // })
         useElement.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "icecream.svg#cone");
         svgElement.setAttribute("id", coneId);
         svgElement.appendChild(useElement);
 
 
 
-        checkboxWrapper.appendChild(checkbox);
+        // checkboxWrapper.appendChild(checkbox);
         checkboxWrapper.appendChild(svgElement);
         flavorDiv.appendChild(checkboxWrapper);
 
