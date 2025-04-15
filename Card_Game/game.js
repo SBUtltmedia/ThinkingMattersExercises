@@ -1,24 +1,30 @@
+// Get the current phase from the URL (like ?phase=2) default to 1 and limit it to max 4
 const urlParams = new URLSearchParams(window.location.search);
 let phase = Math.min(urlParams.get('phase') || 1, 4);
 
+
+//Hi hat in dough and tides not as so
+// Game instructions for each of the 4 phases
 const phaseInfo = [
     { 
-        'description': 'PHASE 1: HOT', 
+        'description': 'Phase 1: Hot', 
         'instructions': 'Players take turns choosing cards from a set of nine, each containing a word. The objective is to be the first to collect three cards with words that share a common letter.' 
     },
     { 
-        'description': 'PHASE 2: ACE', 
-        'instructions': 'Players take turns choosing cards numbered Ace through 9. The objective is to be the first to collect three cards whose sum equals 15.' 
+        'description': 'Phase 2: Ace', 
+        'instructions': 'Players take turns choosing cards numbered 1 through 9. The objective is to be the first to collect three cards whose sum equals 15.' 
     },
     { 
-        'description': 'PHASE 3: Tic-Tac-Toe', 
+        'description': 'Phase 3: Tic-Tac-Toe', 
         'instructions': 'Players take turns placing Xs and Os on a standard 3×3 Tic-Tac-Toe board. The objective is to be the first to get three of your marks in a row - horizontally, vertically or diagonally, while strategically blocking your opponent.' 
     },
     { 
-        'description': 'PHASE 4: Magic Square', 
-        'instructions': 'This phase combines elements from the previous games. Players must recognize connections between words, numbers and patterns to form winning strategies. The key lies in identifying relationships, such as how three words sharing a common letter in "Hot" correspond to a sum of 15 in "Ace".' 
+        'description': 'Phase 4: Magic Square', 
+        'instructions': 'This phase combines elements from the previous games. Players must recognize connections between words, numbers and patterns to form winning strategies. The key lies in identifying relationships, such as how three words sharing a common letter in the game "Hot" correspond to a sum of 15 in "Ace".' 
     }
 ];
+
+
 
 
 // Ensure DOM is fully loaded before switching phase and showing instructions
@@ -26,18 +32,13 @@ window.addEventListener('DOMContentLoaded', () => {
     setupUI()
     switchToPhase(phase);
 
-    // Ensure modal is shown only after elements are available
     const modal = document.getElementById('instructions-modal');
-    // if (modal && phase <= 3) {
-    //     showInstructions(phase); 
-    // }
-    
 });
 
-{/* <div class="phase-overlay" id="phase2-overlay">
-<button class="phase-button" onclick="switchToPhase(2)">PHASE 2: Number Mode</button>
-</div> */}
 
+
+
+// Create clickable buttons for each phase
 function setupUI(){
     for (const [i,val] of phaseInfo.entries()){
         console.log("here",i+1)
@@ -61,15 +62,15 @@ function setupUI(){
 
 const targetSum = 15;
 const wordBindings = {
-    2: "fear",
-    7: "or",
-    6: "try",
-    9: "be",
-    5: "boat",
-    1: "by",
-    4: "ten",
-    3: "on",
-    8: "any",
+    2: "hat",
+    7: "hi",
+    6: "dough",
+    9: "as",
+    5: "tides",
+    1: "so",
+    4: "and",
+    3: "in",
+    8: "not",
 };
 let availableNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 let playerNumbers = [];
@@ -79,12 +80,19 @@ let currentPHASE = 1;
 const boardElement = document.getElementById('board');
 const gameStatus = document.getElementById('gameStatus');
 
+
+
+// Draw the board depending on the current phase
 function createBoard(phase) {
     boardElement.innerHTML = '';
     boardElement.classList.toggle('grid-layout', phase === 3 || phase === 4);
     
+    const wordOrder = [7, 2, 3, 6, 4, 5, 8, 9, 1];
     const magicSquareOrder = [2, 7, 6, 9, 5, 1, 4, 3, 8];
-    magicSquareOrder.forEach(num => {
+
+    const displayOrder = (phase === 1) ? wordOrder : magicSquareOrder;
+
+    displayOrder.forEach(num => {
         const cell = document.createElement('div');
         cell.classList.add('cell');
         cell.dataset.number = num;
@@ -104,18 +112,22 @@ function createBoard(phase) {
                 cell.innerHTML = `
                     <div class="main-symbol"></div>
                     <div class="sub-info">
-                        <span>${num}</span>
-                        <span>${wordBindings[num]}</span>
+    <span class="cell-number">${num}</span>
+    <span class="cell-word">${wordBindings[num]}</span>
                     </div>
                 `;
                 break;
         }
         
+        // Make each cell clickable
         cell.addEventListener('click', handlePlayerMove);
         boardElement.appendChild(cell);
     });
 }
 
+
+
+// Handles what happens when the player clicks a cell
 function handlePlayerMove(event) {
     const cell = event.target.closest('.cell');
     if (gameStatus.textContent.includes('wins') || gameStatus.textContent.includes('tie')) {
@@ -173,6 +185,9 @@ function handlePlayerMove(event) {
     }
 }
 
+
+
+// Show "X" or "O" or label when a cell is clicked
 function updateCellDisplay(cell, player) {
     cell.classList.add(`taken-${player}`);
     const symbol = player === 'player' ? 'X' : 'O';
@@ -181,7 +196,7 @@ function updateCellDisplay(cell, player) {
         case 1:
         case 2:
             const currentContent = cell.textContent;
-            cell.innerHTML = currentContent + `<span class="label">${player}</span>`;
+            cell.innerHTML = currentContent + `<span class="label ${player}">${player}</span>`;
             break;
         case 3:
             cell.textContent = symbol;
@@ -195,6 +210,9 @@ function updateCellDisplay(cell, player) {
     cell.removeEventListener('click', handlePlayerMove);
 }
 
+
+
+// Method to check if any 3 numbers add up to 15
 function checkWinningCombination(numbers) {
     const n = numbers.length;
     for (let i = 0; i < n; i++) {
@@ -209,12 +227,17 @@ function checkWinningCombination(numbers) {
     return false;
 }
 
+
+
+// Returns score based on who is winning
 function evaluate() {
     if (checkWinningCombination(computerNumbers)) return 10;
     if (checkWinningCombination(playerNumbers)) return -10;
     return 0;
 }
 
+
+// Try all moves and pick best one using minimax algorithm
 function minimax(depth, isMaximizing) {
     const score = evaluate();
     if (score === 10 || score === -10 || availableNumbers.length === 0) return score;
@@ -236,6 +259,9 @@ function minimax(depth, isMaximizing) {
     return best;
 }
 
+
+
+// Loop through all moves and return the best move for computer
 function findBestMove() {
     let bestVal = -Infinity;
     let bestMove = -1;
@@ -258,6 +284,9 @@ function findBestMove() {
     return bestMove;
 }
 
+
+
+// When game ends, move to next phase if no phase in URL, if phase="x" in URL, do nothing
 function endGame() {
     gamesPlayed++;
 
@@ -281,6 +310,7 @@ function endGame() {
 
 
 
+// Show phase transition overlay when switching to a new phase
 function showPhaseTransition(phase) {
     setTimeout(() => {
         document.getElementById(`phase${phase}-overlay`).style.display = 'flex';
@@ -288,7 +318,11 @@ function showPhaseTransition(phase) {
 }
 
 
+
+// Function to switch to a specific phase
 function switchToPhase(phase) {
+    currentPHASE = phase;
+
     const gameModeElement = document.getElementById('game-mode');
     const board = document.querySelector('.board');
     
@@ -306,15 +340,14 @@ function switchToPhase(phase) {
     document.getElementById(`phase${phase}-overlay`).style.display = 'none';
     gameModeElement.textContent = phaseInfo[phase - 1].description;
     
-    resetGame(phase);
+    resetGame(currentPHASE);
     
-    // Show instructions when phase changes (except for Phase 4)
-    console.log("Current Phase:", phase);
-    // if (phase !== 4) {
+    // // Show instructions when phase changes (except for Phase 4)
         showInstructions(phase);
-    //}
 
 }
+
+
 
 // Function to Display Instructions Modal
 function showInstructions(phase) {
@@ -335,13 +368,15 @@ function showInstructions(phase) {
 }
 
 
-function resetGame(phase) {
+
+// Function to reset the game for the current phase
+function resetGame(passPhase) {
     availableNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     playerNumbers = [];
     computerNumbers = [];
     gameStatus.textContent = '';
     boardElement.classList.remove('game-over');
-    createBoard(phase);
+    createBoard(passPhase);
 }
 
-createBoard(phase);
+// createBoard(phase);
