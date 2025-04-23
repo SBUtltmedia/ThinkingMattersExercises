@@ -2,22 +2,17 @@ body {
     font-family: 'Special Elite', cursive;
     text-align: center;
     margin: 0;
-    padding: 20px;
     min-height: 100vh;
-    background-color:         #000000;
+    background-color: #000000;
     background-size: 200% 200%;
+    overflow: hidden;
+
 }
 
 @keyframes bgShift {
-    0% {
-        background-position: 0% 0%;
-    }
-    50% {
-        background-position: 100% 100%;
-    }
-    100% {
-        background-position: 0% 0%;
-    }
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
 }
 
 h1 {
@@ -26,9 +21,94 @@ h1 {
     font-size: 2.25rem;
     letter-spacing: 0.125rem;
     color: white;
-    text-shadow: 3px 3px 6px rgba(0,0,0,0.15);
+    text-shadow: 0.1875rem 0.1875rem 0.375rem rgba(0,0,0,0.15);
     font-weight: bold;
 }
+
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.board {
+    display: flex;
+    justify-content: center;
+    gap: 0.625rem;
+    margin: 1.25rem auto;
+}
+
+
+
+
+.letter-count-container {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 2%;
+    width: 90%;
+    box-sizing: border-box;
+    left: 5%;
+}
+
+.letter-box {
+    display: flex;
+    font-size: 0.7rem;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0.625rem;
+    min-width: 11%;
+    min-height: 5rem;
+    font-family: 'Special Elite', cursive;
+    font-weight: bold;
+    color: white;
+    box-sizing: border-box;
+}
+
+.letter-title {
+    padding: 0.3rem 0 0.3rem 0;
+    text-align: center;
+}
+
+.letter-grid {
+    padding: 0 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(4, auto);
+    gap: 0.25rem 0.75rem;
+    justify-items: center;
+}
+
+@keyframes blinkText {
+    0%, 100% {
+      color: yellow;
+      opacity: 1;
+    }
+    50% {
+      color: yellow;
+      opacity: 0;
+    }
+  }
+  
+  .blink {
+    animation: blinkText 1s step-start infinite;
+  }
+  
+
+
+
+.player-box {
+    background-color: #064d1a;
+}
+
+.computer-box {
+    background-color: #6d0b0b;
+}
+
+
 
 
 .game-status {
@@ -40,19 +120,15 @@ h1 {
 }
 
 
+
+
 button {
     font-family: 'Special Elite', cursive;
+    padding: 0.625rem 1.25rem;
 }
 
 .phase-button {
     font-family: 'Special Elite', cursive;
-}
-
-.board {
-    display: flex;
-    justify-content: center;
-    gap: 0.625rem;
-    margin: 1.25rem auto;
 }
 
 .board.grid-layout {
@@ -61,31 +137,39 @@ button {
     width: fit-content;
 }
 
+
+
+
 .cell {
     font-family: 'Special Elite', cursive;
-    background: white !important; 
+    background: white !important;
     color: black !important;
     width: 5rem;
     height: 5rem;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border: 1px solid #ccc;
+    border: 0.0625rem solid #ccc;
     flex-direction: column;
     position: relative;
     transition: all 0.3s ease;
     border-radius: 0.75rem;
     box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.1);
+    flex: 0 0 calc(10% + 1rem);
+    max-width: 5rem;
+    min-width: 3.75rem;
+    height: auto;
+    aspect-ratio: 1 / 1;
 }
 
 .cell:hover:not(.taken-player):not(.taken-computer) {
     background: #ffffff !important;
     color: black !important;
     transform: translateY(-0.5rem);
-    box-shadow: 
+    box-shadow:
         0 0.9375rem 1.5625rem rgba(0,0,0,0.2),
         0 0.3125rem 0.625rem rgba(0,0,0,0.1);
     transition: all 0.3s ease;
@@ -96,14 +180,13 @@ button {
     color: black !important;
 }
 
-
 .cell.taken-player {
-    background-color: #073509 !important;  
+    background-color: #073509 !important;
     color: white !important;
 }
 
 .cell.taken-computer {
-    background-color: crimson !important; 
+    background-color: crimson !important;
     color: white !important;
 }
 
@@ -111,13 +194,12 @@ button {
     color: rgb(0, 0, 0) !important;
     font-weight: bold;
     text-shadow:
-    -0.5px -0.5px 0 white,
-    0.5px -0.5px 0 white,
-    -0.5px  0.5px 0 white,
-    1px  1px 0 white,
-     0px  0px 0 white;
+        -0.03125rem -0.03125rem 0 white,
+        0.03125rem -0.03125rem 0 white,
+        -0.03125rem 0.03125rem 0 white,
+        0.0625rem 0.0625rem 0 white,
+        0 0 0 white;
 }
-
 
 .cell .label {
     font-size: 0.75rem;
@@ -125,31 +207,9 @@ button {
     bottom: 0.3125rem;
 }
 
-button {
-    padding: 0.625rem 1.25rem;
-}
 
-.phase-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
 
-.phase-button {
-    padding: 1.25rem 2.5rem;
-    font-size: 1.5rem;
-    background: white;
-    border: none;
-    border-radius: 0.625rem;
-    cursor: pointer;
-}
+
 
 .phase2-content {
     background: white;
@@ -159,6 +219,9 @@ button {
     text-align: left;
 }
 
+
+
+
 .magic-square {
     display: grid;
     grid-template-columns: repeat(3, 5rem);
@@ -166,10 +229,13 @@ button {
     margin: 1.25rem auto;
 }
 
+
+
+
 .magic-cell {
     width: 5rem;
     height: 5rem;
-    border: 1px solid #ccc;
+    border: 0.0625rem solid #ccc;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -181,7 +247,7 @@ button {
 }
 
 .xo-cell {
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: bold;
 }
 
@@ -191,14 +257,14 @@ button {
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    padding-bottom: 6px;
+    padding-bottom: 0.375rem;
 }
 
 .isomorphic-cell .main-symbol {
     position: absolute;
-    top: 10%; /* Adjust this to push X/O down a bit */
+    top: 10%;
     left: 50%;
-    transform: translateX(-50%);  /* This centers horizontally */
+    transform: translateX(-50%);
     text-align: center;
     font-size: 1.5rem;
     font-weight: bold;
@@ -216,11 +282,13 @@ button {
 
 
 
+
+
 .game-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 1.25rem;
 }
 
 .board.game-over {
@@ -230,21 +298,27 @@ button {
 
 .isomorphic-cell:hover:not(.taken-player):not(.taken-computer) {
     transform: translateY(-0.5rem) rotate(-2deg);
-    box-shadow: 
+    box-shadow:
         0 0.9375rem 1.5625rem rgba(0,0,0,0.2),
         0 0.3125rem 0.625rem rgba(0,0,0,0.1);
 }
 
 .board.grid-layout .cell:hover:not(.taken-player):not(.taken-computer) {
     transform: translateY(-0.625rem) scale(1.1);
-    box-shadow: 
+    box-shadow:
         0 0.9375rem 1.5625rem rgba(0,0,0,0.2),
         0 0.3125rem 0.625rem rgba(0,0,0,0.1);
 }
 
+
+
+
 .cell {
     animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
+
+
+
 
 @keyframes popIn {
     0% {
@@ -266,7 +340,7 @@ button {
 
 .board:not(.game-over) .cell:active:not(.taken-player):not(.taken-computer) {
     transform: scale(0.95);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
 }
 
 h1:hover {
@@ -274,28 +348,32 @@ h1:hover {
     transition: transform 0.3s ease;
 }
 
+
+
+
+
 .reset-button {
     font-family: 'Special Elite', cursive;
-    font-size: 110%;
+    font-size: 1.1rem;
     background: linear-gradient(45deg, #2ff48b, #50a09b);
     border: none;
-    border-radius: 25px;
+    border-radius: 1.5625rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.25rem 0.9375rem rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
 }
 
 .reset-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transform: translateY(-0.1875rem);
+    box-shadow: 0 0.5rem 1.5625rem rgba(0, 0, 0, 0.3);
     background: linear-gradient(45deg, #4ECDC4, #FF6B6B);
 }
 
 .reset-button:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(0.0625rem);
+    box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.2);
 }
 
 .reset-button::before {
@@ -315,16 +393,20 @@ h1:hover {
     transform: rotate(45deg) translateY(100%);
 }
 
+
+
+
+
 @keyframes phaseEntrance {
     0% {
-        transform: translateY(-30px);
+        transform: translateY(-1.875rem);
         opacity: 0;
-        letter-spacing: 8px;
+        letter-spacing: 0.5rem;
     }
     50% {
-        transform: translateY(5px);
+        transform: translateY(0.3125rem);
         opacity: 0.7;
-        letter-spacing: 4px;
+        letter-spacing: 0.25rem;
     }
     100% {
         transform: translateY(0);
@@ -333,26 +415,29 @@ h1:hover {
     }
 }
 
+
+
+
 #game-mode {
     opacity: 0;
     font-size: 1.75rem;
     margin-bottom: 1.875rem;
     color: #6cdbe9;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    text-shadow: 0.125rem 0.125rem 0.25rem rgba(0,0,0,0.1);
     font-weight: bold;
     animation: phaseEntrance 1.5s ease-out forwards;
 }
 
-.board {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 1s ease, transform 1s ease;
-}
+
+
 
 .board.show {
     opacity: 1;
     transform: translateY(0);
 }
+
+
+
 
 .xo-cell, .isomorphic-cell .main-symbol {
     font-size: 1.5rem;
@@ -362,7 +447,9 @@ h1:hover {
     align-items: center;
 }
 
-/* Modal Styling */
+
+
+
 .modal {
     display: none;
     position: fixed;
@@ -378,20 +465,27 @@ h1:hover {
 
 .modal-content {
     background: white;
-    padding: 20px;
-    border-radius: 8px;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
     text-align: center;
-    max-width: 400px;
+    max-width: 25rem;
     position: relative;
 }
 
+#modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+
+
+
+
 .close-button {
     position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
+    top: 0.625rem;
+    right: 0.9375rem;
+    font-size: 1.5rem;
     cursor: pointer;
 }
-
-
-
