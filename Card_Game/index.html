@@ -6,24 +6,36 @@
     <title>Word Tic-Tac-Toe</title>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Special+Elite&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="resize.js"></script>
 </head>
 <body>
+    <div class="screen">
     <h1>GAME ISOMORPHISM DISCOVERY</h1>
-    <div id="game-mode"></div>
-    <div class="game-container">
-        <div class="board" id="board"></div>
-        <div class="game-status" id="gameStatus"></div>
-        <button class="reset-button" onclick="resetGame(currentPHASE)">Reset GAME</button>
-    </div>
+    <div id="game-title">
+        <div id="game-mode"></div>
 
-    <div id="instructions-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2 id="modal-title"></h2>
-            <p id="modal-text"></p>
+            <div class="letter-count-container">
+                <div id="player-letters" class="letter-box player-box">Your Status</div>
+                <div id="computer-letters" class="letter-box computer-box">Computer's Status</div>
+            </div>
+
+            <div class="board" id="board"></div>
+            <div class="game-status" id="gameStatus"></div>
+            <button class="reset-button" onclick="resetGame(currentPHASE)">Reset GAME</button>
+
+        <div id="instructions-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2 id="modal-title"></h2>
+                <p id="modal-text"></p>
+                <div id="modal-buttons" style="margin-top: 1rem; display: none;">
+                    <button class="reset-button" onclick="handlePlayAgain()">Play Again</button>
+                    <button class="reset-button" onclick="proceedToNextPhase()">Next Phase</button>
+                  </div>
+            </div>
         </div>
     </div>
-
+</div>
 
     <script src="game.js"></script>
 </body>
