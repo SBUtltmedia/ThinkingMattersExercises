@@ -7,7 +7,7 @@ class SVGCheckuse extends HTMLElement {
         Array.from(this.attributes).forEach(({ name, value }) => {
            this.attObj[name] = value; 
         })
-  
+
         this._visitedDuringDrag = false;
  
     }
@@ -64,12 +64,19 @@ class SVGCheckuse extends HTMLElement {
           .mousedown {
             display: block;
             width: 7.5%;
-            background: blue;
             transition: transform 0.1s ease;
             transform: scale(0.9);
             
             }
                 
+            .ghosted {
+            filter: saturate(0);
+            }
+
+
+            .hide_checkmark {
+            --show: 0.0;
+            }
 
         `;
 
@@ -89,15 +96,23 @@ class SVGCheckuse extends HTMLElement {
         this.saturation = this.getAttribute('saturation');
         this.lightness = this.getAttribute('lightness');
 
+
         console.log(this.attObj.hue || 0);
        const use = Object.assign(document.createElementNS('http://www.w3.org/2000/svg', 'use'), {style: `--hue:${this.attObj.hue || 0}; --saturation:${this.attObj.saturation || 0}; --lightness_main: ${this.attObj.lightness}; --lightness_highlight: ${parseInt(this.attObj.lightness) - 10}%;` });
        use.setAttributeNS("http://www.w3.org/1999/xlink", 'href', 'icecream.svg#cone');
+
+        const do_not_use =  Object.assign(document.createElementNS('http://www.w3.org/2000/svg', 'use') );
+        use.classList.add("ghosted");
+        do_not_use.setAttributeNS("http://www.w3.org/1999/xlink", 'href', 'icecream.svg#do_not');
+        
+       do_not_use.classList.add("hide_checkmark");
 
     // use.setAttribute('xlink:href', "icecream.svg#cone");
        // Set inline style properties using style.setProperty
 
        
         svg.appendChild(use);
+        svg.appendChild(do_not_use);
 
         return svg;
     }
@@ -126,12 +141,23 @@ class SVGCheckuse extends HTMLElement {
 
 
         console.log(container.classList)
+        const icecream = this.svgCheckuse.querySelectorAll('use')[0];
+
+        const checkmark = this.svgCheckuse.querySelectorAll('use')[1];
+
 
         if (container.classList.contains("mousedown")) {
             container.classList.remove("mousedown");
-            console.log("contains")
+            icecream.classList.add("ghosted");
+            checkmark.classList.add('hide_checkmark');
+
+            console.log(checkmark);
         } else {
             container.classList.add("mousedown");
+            icecream.classList.remove("ghosted");
+            checkmark.classList.remove('hide_checkmark');
+            console.log(checkmark);
+
         }
 
            //console.log(this.classList);
@@ -155,11 +181,21 @@ class SVGCheckuse extends HTMLElement {
                         
                 console.log(container.classList)
 
+                const icecream = this.svgCheckuse.querySelectorAll('use')[0];
+
+                const checkmark = this.svgCheckuse.querySelectorAll('use')[1];
+        
+
                 if (container.classList.contains("mousedown")) {
                     container.classList.remove("mousedown");
+                    icecream.classList.add("ghosted");
+                    checkmark.classList.add('hide_checkmark');
+        
                     console.log("contains")
                 } else {
                     container.classList.add("mousedown");
+                    icecream.classList.remove("ghosted");
+                    checkmark.classList.remove('hide_checkmark');
                 }
                         
             }
