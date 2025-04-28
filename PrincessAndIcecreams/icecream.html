@@ -1,17 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <svg style="width:40rem;" viewBox="0 0 208 334">
-        <use xlink:href="icecream.svg#cone" id="0" style="fill: var(--color_fill, pink);"></use>
+        <!-- <use xlink:href="icecream.svg#cone" id="0" style="--color1_fill:'0, 100%, 50%'; --color2_fill:'130 20 50';   "></use> -->
+        <use xlink:href="icecream.svg#cone" id="cone"
+            style="--hue:70; --saturation:100%; --lightness_main: 50%; --lightness_highlight: 40%;  "></use>
         <!-- <use xlink:href="icecream.svg#cone" id="0" style="--color_fill: pink;"></use> -->
     </svg>
+    <script>
+        let keyframes=[];
+        let cone = document.getElementById("cone");
+        let saturation = 50;
+        let lightness_main = 60;
+        for (let hue = 0; hue < 360; hue++) 
+   {
+          
+                    keyframes.push({hue,saturation,lightness_main})
+                    // requestAnimationFrame(
+                    //     () => {
+                    //         console.log(cone.style)
+                    //         cone.style = `--hue:${hue}; --saturation:${saturation}%; --lightness_main: ${lightness_main}%; --lightness_highlight: ${lightness_main - 10}%;  `
+                    //     }
+                    // )
+                }
+    
+        
+let i=0;
+
+        function cycle(){
+
+            cone.style = `--hue:${keyframes[i].hue}; --saturation:${keyframes[i].saturation}%; --lightness_main: ${keyframes[i].lightness_main}%; --lightness_highlight: ${keyframes[i].lightness_main - 20}%;`
+            i++;
+            if (i>=keyframes.length){
+               i=0;
+            }
+            requestAnimationFrame(cycle)
+        }
+cycle()
+
+
+    </script>
+
 </body>
+
 </html>
-
-
-

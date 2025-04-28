@@ -56,11 +56,11 @@ function resizeWindow() {
     // console.log(stageHeight)
     // document.getElementsByTagName("input")[0].style="transform: scale(stageHeight/10)"
 
-    document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
-        // scalingFactor = stageHeight / (40+Math.pow(numberOfRooms,1.5));
-        checkbox.style.transform = `scale(${scalingFactor*0.025}) 
-        translateY(-${Math.floor(scalingFactor*0.085)}rem)`;
-    });
+    // document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
+    //     // scalingFactor = stageHeight / (40+Math.pow(numberOfRooms,1.5));
+    //     checkbox.style.transform = `scale(${scalingFactor*0.025}) 
+    //     translateY(-${Math.floor(scalingFactor*0.085)}rem)`;
+    // });
 
     // document.querySelectorAll(".flavorClass").forEach((flavorClassElement) => {
     //     flavorClassElement.style.display = 'grid';
@@ -71,6 +71,15 @@ function resizeWindow() {
         flavorClassElement.style.display = 'grid';
         flavorClassElement.style.gridTemplateColumns = `repeat(${numberOfRooms + 1}, 1fr)`;
     });
+
+
+    // document.querySelectorAll(".border-container").forEach((borderElement) => {
+    //     // borderElement.style.transform = `scale(${scalingFactor*0.08}) `;
+    //     // borderElement.style.backgroundImage = "url('images/bordertile.jpg')";
+    //     borderElement.style.backgroundRepeat = `repeat-${scalingFactor*0.5}`;
+    //     // borderElement.style.backgroundSize = "auto 100%";
+    // });
+    
 
     // document.querySelectorAll(".yes-or-no-container").forEach((flavorClassElement) => {
     //     flavorClassElement.style.display = 'grid';

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ice Cream Flavor Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .flavor-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .flavor-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px;
+            border: 1px solid #eee;
+            transition: background-color 0.1s ease;
+        }
+        .flavor-item:hover {
+            background-color: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ice Cream Flavor Selector</h1>
+    <p>Click or drag to select/unselect multiple flavors. Drag in any direction to toggle items.</p>
+    <div id="flavorContainer" class="flavor-list"></div>
+
+    <div style="margin-top: 20px;">
+        <!-- <button onclick="logSelectedFlavors()">Log Selected Flavors</button> -->
+    </div>
+
+    <script src="svgtestcheckbox.js"></script>
+    <svg-checkbox id="room_0_checkbox_row_0" name="roomCheckbox" value="Ube (Philippines, Purple Yam)"></svg-checkbox>
+</body>
+</html>

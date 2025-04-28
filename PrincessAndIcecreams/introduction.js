@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // document.getElementById("introduction").classList.add("hide");
+
   document.getElementById("game").classList.add("hide");
 
   let numberOfRooms = window.gameConfig.numberOfRooms;
@@ -7,21 +9,27 @@ document.addEventListener("DOMContentLoaded", () => {
   mirrorVTT();
 });
 
+// narrate the story
+function generateMediaFiles() {
+  const baseAudioPath = "tts/out/";
+  const baseCaptionsPath = "story/";
+  const numberOfRooms = window.gameConfig.numberOfRooms;
+  let mediaFiles = [];
 
-// Define common and variable media files
-const mediaFiles = [
-    { audio: `tts/out/priya_0.ogg`, captionsFile: `story/priya_0.vtt` },  // Common
-    { audio: `tts/out/priya_1.ogg`, captionsFile: `story/priya_1.vtt` },  // Common
-    { audio: `tts/out/${window.gameConfig.numberOfRooms}/priya_2.ogg`, captionsFile: `story/${window.gameConfig.numberOfRooms}/priya_2.vtt` }, // Room dependent
-    { audio: `tts/out/priya_3.ogg`, captionsFile: `story/priya_3.vtt` },  // Common
-    { audio: `tts/out/priya_4.ogg`, captionsFile: `story/priya_4.vtt` },  // Common
-    { audio: `tts/out/${window.gameConfig.numberOfRooms}/priya_5.ogg`, captionsFile: `story/${window.gameConfig.numberOfRooms}/priya_5.vtt` }, // Room dependent
-    { audio: `tts/out/${window.gameConfig.numberOfRooms}/priya_6.ogg`, captionsFile: `story/${window.gameConfig.numberOfRooms}/priya_6.vtt` }, // Room dependent
-    { audio: `tts/out/${window.gameConfig.numberOfRooms}/priya_7.ogg`, captionsFile: `story/${window.gameConfig.numberOfRooms}/priya_7.vtt` },  // Common
-    { audio: `tts/out/priya_8.ogg`, captionsFile: `story/priya_8.vtt` },  // Common
-    { audio: `tts/out/priya_9.ogg`, captionsFile: `story/priya_9.vtt` },  // Common
-    { audio: `tts/out/priya_10.ogg`, captionsFile: `story/priya_10.vtt` } // Common
-];
+  for (let i = 0; i <= 10; i++) {
+    const isRoomDependent = [2, 5, 6, 7].includes(i);
+    const roomPath = isRoomDependent ? `${numberOfRooms}/` : "";
+    
+    mediaFiles.push({
+      audio: `${baseAudioPath}${roomPath}priya_${i}.ogg`,
+      captionsFile: `${baseCaptionsPath}${roomPath}priya_${i}.vtt`
+    });
+  }
+
+  return mediaFiles;
+}
+
+const mediaFiles = generateMediaFiles();
 let currentIndex = 0;
 
 
@@ -31,8 +39,6 @@ function playSequence() {
   const trackElement = videoElement.querySelector("track");
 
   // document.getElementById("game").classList.add("hide")
-
-
 
   const playNext = () => {
     if (currentIndex < mediaFiles.length) {
@@ -53,6 +59,14 @@ function playSequence() {
 }
 
 function goToNextPage() {
+
+    // Stop the currently playing audio
+  const audioElement = document.getElementById("myAudio");
+    if (audioElement) {
+      audioElement.pause();
+      audioElement.currentTime = 0;
+  }
+
   document.body.style.backgroundImage = 'none';
   document.querySelector("#introduction").classList.add("hide");
   document.querySelector("#game").classList.remove("hide");
@@ -77,7 +91,7 @@ for (let i = 0; i < tracks.length; i++) {
 
         const currentText = activeCues[0].text;
 
-        console.log(currentText);
+        // console.log(currentText);
         document.getElementById("story-text").innerHTML = currentText;
 
       }

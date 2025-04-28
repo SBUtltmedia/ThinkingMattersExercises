@@ -1,0 +1,36 @@
+{
+"intro": [
+    {
+        "speaker": "Alice",
+        "line": "Hi there! How are you doing today?"
+      },
+      {
+        "speaker": "Bob",
+        "line": "Hello Alice! I'm doing well, thanks for asking. How about you?"
+      },
+      {
+        "speaker": "Alice",
+        "line": "I'm great, thanks! Did you have any plans for the weekend?"
+      },
+      {
+        "speaker": "Bob",
+        "line": "Actually, I was thinking about going hiking. Would you like to join me?"
+      },
+      {
+        "speaker": "Alice",
+        "line": "That sounds fun! I'd love to. Where were you planning to go?"
+      },
+      {
+        "speaker": "Bob",
+        "line": "I was considering the trail at Evergreen Park. It's supposed to be beautiful this time of year."
+      },
+      {
+        "speaker": "Alice",
+        "line": "Perfect! Let's do it. Shall we meet at 9 AM on Saturday?"
+      },
+      {
+        "speaker": "Bob",
+        "line": "Sounds good to me. I'll see you then!"
+      }
+    ]
+}
