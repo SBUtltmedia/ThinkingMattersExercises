@@ -3,9 +3,13 @@ const urlParams = new URLSearchParams(window.location.search);
 let phase = Math.min(urlParams.get('phase') || 1, 4);
 
 
+
+
 let playerLetterCounts = {};
 let computerLetterCounts = {};
 const TRACKED_LETTERS = ['a', 'd', 'h', 'i', 'n', 'o', 's', 't'];
+
+
 
 
 // Game instructions for each of the 4 phases
@@ -31,13 +35,42 @@ const phaseInfo = [
 
 
 
-// Ensure DOM is fully loaded before switching phase and showing instructions
+function hideVSCController() {
+    const vscController = document.querySelector('div.vsc-controller');
+    if (vscController && vscController.shadowRoot) {
+      const controller = vscController.shadowRoot.getElementById('controller');
+      if (controller) {
+        controller.style.display = 'none';
+        return;
+      }
+    }
+    requestAnimationFrame(hideVSCController);
+  }
+
+
+
+
+  function hideIntroScreen() {
+    const introScreen = document.getElementById('intro-screen');
+        introScreen.style.display = 'none';
+        document.querySelector('.screen').style.display = 'block';
+        playPhaseIntroAudio();
+}
+
+
+
+
+
+// Ensure DOM is fully loaded before switching phase anding instructions
 window.addEventListener('DOMContentLoaded', () => {
+    hideVSCController();
     switchToPhase(phase);
     resizeWindow();
     toggleLetterBoxesVisibility(phase);
     const modal = document.getElementById('instructions-modal');
+    playPhaseIntroAudio();
 });
+
 
 
 
@@ -63,6 +96,24 @@ const gameStatus = document.getElementById('gameStatus');
 let gameEnded = false;
 const userStatus = "Your Status";
 const computerStatus = "Computer's Status";
+
+
+
+  function playPhaseIntroAudio() {
+    const videoElement = document.getElementById("myAudio");
+    if (!videoElement) return;
+  
+    const sourceElement = videoElement.querySelector("source");  
+    const phaseToUse = currentPHASE;
+  
+    sourceElement.src = `tts/out/${phaseToUse}/phase${phaseToUse}.ogg`;
+  
+    videoElement.load();
+    videoElement.play();
+  }
+  
+  
+  
 
 
 
@@ -117,7 +168,6 @@ function proceedToNextPhase() {
     const nextPhase = Math.min(currentPHASE + 1, 4);
     document.getElementById('instructions-modal').style.display = 'none';
     document.getElementById('modal-buttons').style.display = 'none';
-
     switchToPhase(nextPhase);
 }
 
@@ -163,9 +213,9 @@ function renderPhase2Combinations(numbers, elementId) {
         }
     }
     
-
     container.appendChild(grid);
 }
+
 
 
 
@@ -188,8 +238,6 @@ function handlePlayerMove(event) {
 
     updateCellDisplay(cell, 'player');
     renderPhase2Combinations(playerNumbers, 'player-letters');
-
-
 
     if (checkWinningCombination(playerNumbers)) {
         showResult("Computer Wins!");
@@ -220,10 +268,8 @@ function handlePlayerMove(event) {
 
     const computerCell = document.querySelector(`[data-number="${bestMove}"]`);
 
-    
     updateCellDisplay(computerCell, 'computer');
     renderPhase2Combinations(computerNumbers, 'computer-letters');
-
 
     if (checkWinningCombination(computerNumbers)) {
         showResult("Computer Wins!");
@@ -304,6 +350,7 @@ function toggleLetterBoxesVisibility(phase) {
 
 
 
+
 // Function to update the letter counts for the player and computer
 function updateLetterCounts(word, countObj, elementId) {
     for (let char of word.toLowerCase()) {
@@ -335,7 +382,6 @@ function renderLetterCounts(countObj, elementId) {
         cell.textContent = `${letter}-${value}`;
 
         cell.className = `letter-cell${value === 2 ? ' blink' : ''}`;
-
 
         grid.appendChild(cell);
     }
@@ -443,11 +489,12 @@ function switchToPhase(phase) {
     
     resetGame(currentPHASE);
 
-
     toggleLetterBoxesVisibility(currentPHASE);
     
     // Show instructions when phase changes
     showInstructions(phase);
+
+    playPhaseIntroAudio();
 
 }
 
@@ -470,7 +517,6 @@ function showInstructions(phase) {
     // const closeButton = document.querySelector('.close-button');
     const buttons = document.getElementById('modal-buttons');
 
-
     title.textContent = phaseInfo[phase - 1].description;
     text.textContent = phaseInfo[phase - 1].instructions;
 
@@ -479,7 +525,19 @@ function showInstructions(phase) {
     // Close modal when clicking the close button
     document.querySelector('.close-button').onclick = () => {
         modal.style.display = 'none';
-    };
+      
+        // Stop audio and hide container
+        const videoElement = document.getElementById("myAudio");
+        const audioContainer = document.getElementById("audio-container");
+        if (videoElement) {
+          videoElement.pause();
+          videoElement.currentTime = 0;
+        }
+        if (audioContainer) {
+          audioContainer.style.display = "none";
+        }
+      };
+      
 }
 
 
@@ -507,11 +565,8 @@ function showResult(message) {
     // text.textContent = "Would you like to play again or move on to the next phase?";
     buttons.style.display = 'flex';
 
-
     currentPHASE === 4 && hideNextPhaseButton(currentPHASE);
     urlParams.has('phase') && hideNextPhaseButton(currentPHASE);
-
-
 
     modal.style.display = 'flex';
 }
