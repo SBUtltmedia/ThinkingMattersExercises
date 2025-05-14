@@ -9,6 +9,10 @@
     <script src="resize.js"></script>
 </head>
 <body>
+    <div id="intro-screen" onclick="hideIntroScreen()">
+        <img src="image_background.svg" alt="Intro" id="intro-image">
+    </div>
+    
     <div class="screen">
     <h1>GAME ISOMORPHISM DISCOVERY</h1>
     <div id="game-title">
@@ -34,6 +38,13 @@
                   </div>
             </div>
         </div>
+
+        <div id="audio-container" style="display: none;">
+            <audio id="myAudio" nocontrols autoplay>
+                <source type="audio/ogg" src="tts/out/1/phase1.ogg">
+            </audio>
+        </div>
+  
     </div>
 </div>
 
