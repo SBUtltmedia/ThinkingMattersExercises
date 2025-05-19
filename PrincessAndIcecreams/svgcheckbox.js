@@ -223,7 +223,7 @@ class SVGCheckbox extends HTMLElement {
 }
 
 // Define the custom element
-customElements.define('svg-checkbox', SVGCheckbox);
+//customElements.define('svg-checkbox', SVGCheckbox);
 
 // Stop dragging when mouse or touch is released
 document.addEventListener('mouseup', () => {

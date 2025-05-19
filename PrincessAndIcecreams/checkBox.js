@@ -1,12 +1,8 @@
-class SVGCheckuse extends HTMLElement {
+export default class SVGCheckuse extends HTMLElement {
     constructor() {
         super();
         this.attObj = {}
-        this.attachShadow({ mode: 'open' });
-        // Track if this checkuse has been visited during current drag operation
-        Array.from(this.attributes).forEach(({ name, value }) => {
-           this.attObj[name] = value; 
-        })
+
 
         this._visitedDuringDrag = false;
  
@@ -18,6 +14,12 @@ class SVGCheckuse extends HTMLElement {
     }
 
     render() {
+        this.attachShadow({ mode: 'open' });
+        // Track if this checkuse has been visited during current drag operation
+        Array.from(this.attributes).forEach(({ name, value }) => {
+           this.attObj[name] = value; 
+        })
+        
         const container = Object.assign(document.createElement('div'),{
           "className":  'svg-checkuse-container'
         });
@@ -78,6 +80,22 @@ class SVGCheckuse extends HTMLElement {
             --show: 0.0;
             }
 
+              .cls-1 {
+        fill: #0c0;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: blue;
+      }
+
+      .cls-3 {
+        fill: #000;
+      }
+
         `;
 
         this.shadowRoot.appendChild(style);
@@ -99,11 +117,10 @@ class SVGCheckuse extends HTMLElement {
 
         console.log(this.attObj.hue || 0);
        const use = Object.assign(document.createElementNS('http://www.w3.org/2000/svg', 'use'), {style: `--hue:${this.attObj.hue || 0}; --saturation:${this.attObj.saturation || 0}; --lightness_main: ${this.attObj.lightness}; --lightness_highlight: ${parseInt(this.attObj.lightness) - 10}%;` });
-       use.setAttributeNS("http://www.w3.org/1999/xlink", 'href', 'icecream.svg#cone');
+       use.setAttributeNS("http://www.w3.org/1999/xlink", 'href', 'temp.svg#cone');
 
         const do_not_use =  Object.assign(document.createElementNS('http://www.w3.org/2000/svg', 'use') );
-        use.classList.add("ghosted");
-        do_not_use.setAttributeNS("http://www.w3.org/1999/xlink", 'href', 'icecream.svg#do_not');
+        do_not_use.setAttributeNS("http://www.w3.org/1999/xlink", 'href', 'temp.svg#do_not');
         
        do_not_use.classList.add("hide_checkmark");
 
@@ -148,13 +165,11 @@ class SVGCheckuse extends HTMLElement {
 
         if (container.classList.contains("mousedown")) {
             container.classList.remove("mousedown");
-            icecream.classList.add("ghosted");
             checkmark.classList.add('hide_checkmark');
 
             console.log(checkmark);
         } else {
             container.classList.add("mousedown");
-            icecream.classList.remove("ghosted");
             checkmark.classList.remove('hide_checkmark');
             console.log(checkmark);
 
@@ -188,13 +203,11 @@ class SVGCheckuse extends HTMLElement {
 
                 if (container.classList.contains("mousedown")) {
                     container.classList.remove("mousedown");
-                    icecream.classList.add("ghosted");
                     checkmark.classList.add('hide_checkmark');
         
                     console.log("contains")
                 } else {
                     container.classList.add("mousedown");
-                    icecream.classList.remove("ghosted");
                     checkmark.classList.remove('hide_checkmark');
                 }
                         
@@ -286,7 +299,7 @@ class SVGCheckuse extends HTMLElement {
 }
 
 // Define the custom element
-customElements.define('svg-checkuse', SVGCheckuse);
+customElements.define('svg-checkbox', SVGCheckuse);
 
 // Stop dragging when mouse is released
 document.addEventListener('mouseup', () => {

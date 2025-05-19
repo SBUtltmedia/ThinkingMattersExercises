@@ -1,3 +1,4 @@
+import SVGCheckuse from "./checkBox.js";
 const urlParams = new URLSearchParams(window.location.search);
 
 let numberOfRooms=Math.min(urlParams.get('numberOfRooms') || 2,5);
@@ -19,7 +20,9 @@ window.gameConfig = {
 // Wait for the page to fully load then initialize the game and also adjust the window sizes.
 addEventListener("DOMContentLoaded", () => {
     init(numberOfRooms);
-    resizeWindow();
+    //debugging purposes
+    document.getElementById("nextPageBtn").click();
+   // resizeWindow();
     selectRandomFlavor(numberOfIceCreams);
 });
 
@@ -58,6 +61,41 @@ window.allFlavors = [
     ["Ube (Philippines, Purple Yam)", "#6A0DAD"],
     ["Vietnamese Coffee", "#D2B48C"]
 ];
+
+const iceCreamFlavors = [
+    { flavor: "Almond", hue: 30, saturation: 30, lightness: 70 },
+    { flavor: "Bastani Sonnati (Persian)", hue: 50, saturation: 100, lightness: 50 },
+    { flavor: "Butter Pecan", hue: 45, saturation: 20, lightness: 90 },
+    { flavor: "Cayenne Chocolate", hue: 10, saturation: 40, lightness: 30 },
+    { flavor: "Chocolate Chip Cookie Dough", hue: 40, saturation: 20, lightness: 85 },
+    { flavor: "Coconut Almond Chip", hue: 0, saturation: 0, lightness: 100 },
+    { flavor: "Dulce de Leche", hue: 40, saturation: 30, lightness: 60 },
+    { flavor: "English Toffee", hue: 30, saturation: 70, lightness: 40 },
+    { flavor: "Goat Cheese Beet Swirl", hue: 0, saturation: 0, lightness: 100 },
+    { flavor: "Green Tea Ice Cream", hue: 120, saturation: 60, lightness: 80 },
+    { flavor: "Honey Avocado", hue: 45, saturation: 100, lightness: 50 },
+    { flavor: "Honeyjack and Coke", hue: 30, saturation: 70, lightness: 30 },
+    { flavor: "Huckleberry", hue: 270, saturation: 100, lightness: 40 },
+    { flavor: "Jalapeño", hue: 120, saturation: 100, lightness: 25 },
+    { flavor: "Lavender Honey", hue: 270, saturation: 40, lightness: 80 },
+    { flavor: "Les Bourgeois and Ghirardelli", hue: 20, saturation: 50, lightness: 30 },
+    { flavor: "Madagascar Vanilla", hue: 40, saturation: 20, lightness: 90 },
+    { flavor: "Mango", hue: 39, saturation: 100, lightness: 50 },
+    { flavor: "Mint Chocolate Chip", hue: 120, saturation: 60, lightness: 80 },
+    { flavor: "Moose Tracks", hue: 40, saturation: 20, lightness: 85 },
+    { flavor: "Passion Fruit", hue: 30, saturation: 100, lightness: 50 },
+    { flavor: "Pistachio", hue: 90, saturation: 30, lightness: 70 },
+    { flavor: "Peanut Butter", hue: 30, saturation: 30, lightness: 70 },
+    { flavor: "Pralines and Cream", hue: 45, saturation: 20, lightness: 90 },
+    { flavor: "Red Velvet", hue: 340, saturation: 80, lightness: 50 },
+    { flavor: "Rum Raisin", hue: 45, saturation: 20, lightness: 90 },
+    { flavor: "Spumoni", hue: 120, saturation: 100, lightness: 25 },
+    { flavor: "Strawberry", hue: 340, saturation: 100, lightness: 80 },
+    { flavor: "Sweet Potato Maple Walnut", hue: 30, saturation: 60, lightness: 50 },
+    { flavor: "Ube (Philippines, Purple Yam)", hue: 270, saturation: 100, lightness: 30 },
+    { flavor: "Vietnamese Coffee", hue: 30, saturation: 30, lightness: 70 }
+];
+
 
 
 
@@ -160,14 +198,15 @@ function init(numberOfRooms){
 
 
 
-    let currentFlavors = allFlavors.sort(() => Math.random() - 0.5).slice(0, numberOfIceCreams); 
+    let currentFlavors = iceCreamFlavors.sort(() => Math.random() - 0.5).slice(0, numberOfIceCreams); 
 
 
+    
  
-    currentFlavors.forEach((flavor,id) => {
+    currentFlavors.forEach((flavorObj,id) => {
         let flavorName = Object.assign(document.createElement("div"),{
             className: "flavorName",
-            innerHTML:flavor[0],
+            innerHTML:flavorObj.flavor,
             id: `flavor_name_${id}`
         })
 
@@ -184,7 +223,7 @@ function init(numberOfRooms){
     flavorDiv.append(flavorName) 
     flavorContainer.append(flavorDiv)
     
-    flavorDiv.addEventListener("click", () => handleFlavorClick(flavorDiv, flavor));
+    flavorDiv.addEventListener("click", () => handleFlavorClick(flavorDiv, flavorObj));
 
     for (let i = 0; i < numberOfRooms; i++) {
         let roomId = `room_${i}`
@@ -201,10 +240,24 @@ function init(numberOfRooms){
         //     type: "checkbox",
         //     id: checkboxId
         // });
+
+
+        let checkBoxAtr = {
+            "id": checkboxId, 
+            "name": "roomCheckbox",
+            "hue": flavorObj.hue,
+            "saturation": `${flavorObj.saturation}%`,
+            "lightness": `${flavorObj.lightness}%`
+        }
+        
         let checkbox = document.createElement("svg-checkbox");
-        checkbox.setAttribute("id", checkboxId);
-        checkbox.setAttribute("name", "roomCheckbox");
-        checkbox.setAttribute("value", flavor[0]); 
+        Object.entries(checkBoxAtr).forEach((val, index) => {
+            console.log(val, index);
+            checkbox.setAttribute(val[0], val[1]);
+        });
+
+        
+
         
         // Instead of appending new checkboxes, attach functionality to the existing cone
         checkboxWrapper.appendChild(checkbox);
@@ -212,17 +265,17 @@ function init(numberOfRooms){
         
 
 
-        let svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svgElement.setAttribute("viewBox", "0 0 208 334");
-        // svgElement.setAttribute("preserveAspectRatio","none")
-        svgElement.style.width = "7em";
-        // svgElement.style.height = "100%"
-        svgElement.style.setProperty("--filter-mode", "url(#grayscale)"); // Correct way
-        // console.log(svgElement.style.getPropertyValue("--filter-mode"))
+        // let svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        // svgElement.setAttribute("viewBox", "0 0 208 334");
+        // // svgElement.setAttribute("preserveAspectRatio","none")
+        // svgElement.style.width = "7em";
+        // // svgElement.style.height = "100%"
+        // svgElement.style.setProperty("--filter-mode", "url(#grayscale)"); // Correct way
+        // // console.log(svgElement.style.getPropertyValue("--filter-mode"))
 
-        let useElement = Object.assign(document.createElementNS("http://www.w3.org/2000/svg", "use"), {
-            setAttribute: function(name, value) { this.setAttributeNS(null, name, value); }
-        });
+        // let useElement = Object.assign(document.createElementNS("http://www.w3.org/2000/svg", "use"), {
+        //     setAttribute: function(name, value) { this.setAttributeNS(null, name, value); }
+        // });
 
         // checkboxWrapper.addEventListener("click",(e)=>{
 
@@ -245,14 +298,15 @@ function init(numberOfRooms){
         //     svgElement.style.setProperty("--filter-mode", currentFilter === "url(#grayscale)" ? "none" : "url(#grayscale)");
 
         // })
-        useElement.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "icecream.svg#cone");
-        svgElement.setAttribute("id", coneId);
-        svgElement.appendChild(useElement);
+
+        // useElement.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "icecream.svg#cone");
+        // svgElement.setAttribute("id", coneId);
+        // svgElement.appendChild(useElement);
 
 
 
         // checkboxWrapper.appendChild(checkbox);
-        checkboxWrapper.appendChild(svgElement);
+        //checkboxWrapper.appendChild(svgElement);
         flavorDiv.appendChild(checkboxWrapper);
 
     }

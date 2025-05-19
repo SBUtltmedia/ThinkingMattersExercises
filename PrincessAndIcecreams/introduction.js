@@ -70,7 +70,7 @@ function goToNextPage() {
   document.body.style.backgroundImage = 'none';
   document.querySelector("#introduction").classList.add("hide");
   document.querySelector("#game").classList.remove("hide");
-  resizeWindow();
+ // resizeWindow();
 }
 
 

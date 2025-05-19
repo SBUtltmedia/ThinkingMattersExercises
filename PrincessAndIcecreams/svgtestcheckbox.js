@@ -266,4 +266,4 @@ class SVGCheckbox extends HTMLElement {
     }
 }
 
-customElements.define('svg-checkbox', SVGCheckbox);
+//customElements.define('svg-checkbox', SVGCheckbox);
