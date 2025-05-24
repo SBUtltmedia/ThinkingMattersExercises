@@ -141,7 +141,15 @@
         #target-string-display { font-size: 1.5rem; }
         .inventory-item { display: flex; justify-content: center; align-items: center; }
         #inventory-area-wrapper { flex-grow: 1; overflow-y: auto; border: 0.06rem solid #cd853f; border-radius: 0.3rem; padding: 0.6rem; background-color: rgba(0,0,0,0.1); min-height: 0; }
-        #inventory-area { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+        /* MODIFIED for 4x4 grid layout */
+        #inventory-area {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columns */
+            /* Rows will be created implicitly */
+            gap: 0.5rem;
+            justify-items: center; /* Center items horizontally in their cell */
+            align-items: center;   /* Center items vertically in their cell */
+        }
         .flash-effect { animation: flash 0.6s ease-out; }
         @keyframes flash { 0%, 100% { box-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.3); } 50% { box-shadow: 0 0 0.9rem 0.3rem gold; } }
 
@@ -170,8 +178,6 @@
             #orientation-message {
                 display: flex;
             }
-            /* Optionally hide the game when message is shown, or just overlay */
-            /* #game-wrapper { display: none; } */
         }
 
     </style>
@@ -236,7 +242,7 @@
                 <div class="panel w-full p-3 inventory-panel">
                     <h2 class="text-lg font-bold mb-2 text-center">Inventory</h2>
                     <div id="inventory-area-wrapper">
-                        <div id="inventory-area" class="flex flex-wrap justify-center gap-2">
+                        <div id="inventory-area">
                             </div>
                      </div>
                 </div>
@@ -290,7 +296,7 @@
         let gameWrapper, gameTitle, inventoryArea, slot1Div, slot2Div, outputArea,
             statusPanel, roundMessage, resetButton, winMessageDiv, winMessageContent,
             playAgainButtonElement, legendInput1, legendInput2, legendOutput,
-            goalText, bitModeDisplays, tutorialHintDiv, animatedHandElement; // Changed variable name
+            goalText, bitModeDisplays, tutorialHintDiv, animatedHandElement;
 
         // --- Touch Drag State ---
         let touchDragState = {
@@ -373,8 +379,8 @@
                 const itemContainer = document.createElement('div');
                 itemContainer.className = 'inventory-item';
                 itemContainer.id = `inventory-item-${i}`;
-                itemContainer.style.width = IS_8_BIT ? INV_ITEM_WIDTH_REM : '4.375rem';
-                itemContainer.style.height = IS_8_BIT ? INV_ITEM_HEIGHT_REM : '4.375rem';
+                // itemContainer.style.width = IS_8_BIT ? INV_ITEM_WIDTH_REM : '4.375rem'; // Let grid cell size dictate
+                // itemContainer.style.height = IS_8_BIT ? INV_ITEM_HEIGHT_REM : '4.375rem';
                 if (generatedShapes.has(i)) {
                     renderShape(i, itemContainer, true, true);
                 } else {
@@ -643,12 +649,12 @@
             if (outputArea) outputArea.innerHTML = '';
             if (roundMessage) roundMessage.textContent = '';
             if (winMessageDiv) winMessageDiv.classList.add('hidden');
-            if (tutorialHandContainer) { // Check if the animated hand element exists
+            if (tutorialHandContainer) {
                  tutorialHintShown = false;
                  tutorialHandContainer.style.opacity = 0;
                  tutorialHandContainer.classList.remove('visible');
                  stopTutorialAnimation();
-                 setTimeout(positionTutorialHand, 500); // Delay positioning
+                 setTimeout(positionTutorialHand, 500);
             }
             updateStatusPanel();
             updateInventoryDisplay();
@@ -821,7 +827,7 @@
             gameTitle = document.getElementById('game-title');
             roundMessage = document.createElement('p'); roundMessage.className = "mt-1 h-4 text-sm font-bold text-green-400";
 
-            if (!gameWrapper || !inventoryArea || !statusPanel || !slot1Div || !slot2Div || !resetButton || !winMessageDiv || !tutorialHandContainer) {
+            if (!gameWrapper || !inventoryArea || !statusPanel || !slot1Div || !slot2Div || !resetButton || !winMessageDiv || !tutorialHandContainer) { // Check tutorialHandContainer
                  console.error("Initialization failed: Essential DOM elements not found. Check IDs. Needed: tutorialHandContainer, etc.");
                  document.body.innerHTML = '<h1 style="color:red; text-align:center;">Error: Game elements missing.</h1>'; return;
             }
