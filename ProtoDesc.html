@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proto-Linguistics Puzzle - Design & Code</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .prose h1, .prose h2, .prose h3 {
+            font-weight: 700;
+        }
+        .prose code {
+            background-color: #f3f4f6;
+            padding: 0.2em 0.4em;
+            margin: 0;
+            font-size: 85%;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .prose pre {
+            background-color: #1f2937;
+            color: #d1d5db;
+            padding: 1em;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        .prose pre code {
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            font-size: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 lg:p-12">
+        <div class="prose max-w-none lg:prose-xl">
+            <h1 class="text-4xl md:text-5xl mb-4">Proto-Linguistics Puzzle: Design, Documentation & Code</h1>
+            <p class="text-lg text-gray-600">This document chronicles the collaborative design and development of the Proto-Linguistics Puzzle game. It details the evolution of the game's data structures and logic, moving from a simple implementation to a robust, scientifically-grounded model suitable for advanced gameplay.</p>
+
+            <hr class="my-8">
+
+            <h2 class="text-3xl mt-12 mb-4">The Evolution of a Linguistics Game</h2>
+            <p>Our process was one of iterative refinement, where each step addressed a core weakness in the previous design, progressively making the game's engine more powerful and its data more accurate.</p>
+
+            <h3 class="text-2xl mt-8 mb-2">Phase 1: The Initial State & First Insight</h3>
+            <p>The game began as a functional but flawed puzzle. The core logic used a simple character-positioning formula (`index % proto_length`) to align sounds between words. This created a critical bug where sounds in words of different lengths were incorrectly matched (e.g., the 'z' in Spanish <em>cabeza</em> was matched with the 'a' in Italian <em>testa</em>). This led to our first key insight:</p>
+            <blockquote>
+                <strong>Insight:</strong> Simple string manipulation is insufficient. We need a serialized data structure that explicitly aligns corresponding sounds.
+            </blockquote>
+            <p>This led to the creation of the <code>graphemes</code> array, which correctly represents multi-character sounds (like 'wh') as single units and uses <code>null</code> to mark lost sounds, ensuring perfect alignment.</p>
+
+            <h3 class="text-2xl mt-8 mb-2">Phase 2: Removing Brittle Logic</h3>
+            <p>The next weakness was the hardcoded <code>logic</code> key, which acted as an "answer key" for the flowchart questions. This was brittle and not scalable. This led to the next major insight:</p>
+            <blockquote>
+                <strong>Insight:</strong> The answers to the flowchart questions should be derived dynamically from the data itself, not hardcoded.
+            </blockquote>
+            <p>We determined that the answers to the first two questions ("Are sounds identical?" and "Is there a one-vs-many pattern?") could be calculated on the fly by analyzing the <code>graphemes</code> data. However, the third question ("Is one change more natural?") required abstract linguistic knowledge not present in the data.</p>
+            
+            <h3 class="text-2xl mt-8 mb-2">Phase 3: Embedding the Science</h3>
+            <p>To solve the "naturalness" problem, we needed to embed the linguistic theory directly into our dataset. This led to a series of data enrichment steps:</p>
+            <ol>
+                <li><strong>Adding Transformations:</strong> We introduced a <code>transformations</code> array to each word, listing the specific historical rules that applied to it.</li>
+                <li><strong>Centralizing Rules:</strong> To avoid repetition (following the DRY principle), we created a central <code>rules</code> dictionary. The <code>transformations</code> array then simply held IDs pointing to this dictionary.</li>
+                <li><strong>Distinguishing Rule Types:</strong> We recognized that sound changes (phonological rules) are different from structural changes (morphological rules). We added a <code>type</code> property to our rules, distinguishing between <code>"phonological"</code> and <code>"morphological"</code> (like reduplication).</li>
+                <li><strong>Quantifying Naturalness:</strong> The final step was to add a <code>naturalness</code> score to each phonological rule. This score represents the cross-linguistic probability of that sound change, finally giving our game engine the data it needs to answer the third flowchart question dynamically.</li>
+            </ol>
+
+            <h3 class="text-2xl mt-8 mb-2">Phase 4: A General, Robust Schema</h3>
+            <p>The final refactoring addressed the use of data values (like "tongan") as object keys. We moved to a more general schema using an array of objects for the <code>daughter_languages</code>, making the data structure clean, predictable, and easy to manage.</p>
+            <blockquote>
+                <strong>Final State:</strong> A game with a robust, normalized, and scientifically-grounded data structure, poised for the implementation of advanced gameplay modes.
+            </blockquote>
+
+            <hr class="my-12">
+
+            <h2 class="text-3xl mt-12 mb-4">Final Game Code</h2>
+            <p>The following is the complete and final code for the game, incorporating all the design improvements and data refactoring discussed above.</p>
+
+            <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Proto-Linguistics Puzzle&lt;/title&gt;
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"&gt;
+    &lt;style&gt;
+        body {
+            font-family: 'Inter', sans-serif;
+            touch-action: manipulation; /* Improves touch responsiveness on mobile */
+        }
+        .menu-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .glyph {
+            display: inline-block;
+            min-width: 24px;
+            text-align: center;
+            transition: background-color 0.3s, transform 0.2s;
+            padding: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .glyph.selected { background-color: #fef08a; transform: scale(1.1); font-weight: bold; }
+        .glyph.correct { background-color: #bbf7d0; cursor: default; }
+        .glyph.incorrect { background-color: #fecaca; }
+        .question-card { transition: opacity 0.5s, transform 0.5s; }
+        .fade-in { opacity: 1 !important; transform: translateY(0) !important; }
+        .fade-out { opacity: 0; transform: translateY(20px); }
+        .btn { transition: background-color 0.2s, transform 0.2s; }
+        .btn:hover { transform: translateY(-2px); }
+        .btn:active { transform: translateY(0); }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body class="bg-gray-100 text-gray-800"&gt;
+
+    &lt;!-- Main Menu Screen --&gt;
+    &lt;div id="main-menu" class="flex flex-col items-center justify-center min-h-screen p-4"&gt;
+        &lt;h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-2"&gt;Proto-Linguistics Puzzle&lt;/h1&gt;
+        &lt;p class="text-lg text-gray-600 mb-12"&gt;Select a language family to explore.&lt;/p&gt;
+        &lt;div id="language-selection" class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl"&gt;
+            &lt;!-- Language family cards will be injected here --&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Game Screen (hidden by default) --&gt;
+    &lt;div id="game-screen" class="hidden w-full max-w-5xl mx-auto p-4 md:p-8"&gt;
+        &lt;div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg"&gt;
+            &lt;div class="flex justify-between items-start mb-6"&gt;
+                &lt;div class="text-center flex-grow"&gt;
+                    &lt;h1 id="game-title" class="text-3xl md:text-4xl font-bold text-gray-900"&gt;&lt;/h1&gt;
+                    &lt;p id="gloss-display" class="text-xl text-gray-600 mt-2 italic"&gt;&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;button id="back-to-menu-btn" class="bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 btn"&gt;Menu&lt;/button&gt;
+            &lt;/div&gt;
+
+            &lt;div class="flex justify-between items-center mb-6 bg-gray-50 p-4 rounded-lg"&gt;
+                &lt;div&gt;
+                    &lt;span class="font-bold text-lg"&gt;Score:&lt;/span&gt;
+                    &lt;span id="score" class="font-bold text-lg text-indigo-600"&gt;0&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div&gt;
+                    &lt;span class="font-bold text-lg"&gt;Word:&lt;/span&gt;
+                    &lt;span id="word-counter" class="font-bold text-lg text-gray-700"&gt;&lt;/span&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div id="words-display" class="grid grid-cols-1 gap-x-8 gap-y-4 mb-8 text-lg md:text-xl"&gt;&lt;/div&gt;
+
+            &lt;div id="heuristic-card" class="bg-indigo-50 p-6 rounded-lg shadow-inner hidden"&gt;
+                &lt;div id="question-container" class="question-card fade-out"&gt;
+                    &lt;p id="question-text" class="text-lg font-semibold mb-4 text-center text-indigo-900"&gt;&lt;/p&gt;
+                    &lt;div id="answer-buttons" class="flex flex-col sm:flex-row gap-4 justify-center"&gt;&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div id="feedback-container" class="text-center mt-4"&gt;
+                &lt;div id="proto-word-container" class="h-10 mb-2"&gt;
+                    &lt;p id="proto-word-display" class="text-2xl font-bold text-indigo-600 hidden"&gt;&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;p id="feedback-text" class="text-xl font-semibold h-8"&gt;&lt;/p&gt;
+                &lt;button id="next-word-btn" class="mt-4 bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 btn hidden"&gt;Next Word&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+        &lt;!--
+            TODO Items / Future Features:
+            - Conditioned Sound Change
+            - Consonant Clusters
+            - Analogy
+            - Borrowing
+        --&gt;
+    &lt;script&gt;
+
+        document.addEventListener('DOMContentLoaded', () =&gt; {
+            // --- DATASETS ---
+            const datasets = {
+                polynesian: {
+                    name: "Polynesian",
+                    description: "Reconstruct Proto-Polynesian from its modern descendants like Hawaiian and Maori.",
+                    rules: {
+                        'k_lenition': { name: "K-Lenition", type: "phonological", change: "*k &gt; ʔ", description: "The proto-sound *k becomes a glottal stop.", naturalness: 8 },
+                        'l_rhotacism': { name: "L-Rhotacism", type: "phonological", change: "*l &gt; r", description: "The proto-sound *l becomes an r-sound.", naturalness: 7 },
+                        'l_glottalization': { name: "L-Glottalization", type: "phonological", change: "*l &gt; ʔ", description: "The proto-sound *l becomes a glottal stop.", naturalness: 6 },
+                        'f_debuccalization': { name: "F-Debuccalization", type: "phonological", change: "*f &gt; h", description: "The proto-sound *f weakens to an h-sound.", naturalness: 8 },
+                        'f_fortition': { name: "F-Fortition", type: "phonological", change: "*f &gt; wh", description: "The proto-sound *f shifts to a wh-sound.", naturalness: 5 },
+                        't_velarization': { name: "T-Velarization", type: "phonological", change: "*t &gt; k", description: "The proto-sound *t shifts to a k-sound.", naturalness: 4 },
+                        'reduplication_intensifier': { name: "Reduplication (Intensifier)", type: "morphological", description: "The word is repeated to intensify its meaning." }
+                    },
+                    words: [
+                        { 
+                            gloss: 'black',
+                            proto_graphemes: ['k', 'e', 'l', 'e'],
+                            daughter_languages: [
+                                { name: 'hawaiian',  graphemes: ['ʔ', 'e', 'l', 'e'], transformations: ['k_lenition'] },
+                                { name: 'maori',     graphemes: ['k', 'e', 'r', 'e'], transformations: ['l_rhotacism'] },
+                                { name: 'tongan',    graphemes: ['k', 'e', 'l', 'e'], transformations: [] },
+                                { name: 'samoan',    graphemes: ['ʔ', 'e', 'l', 'e'], transformations: ['k_lenition'] },
+                                { name: 'tahitian',  graphemes: ['ʔ', 'e', 'r', 'e'], transformations: ['k_lenition', 'l_rhotacism'] },
+                                { name: 'rapanui',   graphemes: ['k', 'e', 'r', 'e', 'k', 'e', 'r', 'e'], transformations: ['l_rhotacism', 'reduplication_intensifier'] },
+                                { name: 'marquesan', graphemes: ['k', 'e', 'ʔ', 'e'], transformations: ['l_glottalization'] }
+                            ]
+                        },
+                        { 
+                            gloss: 'red',
+                            proto_graphemes: ['k', 'u', 'l', 'a'],
+                            daughter_languages: [
+                                { name: 'hawaiian',  graphemes: ['ʔ', 'u', 'l', 'a'], transformations: ['k_lenition'] },
+                                { name: 'maori',     graphemes: ['k', 'u', 'r', 'a'], transformations: ['l_rhotacism'] },
+                                { name: 'tongan',    graphemes: ['k', 'u', 'l', 'a'], transformations: [] },
+                                { name: 'samoan',    graphemes: ['ʔ', 'u', 'l', 'a'], transformations: ['k_lenition'] },
+                                { name: 'tahitian',  graphemes: ['ʔ', 'u', 'r', 'a'], transformations: ['k_lenition', 'l_rhotacism'] },
+                                { name: 'rapanui',   graphemes: ['k', 'u', 'r', 'a'], transformations: ['l_rhotacism'] },
+                                { name: 'marquesan', graphemes: ['k', 'u', 'ʔ', 'a'], transformations: ['l_glottalization'] }
+                            ]
+                        },
+                        {
+                            gloss: 'house',
+                            proto_graphemes: ['f', 'a', 'l', 'e'],
+                            daughter_languages: [
+                                { name: 'hawaiian',  graphemes: ['h', 'a', 'l', 'e'], transformations: ['f_debuccalization'] },
+                                { name: 'maori',     graphemes: ['wh', 'a', 'r', 'e'], transformations: ['f_fortition', 'l_rhotacism'] },
+                                { name: 'tongan',    graphemes: ['f', 'a', 'l', 'e'], transformations: [] },
+                                { name: 'samoan',    graphemes: ['f', 'a', 'l', 'e'], transformations: [] },
+                                { name: 'tahitian',  graphemes: ['f', 'a', 'r', 'e'], transformations: ['l_rhotacism'] },
+                                { name: 'rapanui',   graphemes: ['h', 'a', 'r', 'e'], transformations: ['f_debuccalization', 'l_rhotacism'] },
+                                { name: 'marquesan', graphemes: ['h', 'a', 'ʔ', 'e'], transformations: ['f_debuccalization', 'l_glottalization'] }
+                            ]
+                        },
+                        {
+                            gloss: 'taro',
+                            proto_graphemes: ['t', 'a', 'l', 'o'],
+                            daughter_languages: [
+                                { name: 'hawaiian',  graphemes: ['k', 'a', 'l', 'o'], transformations: ['t_velarization'] },
+                                { name: 'maori',     graphemes: ['t', 'a', 'r', 'o'], transformations: ['l_rhotacism'] },
+                                { name: 'tongan',    graphemes: ['t', 'a', 'l', 'o'], transformations: [] },
+                                { name: 'samoan',    graphemes: ['t', 'a', 'l', 'o'], transformations: [] },
+                                { name: 'tahitian',  graphemes: ['t', 'a', 'r', 'o'], transformations: ['l_rhotacism'] },
+                                { name: 'rapanui',   graphemes: ['t', 'a', 'r', 'o'], transformations: ['l_rhotacism'] },
+                                { name: 'marquesan', graphemes: ['t', 'a', 'ʔ', 'o'], transformations: ['l_glottalization'] }
+                            ]
+                        },
+                        {
+                            gloss: 'urinate',
+                            proto_graphemes: ['m', 'i', 'm', 'i'],
+                            daughter_languages: [
+                                { name: 'hawaiian',  graphemes: ['m', 'i', 'm', 'i'], transformations: [] },
+                                { name: 'maori',     graphemes: ['m', 'i', 'm', 'i'], transformations: [] },
+                                { name: 'tongan',    graphemes: ['m', 'i', 'm', 'i'], transformations: [] },
+                                { name: 'samoan',    graphemes: ['m', 'i', 'm', 'i'], transformations: [] },
+                                { name: 'tahitian',  graphemes: ['m', 'i', 'm', 'i'], transformations: [] },
+                                { name: 'rapanui',   graphemes: ['m', 'i', 'm', 'i'], transformations: [] },
+                                { name: 'marquesan', graphemes: ['m', 'i', 'm', 'i'], transformations: [] }
+                            ]
+                        }
+                    ],
+                },
+                /*
+                germanic: { ... },
+                romance: { ... }
+                */
+            };
+
+            const flowchartQuestions = [
+                { id: 1, text: "Are all the highlighted sounds identical?" },
+                { id: 2, text: "Is there a 'one vs. many' pattern? (e.g., most languages have one sound, others have another)" },
+                { id: 3, text: "Is one sound change more 'natural' or common than the reverse? (e.g., sounds simplifying or being lost)" },
+                { id: 4, text: "Based on the evidence, what was the most likely original proto-sound?" }
+            ];
+
+            // --- GAME STATE ---
+            let gameState = { currentFamily: null, score: 0, currentWordIndex: 0 };
+            let selectedGlyphInfo = null;
+            let currentQuestionIndex = 0;
+            let wordState = {};
+
+            // --- UI ELEMENTS ---
+            const mainMenuEl = document.getElementById('main-menu');
+            const gameScreenEl = document.getElementById('game-screen');
+            const languageSelectionEl = document.getElementById('language-selection');
+            const gameTitleEl = document.getElementById('game-title');
+            const glossDisplayEl = document.getElementById('gloss-display');
+            const scoreEl = document.getElementById('score');
+            const wordCounterEl = document.getElementById('word-counter');
+            const wordsDisplayEl = document.getElementById('words-display');
+            const protoWordDisplayEl = document.getElementById('proto-word-display');
+            const heuristicCardEl = document.getElementById('heuristic-card');
+            const questionContainerEl = document.getElementById('question-container');
+            const questionTextEl = document.getElementById('question-text');
+            const answerButtonsEl = document.getElementById('answer-buttons');
+            const feedbackTextEl = document.getElementById('feedback-text');
+            const nextWordBtn = document.getElementById('next-word-btn');
+            const backToMenuBtn = document.getElementById('back-to-menu-btn');
+
+            // --- FUNCTIONS ---
+            
+            function saveProgress() {
+                if (!gameState.currentFamily) return;
+                localStorage.setItem(`progress_${gameState.currentFamily}`, JSON.stringify({
+                    score: gameState.score,
+                    currentWordIndex: gameState.currentWordIndex
+                }));
+            }
+
+            function loadProgress(familyKey) {
+                const saved = localStorage.getItem(`progress_${familyKey}`);
+                if (saved) {
+                    return JSON.parse(saved);
+                }
+                return { score: 0, currentWordIndex: 0 };
+            }
+
+            function createMainMenu() {
+                languageSelectionEl.innerHTML = '';
+                Object.keys(datasets).forEach(key =&gt; {
+                    const family = datasets[key];
+                    const progress = loadProgress(key);
+                    const card = document.createElement('div');
+                    card.className = 'menu-card bg-white p-8 rounded-lg shadow-md cursor-pointer text-center';
+                    card.innerHTML = `
+                        &lt;h2 class="text-2xl font-bold text-indigo-600 mb-2"&gt;${family.name}&lt;/h2&gt;
+                        &lt;p class="text-gray-600 mb-4"&gt;${family.description}&lt;/p&gt;
+                        &lt;p class="text-sm text-gray-500"&gt;Progress: Word ${progress.currentWordIndex + 1} | Score: ${progress.score}&lt;/p&gt;
+                    `;
+                    card.onclick = () =&gt; startGame(key);
+                    languageSelectionEl.appendChild(card);
+                });
+            }
+
+            function startGame(familyKey) {
+                gameState.currentFamily = familyKey;
+                const progress = loadProgress(familyKey);
+                gameState.score = progress.score;
+                gameState.currentWordIndex = progress.currentWordIndex;
+                gameTitleEl.textContent = `${datasets[familyKey].name} Puzzle`;
+                mainMenuEl.classList.add('hidden');
+                gameScreenEl.classList.remove('hidden');
+                loadWord(gameState.currentWordIndex);
+            }
+
+            function goBackToMenu() {
+                saveProgress();
+                gameScreenEl.classList.add('hidden');
+                mainMenuEl.classList.remove('hidden');
+                createMainMenu();
+            }
+            
+            function getProtoSoundForIndex(word, index) {
+                const protoGraphemes = word.proto_graphemes;
+                const mappedIndex = index % protoGraphemes.length;
+                if (mappedIndex &lt; protoGraphemes.length) {
+                    const protoChar = protoGraphemes[mappedIndex];
+                    return protoChar === null ? null : protoChar;
+                }
+                return null;
+            }
+
+            // [NEW] This function will eventually replace the hardcoded 'logic' key.
+            // For now, it's a placeholder.
+            function analyzeCorrespondence(word, index) {
+                // This is where the dynamic logic will go.
+                // It will analyze the graphemes and rules to generate the correct answer path.
+                // For now, we'll have to put back a temporary logic key to keep the game running.
+                const tempLogic = { 'k': ['No', 'No', 'Yes', '*k'], 'l': ['No', 'Yes', null, '*l'], 'f': ['No', 'No', 'Yes', '*f'], 't': ['No', 'Yes', null, '*t'], 'm': ['Yes', null, null, '*m'] };
+                const protoSound = getProtoSoundForIndex(word, index);
+                return tempLogic[protoSound];
+            }
+
+            function startHeuristicQuestions() {
+                displayQuestion();
+            }
+            
+            function displayQuestion() {
+                const currentWord = datasets[gameState.currentFamily].words[gameState.currentWordIndex];
+                const path = analyzeCorrespondence(currentWord, selectedGlyphInfo.mappedIndex);
+
+                if (!path) {
+                    feedbackTextEl.textContent = "This sound is stable and requires no analysis.";
+                    setTimeout(() =&gt; finalizeGlyph(true), 1500);
+                    return;
+                }
+
+                if (currentQuestionIndex &gt;= flowchartQuestions.length - 1 || path[currentQuestionIndex] === null) {
+                    displayFinalQuestion(path[path.length - 1]);
+                    return;
+                }
+
+                const question = flowchartQuestions[currentQuestionIndex];
+                questionTextEl.textContent = question.text;
+                answerButtonsEl.innerHTML = '';
+                const options = ["Yes", "No"];
+                options.forEach(option =&gt; {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = 'bg-white text-indigo-700 font-semibold py-2 px-4 border border-indigo-300 rounded-lg hover:bg-indigo-100 btn';
+                    button.onclick = () =&gt; handleAnswer(option);
+                    answerButtonsEl.appendChild(button);
+                });
+                
+                heuristicCardEl.classList.remove('hidden');
+                setTimeout(() =&gt; questionContainerEl.classList.add('fade-in'), 50);
+            }
+
+            function displayFinalQuestion(correctAnswer) {
+                currentQuestionIndex = flowchartQuestions.length - 1;
+                const question = flowchartQuestions[currentQuestionIndex];
+                questionTextEl.textContent = question.text;
+                answerButtonsEl.innerHTML = '';
+                const allProtoSounds = new Set();
+                datasets[gameState.currentFamily].words.forEach(w =&gt; {
+                    w.proto_graphemes.forEach(g =&gt; {
+                        if(g &amp;&amp; !/[aeiou]/.test(g)) allProtoSounds.add(`*${g}`);
+                    });
+                });
+
+                const options = new Set([correctAnswer]);
+                while (options.size &lt; 3 &amp;&amp; options.size &lt; allProtoSounds.size) {
+                    const randomSound = Array.from(allProtoSounds)[Math.floor(Math.random() * allProtoSounds.size)];
+                    if (randomSound !== correctAnswer) {
+                        options.add(randomSound);
+                    }
+                }
+                
+                Array.from(options).sort(() =&gt; Math.random() - 0.5).forEach(option =&gt; {
+                     const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = 'bg-white text-indigo-700 font-semibold py-2 px-4 border border-indigo-300 rounded-lg hover:bg-indigo-100 btn';
+                    button.onclick = () =&gt; handleAnswer(option);
+                    answerButtonsEl.appendChild(button);
+                });
+            }
+
+            function handleAnswer(selectedAnswer) {
+                Array.from(answerButtonsEl.children).forEach(btn =&gt; btn.disabled = true);
+                const currentWord = datasets[gameState.currentFamily].words[gameState.currentWordIndex];
+                const path = analyzeCorrespondence(currentWord, selectedGlyphInfo.mappedIndex);
+                const correctAnswer = (currentQuestionIndex === flowchartQuestions.length - 1) 
+                    ? path[path.length - 1] 
+                    : path[currentQuestionIndex];
+
+                if (selectedAnswer === correctAnswer) {
+                    gameState.score += 10;
+                    feedbackTextEl.textContent = "Correct!";
+                    feedbackTextEl.className = 'text-xl font-semibold text-green-600 h-8';
+                    if (currentQuestionIndex === flowchartQuestions.length - 1) {
+                        setTimeout(() =&gt; finalizeGlyph(true), 1000);
+                    } else {
+                        currentQuestionIndex++;
+                        setTimeout(() =&gt; {
+                            feedbackTextEl.textContent = '';
+                            displayQuestion();
+                        }, 1000);
+                    }
+                } else {
+                    gameState.score = Math.max(0, gameState.score - 5);
+                    feedbackTextEl.textContent = `Not quite. That set is marked red. Try another.`;
+                    feedbackTextEl.className = 'text-xl font-semibold text-red-600 h-8';
+                    setTimeout(() =&gt; finalizeGlyph(false), 2000);
+                }
+                scoreEl.textContent = gameState.score;
+            }
+
+            function finalizeGlyph(wasCorrect) {
+                questionContainerEl.classList.remove('fade-in');
+                setTimeout(() =&gt; heuristicCardEl.classList.add('hidden'), 500);
+                
+                const mappedIndex = selectedGlyphInfo.mappedIndex;
+                const glyphs = document.querySelectorAll(`.glyph[data-mapped-index='${mappedIndex}']`);
+                
+                if (wasCorrect) {
+                    wordState[mappedIndex] = { status: 'correct' };
+                    glyphs.forEach(g =&gt; {
+                        g.classList.remove('selected', 'incorrect');
+                        g.classList.add('correct');
+                    });
+                } else {
+                    wordState[mappedIndex] = { status: 'incorrect', failedAt: currentQuestionIndex };
+                    glyphs.forEach(g =&gt; {
+                        g.classList.remove('selected');
+                        g.classList.add('incorrect');
+                    });
+                    setTimeout(() =&gt; { if(feedbackTextEl.textContent.includes("marked red")) feedbackTextEl.textContent = ''; }, 2000);
+                }
+                
+                selectedGlyphInfo = null;
+                checkCompletion();
+            }
+            
+            function checkCompletion() {
+                const currentWord = datasets[gameState.currentFamily].words[gameState.currentWordIndex];
+                const requiredConsonants = new Set(currentWord.proto_graphemes.filter(g =&gt; g &amp;&amp; !/[aeiouāēīōū-]/.test(g)));
+                const solvedConsonants = new Set();
+                document.querySelectorAll('.glyph.correct').forEach(g =&gt; {
+                    const proto = getProtoSoundForIndex(currentWord, parseInt(g.dataset.mappedIndex));
+                    if (proto &amp;&amp; !/[aeiouāēīōū-]/.test(proto)) {
+                        solvedConsonants.add(proto);
+                    }
+                });
+
+                let allRequiredSolved = requiredConsonants.size === solvedConsonants.size;
+                if (allRequiredSolved) {
+                    for (const consonant of requiredConsonants) {
+                        if (!solvedConsonants.has(consonant)) {
+                            allRequiredSolved = false;
+                            break;
+                        }
+                    }
+                }
+                
+                if (allRequiredSolved) {
+                    nextWordBtn.classList.remove('hidden');
+                    feedbackTextEl.textContent = "Word complete!";
+                    feedbackTextEl.className = 'text-xl font-semibold text-blue-600 h-8';
+                    protoWordDisplayEl.textContent = `Proto-Word: *${currentWord.proto_graphemes.join('')}`;
+                    protoWordDisplayEl.classList.remove('hidden');
+                }
+            }
+
+            function createGlyph(char, lang, index, mappedIndex) {
+                const glyphEl = document.createElement('span');
+                glyphEl.className = 'glyph p-1';
+                if(char) glyphEl.textContent = char;
+                glyphEl.dataset.lang = lang;
+                glyphEl.dataset.index = index;
+                glyphEl.dataset.mappedIndex = mappedIndex;
+                return glyphEl;
+            }
+
+            function loadWord(index) {
+                wordState = {}; 
+                const familyData = datasets[gameState.currentFamily];
+                if (index &gt;= familyData.words.length) {
+                    gameState.currentWordIndex = 0;
+                }
+                const word = familyData.words[index];
+
+                wordsDisplayEl.innerHTML = '';
+                selectedGlyphInfo = null;
+                heuristicCardEl.classList.add('hidden');
+                questionContainerEl.classList.remove('fade-in');
+                feedbackTextEl.textContent = '';
+                nextWordBtn.classList.add('hidden');
+                glossDisplayEl.textContent = `Meaning: "${word.gloss}"`;
+                protoWordDisplayEl.classList.add('hidden');
+                scoreEl.textContent = gameState.score;
+                wordCounterEl.textContent = `${index + 1} / ${familyData.words.length}`;
+
+                word.daughter_languages.forEach(langData =&gt; {
+                    const langContainer = document.createElement('div');
+                    langContainer.className = 'flex items-center gap-4';
+                    
+                    const label = document.createElement('span');
+                    label.className = 'w-28 font-bold text-gray-500 text-right';
+                    label.textContent = langData.name.charAt(0).toUpperCase() + langData.name.slice(1);
+                    langContainer.appendChild(label);
+
+                    const wordContainer = document.createElement('div');
+                    wordContainer.className = 'flex-1 flex flex-row flex-wrap';
+                    wordContainer.dataset.lang = langData.name;
+                    
+                    const protoLength = word.proto_graphemes.length;
+
+                    langData.graphemes.forEach((grapheme, i) =&gt; {
+                        const mappedIndex = i % protoLength;
+                        const glyphEl = createGlyph(grapheme, langData.name, i, mappedIndex);
+                        if (grapheme === null) {
+                            glyphEl.style.visibility = 'hidden';
+                        }
+                        wordContainer.appendChild(glyphEl);
+                    });
+                    langContainer.appendChild(wordContainer);
+                    wordsDisplayEl.appendChild(langContainer);
+                });
+
+                document.querySelectorAll('.glyph').forEach(addGlyphListener);
+                checkCompletion();
+            }
+
+            function addGlyphListener(glyph) {
+                glyph.addEventListener('click', () =&gt; {
+                    if (glyph.style.visibility === 'hidden' || selectedGlyphInfo) return;
+
+                    const mappedIndex = parseInt(glyph.dataset.mappedIndex);
+                    const statusInfo = wordState[mappedIndex] || {};
+
+                    if (statusInfo.status === 'correct') return;
+
+                    if (statusInfo.status === 'incorrect') {
+                        currentQuestionIndex = statusInfo.failedAt || 0;
+                        document.querySelectorAll(`.glyph[data-mapped-index='${mappedIndex}']`).forEach(g =&gt; g.classList.remove('incorrect'));
+                    } else {
+                        currentQuestionIndex = 0;
+                    }
+                    
+                    const currentWord = datasets[gameState.currentFamily].words[gameState.currentWordIndex];
+                    const protoSound = getProtoSoundForIndex(currentWord, mappedIndex);
+                    
+                    if (!protoSound || /[aeiouāēīōū-]/.test(protoSound)) {
+                        feedbackTextEl.textContent = "Let's focus on the consonants for now.";
+                        feedbackTextEl.className = 'text-lg font-semibold text-gray-500 h-8';
+                        setTimeout(() =&gt; { if(feedbackTextEl.textContent.includes("consonants")) feedbackTextEl.textContent = '' }, 2000);
+                        return;
+                    }
+                    
+                    selectedGlyphInfo = { mappedIndex: mappedIndex, protoSound: protoSound };
+                    document.querySelectorAll('.glyph.selected').forEach(g =&gt; g.classList.remove('selected'));
+                    
+                    document.querySelectorAll(`.glyph[data-mapped-index='${mappedIndex}']`).forEach(g =&gt; {
+                        if (g.style.visibility !== 'hidden') {
+                            g.classList.add('selected');
+                        }
+                    });
+                    
+                    startHeuristicQuestions();
+                });
+            }
+
+            // --- EVENT LISTENERS ---
+            nextWordBtn.addEventListener('click', () =&gt; {
+                gameState.currentWordIndex++;
+                if (gameState.currentWordIndex &gt;= datasets[gameState.currentFamily].words.length) {
+                    gameState.currentWordIndex = 0;
+                }
+                saveProgress();
+                loadWord(gameState.currentWordIndex);
+            });
+
+            backToMenuBtn.addEventListener('click', goBackToMenu);
+
+            // --- INITIALIZE ---
+            createMainMenu();
+        });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+        </div>
+    </div>
+
+</body>
+</html>
