@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Menu</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Use the Inter font family */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style for the active game link */
+        .active-game {
+            border-color: #6366f1 !important; /* Indigo-500 */
+            background-color: #374151 !important; /* Gray-700 */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="text-center py-6 border-b border-gray-700">
+        <h1 class="text-3xl md:text-4xl font-bold text-white">
+            Thinking Matters Exercises
+        </h1>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Sidebar: Game Menu -->
+        <aside class="w-full md:w-1/3 lg:w-1/4 p-6 overflow-y-auto bg-gray-800/50 border-r border-gray-700">
+            <h2 class="text-xl font-semibold mb-4 text-gray-300">Select a Game</h2>
+            <div class="space-y-4">
+                <!-- Game Links -->
+                <!-- Note: Changed <a> to <div> with a data-url attribute for JS handling -->
+
+                <!-- Card 1: WordGolf -->
+                <div data-url="./wordgolf" class="game-link block bg-gray-800 rounded-xl shadow-lg p-4 cursor-pointer transform hover:scale-105 transition-transform duration-300 ease-in-out border border-gray-700 hover:border-indigo-500">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-indigo-500 p-3 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">WordGolf</h3>
+                            <p class="text-sm text-gray-400">A game of words.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: PrincessAndIcecreams -->
+                <div data-url="./PrincessAndIcecreams" class="game-link block bg-gray-800 rounded-xl shadow-lg p-4 cursor-pointer transform hover:scale-105 transition-transform duration-300 ease-in-out border border-gray-700 hover:border-pink-500">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-pink-500 p-3 rounded-lg">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Princess & Icecreams</h3>
+                            <p class="text-sm text-gray-400">A sweet adventure.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: MoveToGodel -->
+                <div data-url="./game/Twine" class="game-link block bg-gray-800 rounded-xl shadow-lg p-4 cursor-pointer transform hover:scale-105 transition-transform duration-300 ease-in-out border border-gray-700 hover:border-teal-500">
+                     <div class="flex items-center space-x-4">
+                        <div class="bg-teal-500 p-3 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">MoveToGodel</h3>
+                            <p class="text-sm text-gray-400">A logical journey.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: JamPuzzle -->
+                <div data-url="./JamPuzzle" class="game-link block bg-gray-800 rounded-xl shadow-lg p-4 cursor-pointer transform hover:scale-105 transition-transform duration-300 ease-in-out border border-gray-700 hover:border-yellow-500">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-yellow-500 p-3 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">JamPuzzle</h3>
+                            <p class="text-sm text-gray-400">A sticky situation.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5: Card_Game -->
+                <div data-url="./Card_Game" class="game-link block bg-gray-800 rounded-xl shadow-lg p-4 cursor-pointer transform hover:scale-105 transition-transform duration-300 ease-in-out border border-gray-700 hover:border-red-500">
+                     <div class="flex items-center space-x-4">
+                        <div class="bg-red-500 p-3 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Card Game</h3>
+                            <p class="text-sm text-gray-400">Play your hand.</p>
+                        </div>
+                    </div>
+                </div>
+
+               <!-- Card 6: minimap -->
+               <div data-url="./minimap/sample" class="game-link block bg-gray-800 rounded-xl shadow-lg p-4 cursor-pointer transform hover:scale-105 transition-transform duration-300 ease-in-out border border-gray-700 hover:border-green-500">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-green-500 p-3 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13v-6m0 6l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 16.382V5.618a1 1 0 00-1.447-.894L15 7m-6 3v6m6-6v6" /></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white">Minimap</h3>
+                        <p class="text-sm text-gray-400">Explore the world.</p>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </aside>
+
+        <!-- Main Content: Game Display -->
+        <main class="flex-1 bg-gray-900 flex flex-col">
+            <div id="game-container" class="flex-1 p-6">
+                <iframe id="game-frame" class="w-full h-full border-0 rounded-lg shadow-lg" title="Game Content"></iframe>
+            </div>
+            <div id="welcome-message" class="flex items-center justify-center h-full text-gray-500">
+                <div class="text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <h2 class="mt-4 text-2xl font-semibold">Select a game from the menu to begin.</h2>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gameLinks = document.querySelectorAll('.game-link');
+            const gameFrame = document.getElementById('game-frame');
+            const gameContainer = document.getElementById('game-container');
+            const welcomeMessage = document.getElementById('welcome-message');
+
+            // Hide the iframe container initially
+            gameContainer.style.display = 'none';
+
+            gameLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    // Get the URL from the data attribute
+                    const gameUrl = this.dataset.url;
+
+                    if (gameUrl) {
+                        // Show the game container and hide the welcome message
+                        welcomeMessage.style.display = 'none';
+                        gameContainer.style.display = 'block';
+                        
+                        // Set the iframe source
+                        gameFrame.src = gameUrl;
+
+                        // Manage active state for styling
+                        gameLinks.forEach(l => l.classList.remove('active-game'));
+                        this.classList.add('active-game');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
