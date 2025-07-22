@@ -1,0 +1,745 @@
+// =====================================================================
+// CONSOLIDATED ARTIFACTS DOCUMENT
+// This file contains multiple complete HTML projects
+// Each project is delineated by START_ARTIFACT and END_ARTIFACT comments
+// =====================================================================
+// START_ARTIFACT_ID: nand_contraption_game_switchable
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>NAND Contraption</title><script src="https://www.google.com/search?q=https://cdn.tailwindcss.com"></script><style>/* Custom Styles */:root {--game-width-ref: 1200;}html {font-size: 16px;height: 100%;overflow: hidden;}body {background-color: #5a3a22;background-image: linear-gradient(45deg, rgba(0,0,0,0.1) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.1) 75%, rgba(0,0,0,0.1)),linear-gradient(-45deg, rgba(0,0,0,0.1) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.1) 75%, rgba(0,0,0,0.1));background-size: 3.75rem 3.75rem;font-family: 'Courier New', Courier, monospace;color: #e0d6c4;margin: 0;padding: 0;display: flex;align-items: center;justify-content: center;min-height: 100%;overflow: hidden;overscroll-behavior-y: contain;}    #game-wrapper {
+        position: relative; /* Crucial for absolute positioning children */
+        overflow: hidden;
+        margin: auto;
+        background-color: rgba(0,0,0,0.1);
+        box-shadow: 0 0 1rem rgba(0,0,0,0.5);
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+    }
+
+    /* Font sizes using rem */
+    h1 { font-size: 2rem; text-shadow: 0.05rem 0.05rem 0.1rem #000; }
+    h2 { font-size: 1.2rem; margin-bottom: 0.5rem; color: #cbd5e1; }
+    h3 { font-size: 1rem; margin-bottom: 0.3rem; color: #94a3b8; }
+    p, button, span, div, li { font-size: 0.8rem; }
+    button { padding: 0.4rem 0.8rem; }
+
+    /* Layout columns using Flexbox */
+    .main-content {
+        display: flex;
+        flex-direction: row; /* Always row for two columns */
+        gap: 1rem;
+        width: 100%;
+        flex-grow: 1;
+        padding: 1rem;
+        overflow: hidden; /* Prevent internal content from breaking wrapper */
+        box-sizing: border-box;
+    }
+     .column {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        flex-basis: 50%; /* Roughly equal columns */
+        min-width: 0; /* Allow shrinking */
+        align-items: center; /* Center items in column */
+    }
+    .left-column { align-items: flex-end; padding-right: 0.5rem; }
+    .right-column { align-items: flex-start; padding-left: 0.5rem; }
+
+
+    .game-section { /* Style for instructions */
+        background-color: rgba(222, 184, 135, 0.8);
+        color: #3b271a;
+        border: 0.1rem solid #8b4513;
+        border-radius: 0.5rem;
+        padding: 0.8rem;
+        width: 100%;
+        max-width: 30rem; /* Max width for readability */
+        overflow-y: auto; /* Allow individual sections to scroll if needed */
+    }
+    .game-section h2 {
+        border-bottom: 1px solid #a0522d; /* Darker border inside instructions */
+        padding-bottom: 0.3rem;
+        margin-top: 0;
+        color: #3b271a; /* Match text color */
+    }
+
+    /* Shape Grid & Venn Diagram Styling */
+    .shape-grid-base, .placeholder-grid-base, venn-diagram {
+        display: grid; border: 0.125rem solid #8b4513;
+        box-shadow: 0.125rem 0.125rem 0.3125rem rgba(0,0,0,0.5);
+        transition: opacity 0.1s ease-in-out, box-shadow 0.2s ease, background-color 0.2s, border-style 0.2s;
+        position: relative; overflow: hidden;
+        background-color: #f5f5dc; /* Background for Venn diagrams too */
+        border-radius: 0.25rem;
+    }
+     .shape-grid-base, venn-diagram { cursor: grab; }
+     .placeholder-grid-base { background-color: #a9a9a9; border-color: #696969; cursor: default; }
+     [data-draggable-shape].dragging, [data-draggable-shape].touch-dragging-source {
+        opacity: 0.4 !important;
+        cursor: grabbing;
+     }
+     .touch-drag-clone {
+        position: fixed;
+        z-index: 1000;
+        pointer-events: none;
+        opacity: 0.75;
+     }
+
+    .shape-cell { border: 0.0625rem solid #deb887; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #3b271a; }
+    .cell-0 { background-color: #d2b48c; }
+    .cell-1 { background-color: #8b4513; color: #f5f5dc; }
+    .grid-4bit { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); width: 3.75rem; height: 3.75rem; }
+    .inventory-item .grid-4bit, .inventory-item venn-diagram { width: 4.375rem; height: 4.375rem; }
+    
+    /* Machine Styling */
+    .machine { background-color: #a0522d; border: 0.25rem solid #cd853f; border-radius: 0.5rem; padding: 1rem; box-shadow: 0.25rem 0.25rem 0.75rem rgba(0,0,0,0.6); background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 1rem 1rem; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 30rem; }
+    .machine > div { display: flex; flex-direction: row; align-items: center; justify-content: space-around; gap: 0.75rem; width: 100%; flex-wrap: wrap;}
+    .slot, .output-area { border: 0.1875rem dashed #cd853f; background-color: rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: center; border-radius: 0.3125rem; transition: background-color 0.2s, border-style 0.2s; }
+    .slot.drag-over { background-color: rgba(255, 215, 0, 0.3); border-style: solid; box-shadow: 0 0 0.5rem gold; }
+    .panel { background-color: #8b4513; border: 0.1rem solid #cd853f; border-radius: 0.3rem; padding: 0.6rem; box-shadow: inset 0.1rem 0.1rem 0.3rem rgba(0,0,0,0.4); }
+    .inventory-panel { flex-grow: 1; display: flex; flex-direction: column; min-height: 9rem; width: 100%; max-width: 30rem; }
+    .inventory-panel h2 { font-size: 1rem; margin-bottom: 0.5rem; text-align: center; }
+    #inventory-area-wrapper { flex-grow: 1; overflow-y: auto; border: 0.06rem solid #cd853f; border-radius: 0.3rem; padding: 0.6rem; background-color: rgba(0,0,0,0.1); min-height: 0; }
+    #inventory-area { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; justify-items: center; align-items: center; }
+    
+    #orientation-message {
+        display: none; position: fixed; inset: 0; background-color: rgba(40, 40, 40, 0.95);
+        color: white; z-index: 2000; flex-direction: column; justify-content: center;
+        align-items: center; text-align: center; padding: 2rem; font-size: 1.2rem;
+    }
+    @media (orientation: portrait) and (max-width: 767px) { #orientation-message { display: flex; } }
+
+    /* Tutorial Styles */
+    #tutorial-overlay {
+        position: fixed; inset: 0; background-color: rgba(0,0,0,0.7); 
+        display: flex; justify-content: center; align-items: center; z-index: 2000;
+    }
+    #tutorial-overlay.hidden {
+        display: none;
+    }
+    #hand-icon {
+        position: absolute; font-size: 3rem;
+        animation: drag-animation 4s ease-in-out infinite;
+        will-change: left, top, opacity;
+    }
+    @keyframes drag-animation {
+        0% { left: 25%; opacity: 0; transform: translateY(0); }
+        20% { opacity: 1; }
+        80% { left: 75%; opacity: 1; transform: translateY(-10px); }
+        100% { left: 75%; opacity: 0; transform: translateY(-10px); }
+    }
+</style>
+</head><body><div id="orientation-message"><p style="font-size: 2em; margin-bottom: 1em;">🔄</p><p>Please rotate your device to landscape mode for the best experience.</p></div><div id="tutorial-overlay" class="hidden">
+    <div class="game-section text-center p-5">
+        <h2 class="text-2xl font-bold mb-3">Tutorial</h2>
+        <p class="mb-4">Drag a shape from your inventory and drop it into an input slot.</p>
+        <div id="hand-animation-container" class="relative h-24">
+            <div id="hand-icon">✋</div>
+        </div>
+        <button id="close-tutorial" class="mt-4 px-4 py-2 bg-yellow-300 text-black rounded">Got it!</button>
+    </div>
+</div>
+
+
+<div id="game-wrapper">
+    <h1 id="game-title" class="text-4xl font-bold text-center text-yellow-300 px-4 py-2" style="text-shadow: 0.125rem 0.125rem 0.1875rem #000;">NAND Contraption</h1>
+    <div class="main-content">
+        <div class="column left-column">
+             <div id="nand-legend" class="game-section p-3 text-sm rounded w-full max-w-md">
+                <h2 class="text-lg font-bold mb-1 text-center">NAND Example</h2>
+                 <p class="text-xs text-center">(8-bit mode uses Venn diagrams)</p>
+            </div>
+            <div id="instructions" class="game-section p-3 text-sm rounded w-full max-w-md">
+                <h2 class="text-lg font-bold mb-1">How to Play (<span class="bit-mode-display">4</span>-bit):</h2>
+                <p>1. Drag available shapes from 'Inventory' into the two 'Input Slots'.</p>
+                <p>2. The machine calculates the NAND result and shows it in 'Output'.</p>
+                <p>3. New shapes appear in your inventory after a brief flash.</p>
+                <p id="goal-text">4. Goal: Create the 'Target Shape' for the current round.</p>
+            </div>
+            <div class="flex-grow"></div>
+        </div>
+        <div class="column right-column">
+             <div id="status-panel" class="panel p-3 text-center w-full max-w-md order-first"></div>
+             <div class="machine flex flex-col items-center justify-around gap-3 w-full max-w-xl p-3">
+                <div>
+                    <div class="flex flex-col items-center">
+                        <p class="mb-1 font-bold text-xs">Input 1</p>
+                        <div id="slot-1" class="slot"></div>
+                    </div>
+                    <div class="text-2xl font-bold text-yellow-300 self-center">↑</div>
+                    <div class="flex flex-col items-center">
+                        <p class="mb-1 font-bold text-xs">Input 2</p>
+                        <div id="slot-2" class="slot"></div>
+                    </div>
+                    <div class="text-2xl font-bold self-center">=</div>
+                    <div class="flex flex-col items-center">
+                        <p class="mb-1 font-bold text-xs">Output</p>
+                        <div id="output-area" class="output-area"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel w-full p-3 inventory-panel">
+                <h2 class="text-lg font-bold mb-2 text-center">Inventory</h2>
+                <div id="inventory-area-wrapper">
+                    <div id="inventory-area"></div>
+                </div>
+            </div>
+            <div class="flex justify-center mt-2">
+                 <button id="reset-button" class="text-sm">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="win-message" class="hidden fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50 p-4">
+    <div id="win-message-content" class="text-center"></div>
+</div>
+
+<script>
+    // --- Venn Diagram Web Component Definition ---
+    class VennDiagram extends HTMLElement {
+        constructor() {
+            super();
+            this.attachShadow({ mode: 'open' });
+            const template = document.createElement('template');
+            template.innerHTML = `
+                <style>
+                    :host { display: inline-block; width: 100%; height: 100%; }
+                    svg { width: 100%; height: 100%; }
+                    .region { stroke: none; transition: fill 0.2s ease-in-out; }
+                    .outline { fill: none; stroke: #333; stroke-width: 1.5; }
+                    .filled { fill: #8b4513; }
+                    .unfilled { fill: #f5f5dc; }
+                    :host(.placeholder) .unfilled { fill: #a9a9a9; }
+                    :host(.placeholder) .filled { fill: #808080; }
+                </style>
+                <svg viewBox="0 0 200 200" aria-labelledby="title" role="img">
+                    <title id="title">A 3-circle Venn diagram</title>
+                    <defs>
+                        <circle id="c-a" cx="85" cy="85" r="50" />
+                        <circle id="c-b" cx="115" cy="85" r="50" />
+                        <circle id="c-c" cx="100" cy="125.5" r="50" />
+                        <clipPath id="clip-a"><use href="#c-a"/></clipPath>
+                        <clipPath id="clip-b"><use href="#c-b"/></clipPath>
+                        <clipPath id="clip-c"><use href="#c-c"/></clipPath>
+                        <mask id="mask-not-a"><rect width="100%" height="100%" fill="white" /><use href="#c-a" fill="black" /></mask>
+                        <mask id="mask-not-b"><rect width="100%" height="100%" fill="white" /><use href="#c-b" fill="black" /></mask>
+                        <mask id="mask-not-c"><rect width="100%" height="100%" fill="white" /><use href="#c-c" fill="black" /></mask>
+                         <mask id="mask-not-any"><rect width="100%" height="100%" fill="white" /><use href="#c-a" fill="black" /><use href="#c-b" fill="black" /><use href="#c-c" fill="black" /></mask>
+                        <mask id="mask-a-only"><rect width="100%" height="100%" fill="white" /><use href="#c-b" fill="black" /><use href="#c-c" fill="black" /></mask>
+                        <mask id="mask-b-only"><rect width="100%" height="100%" fill="white" /><use href="#c-a" fill="black" /><use href="#c-c" fill="black" /></mask>
+                        <mask id="mask-c-only"><rect width="100%" height="100%" fill="white" /><use href="#c-a" fill="black" /><use href="#c-b" fill="black" /></mask>
+                    </defs>
+                    <g id="regions-group">
+                        <rect id="region-0" class="region" width="200" height="200" mask="url(#mask-not-any)"/>
+                        <use id="region-1" href="#c-c" class="region" mask="url(#mask-c-only)" />
+                        <use id="region-2" href="#c-b" class="region" mask="url(#mask-b-only)" />
+                        <use id="region-3" href="#c-b" class="region" clip-path="url(#clip-c)" mask="url(#mask-not-a)" />
+                        <use id="region-4" href="#c-a" class="region" mask="url(#mask-a-only)" />
+                        <use id="region-5" href="#c-a" class="region" clip-path="url(#clip-c)" mask="url(#mask-not-b)" />
+                        <use id="region-6" href="#c-a" class="region" clip-path="url(#clip-b)" mask="url(#mask-not-c)" />
+                        <use id="region-7" href="#c-a" class="region" clip-path="url(#clip-b) url(#clip-c)" />
+                    </g>
+                    <g id="outlines-group">
+                        <use href="#c-a" class="outline" />
+                        <use href="#c-b" class="outline" />
+                        <use href="#c-c" class="outline" />
+                    </g>
+                </svg>
+            `;
+            this.shadowRoot.appendChild(template.content.cloneNode(true));
+        }
+        static get observedAttributes() { return ['value']; }
+        attributeChangedCallback(name, oldValue, newValue) {
+            if (name === 'value') { this.updateDiagram(newValue); }
+        }
+        updateDiagram(value) {
+            const numValue = parseInt(value, 10);
+            if (isNaN(numValue) || numValue < 0 || numValue > 255) { return; }
+            const binaryString = numValue.toString(2).padStart(8, '0');
+            for (let i = 0; i < 8; i++) {
+                const region = this.shadowRoot.getElementById(`region-${i}`);
+                if (region) {
+                    const bit = binaryString[7 - i];
+                    region.classList.toggle('filled', bit === '1');
+                    region.classList.toggle('unfilled', bit !== '1');
+                }
+            }
+        }
+        connectedCallback() {
+            if (this.hasAttribute('value')) { this.updateDiagram(this.getAttribute('value')); }
+             else { this.updateDiagram('0'); }
+        }
+    }
+    customElements.define('venn-diagram', VennDiagram);
+
+
+    // --- MAIN GAME SCRIPT ---
+    const urlParams = new URLSearchParams(window.location.search);
+    const requestedBits = urlParams.get('bits');
+    const BIT_MODE = (requestedBits === '8') ? 8 : 4;
+    const IS_8_BIT = (BIT_MODE === 8);
+
+    const P_VAL = IS_8_BIT ? 170 : 10;
+    const Q_VAL = IS_8_BIT ? 204 : 12;
+    const R_VAL = IS_8_BIT ? 240 : null;
+    const TOTAL_SHAPES = IS_8_BIT ? 256 : 16;
+    const NAND_MASK = IS_8_BIT ? 255 : 15;
+    const targetShapesOrder = [5, 3, 7, 15, 13, 11, 8, 2, 4, 0, 14, 9, 6, 1, 10, 12];
+    
+    const SLOT_SIZE_REM = IS_8_BIT ? '6rem' : '3.75rem';
+    const INV_ITEM_SIZE_REM = IS_8_BIT ? '5rem' : '4.375rem';
+
+    let slot1Value = null, slot2Value = null, currentRound = 0, generatedShapes = new Set();
+    let touchDragState = { isDragging: false, draggedElement: null, clone: null, value: null, offsetX: 0, offsetY: 0, currentDropTarget: null };
+
+    // --- Utility Functions ---
+    function valueToGrid(value) {
+        const cols = 2, rows = 2, cells = 4;
+        const grid = Array(rows).fill(null).map(() => Array(cols).fill(0));
+        for (let i = 0; i < cells; i++) {
+            const bit = (value >> i) & 1;
+            const row = i < cols ? (rows - 1) : 0;
+            const col = i % cols;
+            grid[row][col] = bit;
+        }
+        return grid;
+    }
+
+    function nand(val1, val2) {
+        if (val1 === null || val2 === null) return null;
+        return (val1 & val2) ^ NAND_MASK;
+    }
+
+    function renderShape(value, container, isDraggable = false, isInventory = false) {
+        container.innerHTML = '';
+        if (value === null) return;
+        
+        let shapeElement;
+        if (IS_8_BIT) {
+            shapeElement = document.createElement('venn-diagram');
+            shapeElement.setAttribute('value', value);
+            shapeElement.style.width = isInventory ? INV_ITEM_SIZE_REM : SLOT_SIZE_REM;
+            shapeElement.style.height = isInventory ? INV_ITEM_SIZE_REM : SLOT_SIZE_REM;
+        } else {
+            shapeElement = document.createElement('div');
+            const grid = valueToGrid(value);
+            shapeElement.className = `shape-grid-base grid-4bit`;
+            shapeElement.style.width = isInventory ? INV_ITEM_SIZE_REM : SLOT_SIZE_REM;
+            shapeElement.style.height = isInventory ? INV_ITEM_SIZE_REM : SLOT_SIZE_REM;
+            grid.forEach(row => row.forEach(cellValue => {
+                const cellDiv = document.createElement('div');
+                cellDiv.className = `shape-cell cell-${cellValue}`;
+                shapeElement.appendChild(cellDiv);
+            }));
+        }
+
+        shapeElement.dataset.value = value;
+        shapeElement.dataset.draggableShape = 'true';
+
+        if (isDraggable && generatedShapes.has(value)) {
+            shapeElement.draggable = true;
+            shapeElement.addEventListener('dragstart', handleDragStart);
+            shapeElement.addEventListener('dragend', handleDragEnd);
+            container.addEventListener('touchstart', handleTouchStart, { passive: false });
+        } else {
+            shapeElement.style.cursor = 'default';
+        }
+        container.appendChild(shapeElement);
+    }
+
+    function renderPlaceholder(container, isInventory = false) {
+        container.innerHTML = '';
+        if (IS_8_BIT) {
+            const vennElement = document.createElement('venn-diagram');
+            vennElement.setAttribute('value', '0');
+            vennElement.classList.add('placeholder');
+            vennElement.style.width = isInventory ? INV_ITEM_SIZE_REM : SLOT_SIZE_REM;
+            vennElement.style.height = isInventory ? INV_ITEM_SIZE_REM : SLOT_SIZE_REM;
+            container.appendChild(vennElement);
+        } else {
+            const gridDiv = document.createElement('div');
+            gridDiv.className = `placeholder-grid-base grid-4bit`;
+            gridDiv.style.width = isInventory ? INV_ITEM_SIZE_REM : SLOT_SIZE_REM;
+            gridDiv.style.height = isInventory ? INV_ITEM_SIZE_REM : SLOT_SIZE_REM;
+            container.appendChild(gridDiv);
+        }
+    }
+    
+    function updateInventoryDisplay(inventoryArea) {
+        if (!inventoryArea) return;
+        inventoryArea.innerHTML = '';
+        const fragment = document.createDocumentFragment();
+        for (let i = 0; i < TOTAL_SHAPES; i++) {
+            const itemContainer = document.createElement('div');
+            itemContainer.className = 'inventory-item';
+            itemContainer.id = `inventory-item-${i}`;
+            if (generatedShapes.has(i)) {
+                renderShape(i, itemContainer, true, true);
+            } else {
+                renderPlaceholder(itemContainer, true);
+            }
+            fragment.appendChild(itemContainer);
+        }
+        inventoryArea.appendChild(fragment);
+    }
+
+    function updateStatusPanel(roundMessage) {
+        const statusPanel = document.getElementById('status-panel');
+        if (!statusPanel) return;
+        statusPanel.innerHTML = '';
+        let content;
+        if (IS_8_BIT) {
+             content = `<h2 class="text-lg font-bold mb-1">Progress</h2><p class="text-base">Shapes Generated: <span id="generated-count">${generatedShapes.size}</span> / ${TOTAL_SHAPES}</p>`;
+         } else {
+             content = `<h2 class="text-lg font-bold mb-1">Round <span id="round-number">${currentRound + 1}</span> / ${TOTAL_SHAPES}</h2><p class="mb-1 text-sm">Target Shape:</p><div class="flex justify-center"><div id="target-shape-display" class="border-4 border-yellow-300 rounded inline-block"></div></div>`;
+         }
+         statusPanel.innerHTML = content;
+         statusPanel.appendChild(roundMessage);
+         if(!IS_8_BIT){
+            const targetDiv = statusPanel.querySelector('#target-shape-display');
+             if (currentRound < targetShapesOrder.length) {
+                 renderShape(targetShapesOrder[currentRound], targetDiv, false, false);
+             }
+         }
+    }
+
+    function triggerNandOperation() {
+        const outputArea = document.getElementById('output-area');
+        const roundMessage = document.querySelector("#status-panel p.text-green-400");
+        if (slot1Value !== null && slot2Value !== null) {
+            const resultValue = nand(slot1Value, slot2Value);
+             renderShape(resultValue, outputArea, false, false);
+            const wasNewShape = !generatedShapes.has(resultValue);
+            if (resultValue !== null) generatedShapes.add(resultValue);
+            if (wasNewShape) {
+                 if (roundMessage) roundMessage.textContent = `New shape ${resultValue} generated!`;
+                 if (roundMessage) setTimeout(() => { if (roundMessage) roundMessage.textContent = '' }, 2000);
+                 if(IS_8_BIT) updateStatusPanel(roundMessage);
+                 if (generatedShapes.size === TOTAL_SHAPES) winGame();
+            }
+            setTimeout(clearSlots, 800);
+            if (wasNewShape) {
+                const outputElement = outputArea.firstChild;
+                if(outputElement) outputElement.classList.add('flash-effect');
+                setTimeout(() => {
+                    if (outputElement) outputElement.classList.remove('flash-effect');
+                    updateInventoryDisplay(document.getElementById('inventory-area'));
+                    setTimeout(() => { outputArea.innerHTML = ''; renderPlaceholder(outputArea); }, 100);
+                }, 600);
+            } else {
+                setTimeout(() => { outputArea.innerHTML = ''; renderPlaceholder(outputArea); }, 1000);
+            }
+            if (!IS_8_BIT) checkTargetMatch(resultValue);
+        }
+    }
+
+    function checkTargetMatch(generatedValue) {
+         const roundMessage = document.querySelector("#status-panel p.text-green-400");
+         if (currentRound >= targetShapesOrder.length) return;
+         const targetValue = targetShapesOrder[currentRound];
+         if (generatedValue === targetValue) {
+             if(roundMessage) roundMessage.textContent = `Round ${currentRound + 1} complete! Target ${targetValue} generated.`;
+             setTimeout(() => {
+                 currentRound++;
+                 if (currentRound >= targetShapesOrder.length || generatedShapes.size === TOTAL_SHAPES) {
+                     if (generatedShapes.size === TOTAL_SHAPES) { winGame(); }
+                     else { if(roundMessage) roundMessage.textContent = 'All targets met, but not all shapes generated yet!'; }
+                 } else {
+                     if(roundMessage) roundMessage.textContent = '';
+                     updateStatusPanel(roundMessage);
+                 }
+             }, 2500);
+         }
+    }
+
+    function clearSlots() {
+        slot1Value = null; slot2Value = null;
+        const slot1Div = document.getElementById('slot-1');
+        const slot2Div = document.getElementById('slot-2');
+        if(slot1Div) renderPlaceholder(slot1Div);
+        if(slot2Div) renderPlaceholder(slot2Div);
+    }
+     function winGame() {
+        const winMessageContent = document.getElementById('win-message-content');
+        const winMessageDiv = document.getElementById('win-message');
+        const playAgainButtonElement = document.getElementById('reset-button').cloneNode(true);
+        playAgainButtonElement.addEventListener('click', resetGame);
+         if(!winMessageContent || !winMessageDiv) return;
+        winMessageContent.innerHTML = `<h2 class="text-3xl md:text-5xl font-bold mb-4 md:mb-6 text-yellow-300">MASTER CONTRAPTIONIST!</h2><p class="text-lg md:text-2xl mb-8">You've generated all ${TOTAL_SHAPES} shapes!</p>`;
+        winMessageContent.appendChild(playAgainButtonElement);
+        winMessageDiv.classList.remove('hidden');
+     }
+    function resetGame() {
+        generatedShapes = new Set(IS_8_BIT ? [P_VAL, Q_VAL, R_VAL].filter(v => v !== null) : [P_VAL, Q_VAL]);
+        slot1Value = null; slot2Value = null; currentRound = 0;
+        const slot1Div = document.getElementById('slot-1');
+        const slot2Div = document.getElementById('slot-2');
+        const outputArea = document.getElementById('output-area');
+        const roundMessage = document.querySelector("#status-panel p.text-green-400");
+        if(slot1Div) renderPlaceholder(slot1Div);
+        if(slot2Div) renderPlaceholder(slot2Div);
+        if(outputArea) renderPlaceholder(outputArea);
+        if (roundMessage) roundMessage.textContent = '';
+        const winMessageDiv = document.getElementById('win-message');
+        if (winMessageDiv) winMessageDiv.classList.add('hidden');
+        updateStatusPanel(document.querySelector("#status-panel p.text-green-400"));
+        updateInventoryDisplay(document.getElementById('inventory-area'));
+        console.log("Game Reset for", BIT_MODE, "bits");
+    }
+
+    function updateLayout() { /* ... existing logic ... */ }
+
+    // Mouse handlers are kept for non-touch devices
+    function handleDragStart(e) {
+        const targetShape = e.currentTarget;
+        if (targetShape && !targetShape.classList.contains('placeholder-grid-base')) {
+            e.dataTransfer.setData('text/plain', targetShape.dataset.value);
+            targetShape.classList.add('dragging');
+        } else { e.preventDefault(); }
+    }
+    function handleDragEnd(e) { if (e.currentTarget) e.currentTarget.classList.remove('dragging'); }
+    function handleDragOver(e) { e.preventDefault(); const ts = e.target.closest('.slot'); if(ts) ts.classList.add('drag-over'); }
+    function handleDragLeave(e) { const ts = e.target.closest('.slot'); if(ts) ts.classList.remove('drag-over'); }
+    function handleDrop(e) {
+        e.preventDefault();
+        const targetSlot = e.target.closest('.slot');
+        if (targetSlot) {
+            targetSlot.classList.remove('drag-over');
+            const droppedValue = parseInt(e.dataTransfer.getData('text/plain'), 10);
+            if (isNaN(droppedValue)) return;
+            if (targetSlot.id === 'slot-1') slot1Value = droppedValue;
+            else if (targetSlot.id === 'slot-2') slot2Value = droppedValue;
+            renderShape(droppedValue, targetSlot, false, false);
+            hideTutorial();
+            triggerNandOperation();
+        }
+    }
+    
+    function handleTouchStart(e) {
+        e.preventDefault();
+        const targetShape = e.currentTarget.querySelector('[data-draggable-shape="true"]');
+        if (!targetShape || touchDragState.isDragging || !targetShape.dataset.value) return;
+        touchDragState.isDragging = true;
+        touchDragState.draggedElement = targetShape;
+        touchDragState.value = targetShape.dataset.value;
+        touchDragState.clone = targetShape.cloneNode(true);
+        touchDragState.clone.classList.add('touch-drag-clone');
+        document.body.appendChild(touchDragState.clone);
+        targetShape.classList.add('touch-dragging-source');
+        const touch = e.touches[0];
+        const rect = targetShape.getBoundingClientRect();
+        touchDragState.offsetX = touch.clientX - rect.left;
+        touchDragState.offsetY = touch.clientY - rect.top;
+        touchDragState.clone.style.left = `${touch.clientX - touchDragState.offsetX}px`;
+        touchDragState.clone.style.top = `${touch.clientY - touchDragState.offsetY}px`;
+        document.addEventListener('touchmove', handleTouchMove, { passive: false });
+        document.addEventListener('touchend', handleTouchEnd);
+    }
+    function handleTouchMove(e) { /* ... same as before ... */ }
+    function handleTouchEnd(e) { /* ... same as before ... */ }
+    function hideTutorial() {
+        const tutorialOverlay = document.getElementById('tutorial-overlay');
+        if (tutorialOverlay) tutorialOverlay.classList.add('hidden');
+    }
+
+    // MAIN INIT
+    document.addEventListener('DOMContentLoaded', () => {
+        // Assign all DOM element variables here after DOM is loaded
+        const gameWrapper = document.getElementById('game-wrapper');
+        const inventoryArea = document.getElementById('inventory-area');
+        const slot1Div = document.getElementById('slot-1');
+        const slot2Div = document.getElementById('slot-2');
+        const outputArea = document.getElementById('output-area');
+        const statusPanel = document.getElementById('status-panel');
+        const resetButton = document.getElementById('reset-button');
+        const winMessageDiv = document.getElementById('win-message');
+        const winMessageContent = document.getElementById('win-message-content');
+        const legendContainer = document.querySelector("#nand-legend .legend-container");
+        const goalText = document.getElementById('goal-text');
+        const bitModeDisplays = document.querySelectorAll('.bit-mode-display');
+        const gameTitle = document.getElementById('game-title');
+        
+        if (!gameWrapper || !inventoryArea || !slot1Div || !slot2Div || !resetButton || !winMessageDiv || !gameTitle) {
+             console.error("Initialization failed: Core game elements not found.");
+             document.body.innerHTML = '<h1 style="color:red; text-align:center;">Error: Game elements missing.</h1>'; return;
+        }
+        const playAgainButtonElement = document.createElement('button');
+        playAgainButtonElement.className = "text-lg px-4 py-2";
+        playAgainButtonElement.textContent = "Play Again";
+        playAgainButtonElement.addEventListener('click', resetGame);
+        const roundMessage = document.createElement('p'); // Create it here
+        roundMessage.className = "mt-1 h-4 text-sm font-bold text-green-400"; // Style it
+        if(statusPanel) statusPanel.appendChild(roundMessage); // Append it once
+
+
+        document.title = `NAND Contraption (${BIT_MODE}-bit)`;
+        gameTitle.textContent = 'NAND Contraption';
+        bitModeDisplays.forEach(el => el.textContent = BIT_MODE);
+        if(goalText) {
+            if (IS_8_BIT) { goalText.textContent = `4. Goal: Generate all ${TOTAL_SHAPES} possible shapes!`; }
+            else { goalText.textContent = `4. Goal: Create the 'Target Shape' for the current round.`; }
+        }
+        if (legendContainer) legendContainer.style.display = IS_8_BIT ? 'none' : 'flex';
+        
+        updateLayout();
+        resetButton.addEventListener('click', resetGame);
+        [slot1Div, slot2Div].forEach(slot => {
+            slot.addEventListener('dragover', handleDragOver); slot.addEventListener('dragleave', handleDragLeave);
+            slot.addEventListener('drop', handleDrop);
+        });
+        const closeTutorialButton = document.getElementById('close-tutorial');
+        if (closeTutorialButton) {
+            closeTutorialButton.addEventListener('click', hideTutorial);
+        }
+        
+        if (!sessionStorage.getItem('nandTutorialSeen')) {
+            const tutorialOverlay = document.getElementById('tutorial-overlay');
+            if(tutorialOverlay) tutorialOverlay.classList.remove('hidden');
+            sessionStorage.setItem('nandTutorialSeen', 'true');
+        } else {
+            const tutorialOverlay = document.getElementById('tutorial-overlay');
+            if(tutorialOverlay) tutorialOverlay.classList.add('hidden');
+        }
+
+        resetGame();
+        window.addEventListener('resize', updateLayout);
+    });
+</script>
+</body></html>// END_ARTIFACT_ID: nand_contraption_game_switchable// =====================================================================// START_ARTIFACT_ID: natural_deduction_game// =====================================================================<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Natural Deduction Contraption</title><script src="https://www.google.com/search?q=https://cdn.tailwindcss.com"></script><style>/* Styles for Natural Deduction Game */:root { --game-width-ref: 1200; }html { font-size: 16px; height: 100%; overflow: hidden; }body { background-color: #334155; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #e2e8f0; margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; min-height: 100%; overflow: hidden; }#game-wrapper { position: relative; overflow: hidden; margin: auto; background-color: #475569; box-shadow: 0 0 1.5rem rgba(0,0,0,0.6); display: flex; flex-direction: column; box-sizing: border-box; }h1 { font-size: 2rem; text-shadow: 0.05rem 0.05rem 0.1rem #000; } h2 { font-size: 1.2rem; margin-bottom: 0.5rem; color: #cbd5e1; } h3 { font-size: 1rem; margin-bottom: 0.3rem; color: #94a3b8; }p, button, span, div, li { font-size: 0.8rem; } button { padding: 0.4rem 0.8rem; }.main-content-grid { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 1rem; width: 100%; flex-grow: 1; padding: 1rem; overflow: hidden; box-sizing: border-box; }.game-section { background-color: #1e293b; border: 1px solid #334155; border-radius: 0.5rem; padding: 0.8rem; overflow-y: auto; display: flex; flex-direction: column; }.game-section h2 { border-bottom: 1px solid #475569; padding-bottom: 0.3rem; margin-top: 0; }#proof-area ol { list-style-type: none; padding-left: 0; flex-grow: 1; overflow-y: auto; margin: 0; border: 2px dashed transparent; }#proof-area ol.drag-over-proof { border-color: #60a5fa; background-color: rgba(96, 165, 250, 0.1); }#proof-area li { background-color: #334155; margin-bottom: 0.3rem; padding: 0.4rem 0.6rem; border-radius: 0.25rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid #475569; transition: background-color 0.3s ease; position: relative; }.subproof-line { border-left: 2px solid #60a5fa !important; padding-left: 0.8rem !important; }.subproof-assumption { background-color: #4b5563 !important; }.show-line { background-color: #0f172a; border-style: dashed; border-color: #f59e0b; }.show-line .formula { color: #f59e0b; }.show-line.proven-show-line { background-color: #334155; border-style: solid; border-color: #22c55e; }.show-line.proven-show-line .formula { color: #f1f5f9; }#proof-area li.proof-line-complete { background-color: #166534; border-color: #22c55e; }#proof-area li.proof-line-complete .formula, #proof-area li.proof-line-complete .line-number, #proof-area li.proof-line-complete .justification { color: #f0fdf4; }.line-number { color: #94a3b8; margin-right: 0.5rem; font-weight: bold; }.formula { font-family: monospace; color: #f1f5f9; cursor: grab; padding: 0.2rem 0.4rem; background-color: #2d3748; border: 1px solid #4a5568; border-radius: 0.15rem; display: inline-block; margin-right: auto; }.formula.dragging { opacity: 0.5; cursor: grabbing; box-shadow: 0 0 5px #60a5fa; }.justification { font-size: 0.7rem; color: #64748b; white-space: nowrap; flex-shrink: 0; }.proof-header, .proof-goal, .subproof-goal-display { padding: 0.5rem; margin-bottom: 0.5rem; background-color: #0f172a; border-radius: 0.25rem; }.proof-header span, .proof-goal span, .subproof-goal-display span { font-weight: bold; color: #60a5fa; }.subproof-goal-display { color: #f59e0b; }#proof-feedback { min-height: 1.5rem; text-align: center; font-weight: bold; margin-top: 0.5rem; }.tool-area { margin-bottom: 0.8rem; }.tool-button, .draggable-var, .connective-hotspot { border: none; padding: 0.5rem; margin: 0.25rem; border-radius: 0.25rem; transition: background-color 0.2s; text-align: center; font-weight: bold; }.tool-button { background-color: #3b82f6; color: white; cursor: pointer; }.tool-button:hover { background-color: #2563eb; }.draggable-var { background-color: #f5f5dc; color: #3b271a; border: 1px solid #a0522d; cursor: grab; display: inline-block; }.draggable-var.dragging { opacity: 0.5; cursor: grabbing; }.connective-hotspot { background-color: #4b5563; color: white; border: 2px dashed #6b7280; cursor: copy; min-width: 3rem; display: inline-block; padding: 0.5rem 0.3rem; font-size: 0.75rem; }.connective-hotspot.waiting { border-style: solid; border-color: #f59e0b; }.connective-hotspot.drag-over { border-color: #60a5fa; background-color: #334155; }#wff-output-tray { background-color: #0f172a; padding: 0.5rem; margin-top: 1rem; border-radius: 0.25rem; min-height: 5rem; font-family: monospace; color: #f1f5f9; display: flex; flex-wrap: wrap; gap: 0.5rem; align-content: flex-start; flex-grow: 1; overflow-y: auto; border: 2px dashed transparent; }#wff-output-tray.drag-over-tray { border-color: #60a5fa; background-color: rgba(96, 165, 250, 0.1); }#wff-output-tray .formula { background-color: #3b82f6; color: white; border-color: #1d4ed8; cursor: grab; }#wff-output-tray .formula.dragging { opacity: 0.5; cursor: grabbing; }.rule-item { background-color: #334155; padding: 0.5rem; margin-bottom: 0.3rem; border-radius: 0.25rem; cursor: pointer; text-align: center; border: 1px solid #475569; user-select: none; }.rule-item:hover { background-color: #475569; }.rule-item.active { background-color: #4a5568; }.rule-slots { display: none; padding: 0.5rem; margin-top: 0.3rem; background-color: #2d3748; border-radius: 0.25rem; border: 1px dashed #4a5568; }.rule-item.active .rule-slots { display: flex; flex-direction: column; gap: 0.5rem; }.drop-slot { background-color: #4a5568; border: 2px dashed #64748b; min-height: 2.5rem; border-radius: 0.25rem; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-style: italic; font-size: 0.75rem; padding: 0.3rem; }.drop-slot.drag-over { border-color: #60a5fa; background-color: #334155; }.apply-rule-button { background-color: #10b981; margin-top: 0.5rem; color: white; border: none; cursor: pointer; }.apply-rule-button:hover { background-color: #059669; }#subproof-context-menu { display: none; position: absolute; background-color: #475569; border: 1px solid #64748b; border-radius: 0.3rem; box-shadow: 0 2px 10px rgba(0,0,0,0.5); padding: 0.5rem; z-index: 1000; }#subproof-context-menu button { display: block; width: 100%; margin-bottom: 0.25rem; background-color: #3b82f6; color: white; }#subproof-context-menu button:hover { background-color: #2563eb; }#subproof-context-menu button:last-child { margin-bottom: 0; }</style></head><body><!-- ... (rest of the body HTML for natural_deduction_game) ... --></body></html>// END_ARTIFACT_ID: natural_deduction_game// =====================================================================// START_ARTIFACT_ID: ifs_mega_heatmap_survey// =====================================================================<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Combined Operator Heatmap (Dynamic Iterations)</title><style>body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; align-items: center; padding: 1em; background-color: #e8eaf6; color: #333; margin: 0; height: 100vh; box-sizing: border-box; overflow-y: auto; }h1, p { text-align: center; margin-top: 0.5em; margin-bottom: 0.5em; flex-shrink: 0; }.controls { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; flex-shrink: 0; }.controls label { font-weight: bold; }.controls select, .controls input { padding: 5px; border-radius: 4px; border: 1px solid #ccc; }.checkbox-label { display: flex; align-items: center; gap: 5px; }.legend-wrapper { margin-top: 0.5rem; margin-bottom: 1rem; width: 80%; max-width: 500px; }.gradient-bar { width: 100%; height: 20px; border: 1px solid #555; border-radius: 4px; background: linear-gradient(to right, hsl(240, 100%, 50%), hsl(180, 100%, 50%), hsl(120, 100%, 50%), hsl(60, 100%, 50%), hsl(0, 100%, 50%)); }.gradient-labels { display: flex; justify-content: space-between; font-size: 0.75rem; padding: 0 2px; }.mega-heatmap-container { margin-top: 10px; width: 100%; display: flex; justify-content: center; align-items: center; flex-grow: 1; overflow: auto; min-height: 0; }table.mega-heatmap-table { border-collapse: collapse; box-shadow: 0 2px 8px rgba(0,0,0,0.15); border: 1px solid #ccc; }table.mega-heatmap-table td { border: none; padding: 0; }table.mega-heatmap-table td:hover::after { content: attr(data-tooltip); position: absolute; transform: translate(5px, -25px); background-color: rgba(0,0,0,0.8); color: white; padding: 3px 6px; border-radius: 3px; font-size: 10px; white-space: nowrap; z-index: 10; pointer-events: none; }</style></head><body><!-- ... (rest of the body HTML for ifs_mega_heatmap_survey) ... --></body></html>// END_ARTIFACT_ID: ifs_mega_heatmap_survey// =====================================================================// START_ARTIFACT_ID: truth_table_to_matrix_infographic// =====================================================================<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>From Truth Tables to Operator Matrices</title><script src="https://www.google.com/search?q=https://cdn.tailwindcss.com"></script><style>body { background-color: #f8f9fa; color: #212529; font-family: 'Georgia', 'Times New Roman', serif; padding: 0.5rem; }.container { max-width: 100%; width: 100%; }.header-section { background-color: #e9ecef; border-bottom: 1px solid #dee2e6; padding: 1.5rem; margin-bottom: 1rem; }.mega-table-container, .summary-grid-container { overflow-x: auto; padding: 0.5rem 0; }.mega-table { border-collapse: collapse; margin: 0 auto; font-size: 0.8rem; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); white-space: nowrap; }.mega-table th, .mega-table td { border: 1px solid #ced4da; }.mega-table th { padding: 1px; background-color: #f1f3f5; position: sticky; top: 0; z-index: 10; }.mega-table td { padding: 4px 6px; }.mega-table .input-col { background-color: #e9ecef; font-weight: bold; }.op-header { vertical-align: top; }.op-header .op-symbol { font-size: 1em; font-weight: bold; color: #007bff; padding: 2px 4px; }.matrix-container { display: flex; align-items: center; justify-content: center; gap: 0.4rem; margin-top: 0.2rem; padding-bottom: 2px; }.matrix { display: grid; grid-template-columns: repeat(2, 18px); grid-template-rows: repeat(2, 18px); border: 1px solid #343a40; }.matrix-cell { display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 0.75rem; border: 1px solid #adb5bd; }.cell-0 { background-color: #f8f9fa; color: #495057; }.cell-1 { background-color: #343a40; color: #f8f9fa; }.summary-grid-title { text-align: center; font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; color: #343a40; }.summary-grid { display: grid; grid-template-columns: repeat(8, 25px); grid-template-rows: repeat(8, 25px); justify-content: center; margin: 0 auto; }.summary-cell { border: 1px solid #adb5bd; }.summary-cell:nth-child(2n) { border-right: 2px solid #343a40; }.summary-cell:nth-child(8n) { border-right: 1px solid #adb5bd; }.thick-bottom-border { border-bottom: 2px solid #343a40 !important; }</style></head><body><div class="container mx-auto"><div class="header-section text-center p-6 rounded-lg mb-8"><h1 class="text-4xl font-bold">From Truth Tables to Operator Matrices</h1><p class="mt-4 max-w-3xl mx-auto text-lg">The familiar truth table for any of the 16 possible binary logical connectives has four output rows. We can represent these four output bits as a single 4-digit binary number, which uniquely identifies the operator. This binary string can then be mapped spatially onto a 2x2 matrix, forming the fundamental seed for generating complex fractal patterns through recursive rules.</p></div>    <div class="mega-table-container">
+        <table id="mega-truth-table" class="mega-table">
+            <!-- Table generated by JavaScript -->
+        </table>
+    </div>
+
+    <div class="summary-grid-container">
+        <h2 class="summary-grid-title">16 Operator Seeds</h2>
+        <div id="summary-grid" class="summary-grid">
+            <!-- 8x8 Grid of cells generated by JavaScript -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const operatorDetails = [
+        { id: 0,  name: "FALSE", binary: "0000" }, { id: 1,  name: "p ∧ q", binary: "0001", symbol: "AND" },
+        { id: 2,  name: "p ∧ ~q", binary: "0010" }, { id: 3,  name: "p", binary: "0011", symbol: "PROJ p" },
+        { id: 4,  name: "~p ∧ q", binary: "0100" }, { id: 5,  name: "q", binary: "0101", symbol: "PROJ q" },
+        { id: 6,  name: "p ⊕ q", binary: "0110", symbol: "XOR" }, { id: 7,  name: "p ∨ q", binary: "0111", symbol: "OR" },
+        { id: 8,  name: "p ↓ q", binary: "1000", symbol: "NOR" }, { id: 9,  name: "p ↔ q", binary: "1001", symbol: "XNOR" },
+        { id: 10, name: "~q", binary: "1010", symbol: "NOT q" }, { id: 11, name: "q → p", binary: "1011" },
+        { id: 12, name: "~p", binary: "1100", symbol: "NOT p" }, { id: 13, name: "p → q", binary: "1101", symbol: "IMPLIES" },
+        { id: 14, name: "p ↑ q", binary: "1110", symbol: "NAND" }, { id: 15, name: "TRUE", binary: "1111" }
+    ];
+
+    function createMegaTruthTable() {
+        const table = document.getElementById('mega-truth-table');
+        table.innerHTML = ''; // Clear previous table content
+
+        // --- Create Header Row ---
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        
+        // Input Headers
+        headerRow.innerHTML = `
+            <th class="input-col">p</th>
+            <th class="input-col">q</th>
+        `;
+
+        // Operator Headers
+        operatorDetails.forEach(op => {
+            const th = document.createElement('th');
+            th.className = 'op-header';
+            
+            const b = op.binary;
+            const matrixHtml = `
+                <div class="matrix-container">
+                    <div class="matrix">
+                        <div class="matrix-cell cell-${b[0]}">${b[0]}</div>
+                        <div class="matrix-cell cell-${b[1]}">${b[1]}</div>
+                        <div class="matrix-cell cell-${b[2]}">${b[2]}</div>
+                        <div class="matrix-cell cell-${b[3]}">${b[3]}</div>
+                    </div>
+                </div>
+            `;
+
+            th.innerHTML = `
+                <div class="op-symbol">${op.name}</div>
+                ${matrixHtml}
+            `;
+            headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        // --- Create Body Rows ---
+        const tbody = document.createElement('tbody');
+        const inputs = [[0, 0], [0, 1], [1, 0], [1, 1]];
+        
+        inputs.forEach((inputPair, rowIndex) => {
+            const tr = document.createElement('tr');
+            // Input Cells
+            tr.innerHTML = `
+                <td class="input-col">${inputPair[0]}</td>
+                <td class="input-col">${inputPair[1]}</td>
+            `;
+
+            // Operator Output Cells
+            operatorDetails.forEach(op => {
+                // Get the correct bit from the binary string.
+                // The standard truth table order (00,01,10,11) corresponds to bits 0,1,2,3
+                const bit = op.binary.split('').reverse()[rowIndex];
+                const td = document.createElement('td');
+                td.textContent = bit;
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+    }
+
+    function createSummaryGrid() {
+        const container = document.getElementById('summary-grid');
+        container.innerHTML = '';
+
+        // This will use the original 0-15 order
+        for (let opRow = 0; opRow < 4; opRow++) {
+            for (let opCol = 0; opCol < 4; opCol++) {
+                const operatorIndex = opRow * 4 + opCol;
+                const op = operatorDetails[operatorIndex];
+                const b = op.binary;
+                
+                // CORRECTED LINE: The last cell now includes 'matrix-cell'
+                const cellsHtml = `
+                    <div class="summary-cell matrix-cell cell-${b[0]}">${b[0]}</div>
+                    <div class="summary-cell matrix-cell cell-${b[1]}">${b[1]}</div>
+                    <div class="summary-cell matrix-cell cell-${b[2]}">${b[2]}</div>
+                    <div class="summary-cell matrix-cell cell-${b[3]}">${b[3]}</div>
+                `;
+                
+                const block = document.createElement('div');
+                block.style.display = 'grid';
+                block.style.gridTemplateColumns = 'repeat(2, 25px)';
+                block.style.gridTemplateRows = 'repeat(2, 25px)';
+                block.innerHTML = cellsHtml;
+                
+                 if (opCol < 3) {
+                     block.style.borderRight = "2px solid #343a40";
+                 }
+                 if (opRow < 3) {
+                     block.style.borderBottom = "2px solid #343a40";
+                 }
+
+                container.appendChild(block);
+            }
+        }
+
+         container.style.gridTemplateColumns = "repeat(4, auto)";
+         container.style.gridTemplateRows = "repeat(4, auto)";
+         // container.style.border = "2px solid #343a40"; // REMOVED
+    }
+
+
+    createMegaTruthTable();
+    createSummaryGrid();
+
+</script>
+</body></html>// END_ARTIFACT_ID: truth_table_to_matrix_infographic

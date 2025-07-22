@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From Truth Tables to Operator Matrices</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* A simple, clean, academic-inspired theme */
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            padding: 0.5rem; /* Reduced body padding */
+        }
+        .container {
+            max-width: 100%; /* Use full width */
+            width: 100%;
+        }
+        .header-section {
+            background-color: #e9ecef;
+            border-bottom: 1px solid #dee2e6;
+            padding: 1.5rem; /* Reduced header padding */
+            margin-bottom: 1rem; /* Reduced header margin */
+        }
+        .mega-table-container, .summary-grid-container {
+            overflow-x: auto;
+            padding: 0.5rem 0; /* Reduced padding */
+        }
+        .mega-table {
+            border-collapse: collapse;
+            margin: 0 auto;
+            font-size: 0.8rem; /* Reduced font size */
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            white-space: nowrap;
+        }
+        .mega-table th, .mega-table td {
+            border: 1px solid #ced4da;
+        }
+        .mega-table th {
+            padding: 1px; /* MODIFIED padding */
+            background-color: #f1f3f5;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+         .mega-table td {
+            padding: 4px 6px;
+        }
+        .mega-table .input-col {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+        .op-header {
+             vertical-align: top;
+        }
+        .op-header .op-symbol {
+            font-size: 1em;
+            font-weight: bold;
+            color: #007bff;
+            padding: 2px 4px; /* Add some padding back to the symbol div */
+        }
+
+        .matrix-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            margin-top: 0.2rem; /* Reduced margin */
+            padding-bottom: 2px;
+        }
+        .matrix {
+            display: grid;
+            grid-template-columns: repeat(2, 18px); /* Smaller matrix cells */
+            grid-template-rows: repeat(2, 18px);
+            border: 1px solid #343a40;
+        }
+        .matrix-cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 0.75rem; /* Smaller font in matrix */
+            border: 1px solid #adb5bd;
+        }
+        .cell-0 {
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+        .cell-1 {
+            background-color: #343a40;
+            color: #f8f9fa;
+        }
+
+        /* Summary Heatmap Styles */
+        .summary-grid-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #343a40;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 25px); /* 8x8 grid of cells */
+            grid-template-rows: repeat(8, 25px);
+            /* border: 2px solid #343a40; REMOVED outer border */
+            justify-content: center;
+            margin: 0 auto;
+        }
+        .summary-cell {
+            border: 1px solid #adb5bd; /* Thin inner border */
+        }
+        /* Thicker delineating lines for 2x2 blocks */
+        .summary-cell:nth-child(2n) {
+            border-right: 2px solid #343a40;
+        }
+         .summary-cell:nth-child(8n) {
+            border-right: 1px solid #adb5bd; /* Override for last cell in row */
+        }
+        .thick-bottom-border {
+             border-bottom: 2px solid #343a40 !important;
+        }
+
+        /* Print Styles */
+        @media print {
+            body, .container {
+                padding: 0;
+                margin: 0;
+                background-color: #ffffff;
+            }
+     
+            .mega-table-container {
+                overflow-x: visible; /* Prevent scrollbar on print */
+            }
+            .mega-table {
+                font-size: 7pt; /* Shrink font for print */
+                box-shadow: none;
+            }
+            .mega-table th, .mega-table td {
+                padding: 2px 3px; /* Shrink padding */
+            }
+            .matrix {
+                grid-template-columns: repeat(2, 10px);
+                grid-template-rows: repeat(2, 10px);
+            }
+            .matrix-cell {
+                font-size: 6pt;
+            }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="container mx-auto">
+        <div class="header-section text-center p-6 rounded-lg mb-8">
+            <h1 class="text-4xl font-bold">From Truth Tables to Operator Matrices</h1>
+            <p class="mt-4 max-w-3xl mx-auto text-lg">
+                The familiar truth table for any of the 16 possible binary logical connectives has four output rows. We can represent these four output bits as a single 4-digit binary number, which uniquely identifies the operator. This binary string can then be mapped spatially onto a 2x2 matrix, forming the fundamental "gene" for generating complex fractal patterns through recursive rules.
+            </p>
+        </div>
+
+        <div class="mega-table-container">
+            <table id="mega-truth-table" class="mega-table">
+                <!-- Table generated by JavaScript -->
+            </table>
+        </div>
+
+        <div class="summary-grid-container">
+            <h2 class="summary-grid-title">16 Operator Genes</h2>
+            <div id="summary-grid" class="summary-grid">
+                <!-- 8x8 Grid of cells generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const operatorDetails = [
+            { id: 0,  name: "FALSE", binary: "0000" }, { id: 1,  name: "p ∧ q", binary: "0001", symbol: "AND" },
+            { id: 2,  name: "p ∧ ~q", binary: "0010" }, { id: 3,  name: "p", binary: "0011", symbol: "PROJ p" },
+            { id: 4,  name: "~p ∧ q", binary: "0100" }, { id: 5,  name: "q", binary: "0101", symbol: "PROJ q" },
+            { id: 6,  name: "p ⊕ q", binary: "0110", symbol: "XOR" }, { id: 7,  name: "p ∨ q", binary: "0111", symbol: "OR" },
+            { id: 8,  name: "p ↓ q", binary: "1000", symbol: "NOR" }, { id: 9,  name: "p ↔ q", binary: "1001", symbol: "XNOR" },
+            { id: 10, name: "~q", binary: "1010", symbol: "NOT q" }, { id: 11, name: "q → p", binary: "1011" },
+            { id: 12, name: "~p", binary: "1100", symbol: "NOT p" }, { id: 13, name: "p → q", binary: "1101", symbol: "IMPLIES" },
+            { id: 14, name: "p ↑ q", binary: "1110", symbol: "NAND" }, { id: 15, name: "TRUE", binary: "1111" }
+        ];
+
+        function createMegaTruthTable() {
+            const table = document.getElementById('mega-truth-table');
+            table.innerHTML = ''; // Clear previous table content
+
+            // --- Create Header Row ---
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            
+            // Operator Headers
+            operatorDetails.forEach(op => {
+                const th = document.createElement('th');
+                th.className = 'op-header';
+                
+                const b = op.binary;
+                const matrixHtml = `
+                    <div class="matrix-container">
+                        <div class="matrix">
+                            <div class="matrix-cell cell-${b[0]}">${b[0]}</div>
+                            <div class="matrix-cell cell-${b[1]}">${b[1]}</div>
+                            <div class="matrix-cell cell-${b[2]}">${b[2]}</div>
+                            <div class="matrix-cell cell-${b[3]}">${b[3]}</div>
+                        </div>
+                    </div>
+                `;
+
+                th.innerHTML = `
+                    <div class="op-symbol">${op.name}</div>
+                    ${matrixHtml}
+                `;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            // --- Create Body Rows ---
+            const tbody = document.createElement('tbody');
+            const inputs = [[0, 0], [0, 1], [1, 0], [1, 1]];
+            
+            inputs.forEach((inputPair, rowIndex) => {
+                const tr = document.createElement('tr');
+                
+                // Operator Output Cells
+                operatorDetails.forEach(op => {
+                    // Get the correct bit from the binary string.
+                    // The standard truth table order (00,01,10,11) corresponds to bits 0,1,2,3
+                    const bit = op.binary.split('').reverse()[rowIndex];
+                    const td = document.createElement('td');
+                    td.textContent = bit;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+        }
+
+        function createSummaryGrid() {
+            const container = document.getElementById('summary-grid');
+            container.innerHTML = '';
+
+            // This will use the original 0-15 order
+            for (let opRow = 0; opRow < 4; opRow++) {
+                for (let opCol = 0; opCol < 4; opCol++) {
+                    const operatorIndex = opRow * 4 + opCol;
+                    const op = operatorDetails[operatorIndex];
+                    const b = op.binary;
+                    
+                    const cellsHtml = `
+                        <div class="summary-cell matrix-cell cell-${b[0]}">${b[0]}</div>
+                        <div class="summary-cell matrix-cell cell-${b[1]}">${b[1]}</div>
+                        <div class="summary-cell matrix-cell cell-${b[2]}">${b[2]}</div>
+                        <div class="summary-cell matrix-cell cell-${b[3]}">${b[3]}</div>
+                    `;
+                    
+                    const block = document.createElement('div');
+                    block.style.display = 'grid';
+                    block.style.gridTemplateColumns = 'repeat(2, 25px)';
+                    block.style.gridTemplateRows = 'repeat(2, 25px)';
+                    block.innerHTML = cellsHtml;
+                    
+                     if (opCol < 3) {
+                         block.style.borderRight = "2px solid #343a40";
+                     }
+                     if (opRow < 3) {
+                         block.style.borderBottom = "2px solid #343a40";
+                     }
+
+                    container.appendChild(block);
+                }
+            }
+
+             container.style.gridTemplateColumns = "repeat(4, auto)";
+             container.style.gridTemplateRows = "repeat(4, auto)";
+             // container.style.border = "2px solid #343a40"; // REMOVED
+        }
+
+
+        createMegaTruthTable();
+        createSummaryGrid();
+
+    </script>
+</body>
+</html>
