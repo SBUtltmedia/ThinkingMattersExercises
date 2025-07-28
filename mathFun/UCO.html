@@ -43,21 +43,6 @@
             aspect-ratio: 1 / 1;
             image-rendering: pixelated; /* Ensures sharp pixels */
         }
-        #pixel-heatmap-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(0,0,0,0.5);
-            color: white;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            pointer-events: none; /* Allows mouse events to pass through */
-        }
         #rug-tooltip {
             position: absolute;
             visibility: hidden;
@@ -130,35 +115,7 @@
                 A heatmap of emergent computational complexity.
             </p>
         </header>
-
-        <!-- What is U? Section -->
-        <section class="mb-16 md:mb-24">
-            <h2 class="font-orbitron text-3xl font-bold text-center mb-12">A Universe in Three Parts</h2>
-            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <div class="glass-card p-6 text-center flex flex-col items-center hover:border-sky-400 transition-colors duration-300">
-                    <div class="w-16 h-16 bg-sky-900/50 border border-sky-500 rounded-full flex items-center justify-center mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
-                    </div>
-                    <h3 class="font-orbitron text-xl font-semibold mb-2">Sentences (S)</h3>
-                    <p class="text-neutral-400">The vocabulary. Declarative statements like `(p NOR q)` that form the logical bedrock of the universe.</p>
-                </div>
-                <div class="glass-card p-6 text-center flex flex-col items-center hover:border-green-400 transition-colors duration-300">
-                    <div class="w-16 h-16 bg-green-900/50 border border-green-500 rounded-full flex items-center justify-center mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                    </div>
-                    <h3 class="font-orbitron text-xl font-semibold mb-2">Rules (R)</h3>
-                    <p class="text-neutral-400">The grammar. Imperative laws like `Sᵢ := Sₖ` that dictate how the universe changes from one moment to the next.</p>
-                </div>
-                <div class="glass-card p-6 text-center flex flex-col items-center hover:border-violet-400 transition-colors duration-300">
-                    <div class="w-16 h-16 bg-violet-900/50 border border-violet-500 rounded-full flex items-center justify-center mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
-                    </div>
-                    <h3 class="font-orbitron text-xl font-semibold mb-2">Machines (M)</h3>
-                    <p class="text-neutral-400">The programs. Collections of rules that, when executed, perform computations—from simple logic to universal machines.</p>
-                </div>
-            </div>
-        </section>
-
+        
         <!-- How it Works Section -->
         <section class="mb-16 md:mb-24 flex flex-col md:flex-row items-center gap-8 md:gap-12">
             <div class="flex-1">
@@ -196,9 +153,9 @@ function U(universeState) {
     const { i, j } = getCantorPair(n);
 
     // 2. Construct new objects
-    const S_new = { /* (Sᵢ NOR Sⱼ) */ };
-    const R_new = { /* Sᵢ := Sⱼ */ };
-    const M_new = { /* Mᵢ ∪ Mⱼ ∪ {R_new} */ };
+    const S_new =  (Sᵢ NOR Sⱼ) 
+    const R_new = Sᵢ := Sⱼ 
+    const M_new =  Mᵢ rules + Mⱼ rules + R_new 
     
     // 3. Return the new universe
     return { 
@@ -211,6 +168,30 @@ function U(universeState) {
                 </div>
             </div>
         </section>
+
+        <!-- Interpreter Description and Controls Section -->
+        <section class="mb-16 md:mb-24 text-center">
+            <h2 class="font-orbitron text-3xl font-bold mb-4">Interpreting the Machine</h2>
+            <div class="max-w-3xl mx-auto text-left">
+                <p class="text-neutral-300 mb-6">
+                    While all machines are constructed by concatenating their parents' rule lists, they can be executed in two distinct ways. This choice dramatically affects their behavior and the complexity that emerges. You can switch between these modes below.
+                </p>
+                <p class="text-neutral-400 mb-4">
+                    <strong class="text-violet-400">Parallel (Set-based):</strong> In this mode, only the unique rules of a machine are considered. They are all evaluated simultaneously based on the state at the start of a step, much like a hardware logic circuit. This often leads to more complex, oscillating patterns.
+                </p>
+                <p class="text-neutral-400 mb-8">
+                    <strong class="text-violet-400">Sequential (List-based):</strong> Here, every rule in the machine's list is executed in order, one by one. The state is updated immediately after each rule, which can influence the next rule in the sequence. This behaves more like a traditional computer script and tends to settle into simpler patterns more quickly.
+                </p>
+            </div>
+             <div class="inline-block glass-card p-4">
+                <label for="execution-mode" class="font-orbitron text-xl mr-4 align-middle">Execution Mode:</label>
+                <select id="execution-mode" class="bg-neutral-800 border border-neutral-600 rounded-lg p-2 text-white font-orbitron focus:ring-violet-500 focus:border-violet-500 align-middle">
+                    <option value="parallel" selected>Parallel (Set-based)</option>
+                    <option value="sequential">Sequential (List-based)</option>
+                </select>
+            </div>
+        </section>
+
 
         <!-- The Rug of Computation Section -->
         <section class="mb-16 md:mb-24">
@@ -226,13 +207,12 @@ function U(universeState) {
 
         <!-- Pixel Heatmap Section -->
         <section class="mb-16 md:mb-24">
-            <h2 class="font-orbitron text-3xl font-bold text-center mb-4">Large-Scale Heatmap (First 10,000 Machines)</h2>
+            <h2 class="font-orbitron text-3xl font-bold text-center mb-4">Large-Scale Heatmap (First 5,000 Machines)</h2>
             <p class="text-center text-neutral-400 max-w-3xl mx-auto mb-8">
-                This is a non-interactive, high-density view of the first 10,000 machines. Each pixel represents a machine, colored by its cycle length. This provides a broader perspective on the patterns of complexity that emerge as `U` explores the space of all possible programs.
+                This is a non-interactive, high-density view of the first 5,000 machines. Each pixel represents a machine, colored by its cycle length. This provides a broader perspective on the patterns of complexity that emerge as `U` explores the space of all possible programs.
             </p>
             <div id="pixel-rug-container" class="rug-container mx-auto shadow-2xl shadow-violet-500/20">
                 <canvas id="pixel-heatmap-canvas"></canvas>
-                <div id="pixel-heatmap-overlay">Generating...</div>
             </div>
         </section>
 
@@ -242,18 +222,13 @@ function U(universeState) {
             <p class="text-lg text-neutral-300 max-w-3xl mx-auto mb-8">
                 The search for complexity is non-trivial. The most interesting machines are rare. We challenge you to find them. Download the `U.js` library and write your own program to search the computational universe for the machine with the highest cycle length.
             </p>
-            <a id="download-link" href="#" download="U.js" class="font-orbitron bg-violet-600 hover:bg-violet-500 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 inline-block btn-glow">
+            <a id="download-link" href="#" download="U.js.txt" class="font-orbitron bg-violet-600 hover:bg-violet-500 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 inline-block btn-glow">
                 Download U.js
             </a>
             <div class="glass-card max-w-3xl mx-auto p-6 mt-12">
                 <h3 class="font-orbitron text-xl font-semibold mb-4 text-center">Cycle Hunt Log</h3>
-                <div class="font-mono text-sm text-left bg-black/30 rounded p-4 overflow-x-auto">
-                    <p class="text-green-400">*** New Highest Cycle Found: 1 at n=0 ***</p>
-                    <p class="text-green-400">*** New Highest Cycle Found: 2 at n=5 ***</p>
-                    <p class="text-green-400">*** New Highest Cycle Found: 3 at n=13 ***</p>
-                    <p class="text-green-400">*** New Highest Cycle Found: 4 at n=27 ***</p>
-                    <p class="mt-4 text-amber-400">Progress: n = 57000/200000 | Highest Cycle: 4</p>
-                    <p class="text-neutral-400">The machine for Cycle=5 is still unknown after 57,000 iterations.</p>
+                <div id="cycle-log" class="font-mono text-sm text-left bg-black/30 rounded p-4 overflow-x-auto">
+                    <!-- Log content will be generated by script -->
                 </div>
             </div>
         </section>
@@ -262,20 +237,27 @@ function U(universeState) {
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // --- DOM Element Selection ---
             const svgContainer = document.getElementById('rug-container');
             const svg = document.getElementById('rug-svg');
             const tooltip = document.getElementById('rug-tooltip');
             const pixelCanvas = document.getElementById('pixel-heatmap-canvas');
-            const pixelOverlay = document.getElementById('pixel-heatmap-overlay');
             const downloadLink = document.getElementById('download-link');
+            const executionModeSelect = document.getElementById('execution-mode');
+            const cycleLog = document.getElementById('cycle-log');
             
-            if (!svg || !tooltip || !pixelCanvas || !downloadLink) return;
+            // --- Basic Sanity Check ---
+            if (!svg || !tooltip || !pixelCanvas || !downloadLink || !executionModeSelect || !cycleLog) {
+                console.error("One or more essential DOM elements are missing.");
+                return;
+            }
 
+            // --- Constants ---
             const HEATMAP_MAX_N = 60;
-            const PIXEL_HEATMAP_MAX_N = 10000;
+            const PIXEL_HEATMAP_MAX_N = 5000;
             const MAX_SIMULATION_STEPS = 50;
 
-            // --- Core UCO Logic (AST Version) ---
+            // --- Core Universal Constructor Logic ---
 
             function getCantorPair(n) {
                 const w = Math.floor((Math.sqrt(8 * n + 1) - 1) / 2);
@@ -295,18 +277,32 @@ function U(universeState) {
                 const S_new = { id: S.length, type: 'operation', op: 'NOR', args: [S[i].id, S[j].id] };
                 const R_new = { id: R.length, type: 'assignment', lhs: S[i].id, rhs: S[j].id };
                 
-                let newMachineRules;
-                if (i >= M.length || j >= M.length) {
-                    newMachineRules = [R_new.id];
-                } else {
-                    newMachineRules = [...new Set([...M[i].rules, ...M[j].rules, R_new.id])];
-                }
-
+                const rules_i = M[i]?.rules || [];
+                const rules_j = M[j]?.rules || [];
+                const newMachineRules = [...rules_i, ...rules_j, R_new.id];
                 const M_new = { id: M.length, type: 'machine', rules: newMachineRules };
-                return { S: [...S, S_new], R: [...R, R_new], M: [...M, M_new] };
+                
+                S.push(S_new);
+                R.push(R_new);
+                M.push(M_new);
+                return { S, R, M };
             }
 
-            function runMachineAndDetectCycle(universe, machineId, initialStates = {}) {
+            // --- Machine Interpreters ---
+
+            function evaluateSentence(sentenceId, currentStates, sentenceMap) {
+                const sentence = sentenceMap.get(sentenceId);
+                if (!sentence) return 0;
+                if (sentence.type === 'atomic') return currentStates[sentenceId] || 0;
+                if (sentence.type === 'operation' && sentence.op === 'NOR') {
+                    const val1 = evaluateSentence(sentence.args[0], currentStates, sentenceMap);
+                    const val2 = evaluateSentence(sentence.args[1], currentStates, sentenceMap);
+                    return (val1 === 0 && val2 === 0) ? 1 : 0;
+                }
+                return 0;
+            }
+
+            function runMachineSequential(universe, machineId, initialStates = {}) {
                 const machine = universe.M.find(m => m.id === machineId);
                 if (!machine || machine.rules.length === 0) return { cycleLength: 0, history: [] };
 
@@ -315,23 +311,43 @@ function U(universeState) {
                 const ruleMap = new Map(universe.R.map(r => [r.id, r]));
                 const seenStates = new Map();
                 const history = [];
-
-                function evaluateSentence(sentenceId, currentStates) {
-                    const sentence = sentenceMap.get(sentenceId);
-                    if (!sentence) return 0;
-                    if (sentence.type === 'atomic') return currentStates[sentenceId] || 0;
-                    if (sentence.type === 'operation' && sentence.op === 'NOR') {
-                        const val1 = evaluateSentence(sentence.args[0], currentStates);
-                        const val2 = evaluateSentence(sentence.args[1], currentStates);
-                        return (val1 === 0 && val2 === 0) ? 1 : 0;
-                    }
-                    return 0;
-                }
                 
                 for (let step = 0; step < MAX_SIMULATION_STEPS; step++) {
                     const stateString = JSON.stringify(Object.entries(sentenceStates).sort());
                     history.push(sentenceStates);
+                    if (seenStates.has(stateString)) {
+                        const cycleLen = step - seenStates.get(stateString);
+                        return { cycleLength: cycleLen === 0 ? 1 : cycleLen, history };
+                    }
+                    seenStates.set(stateString, step);
 
+                    for (const ruleId of machine.rules) {
+                        const rule = ruleMap.get(ruleId);
+                        if (rule) {
+                            const rhsValue = evaluateSentence(rule.rhs, sentenceStates, sentenceMap);
+                            sentenceStates[rule.lhs] = rhsValue;
+                        }
+                    }
+                }
+                return { cycleLength: MAX_SIMULATION_STEPS, history };
+            }
+
+            function runMachineParallel(universe, machineId, initialStates = {}) {
+                const machine = universe.M.find(m => m.id === machineId);
+                if (!machine) return { cycleLength: 0, history: [] };
+
+                const uniqueRuleIds = [...new Set(machine.rules)];
+                if (uniqueRuleIds.length === 0) return { cycleLength: 0, history: [] };
+
+                let sentenceStates = { ...initialStates };
+                const sentenceMap = new Map(universe.S.map(s => [s.id, s]));
+                const ruleMap = new Map(universe.R.map(r => [r.id, r]));
+                const seenStates = new Map();
+                const history = [];
+
+                for (let step = 0; step < MAX_SIMULATION_STEPS; step++) {
+                    const stateString = JSON.stringify(Object.entries(sentenceStates).sort());
+                    history.push(sentenceStates);
                     if (seenStates.has(stateString)) {
                         const cycleLen = step - seenStates.get(stateString);
                         return { cycleLength: cycleLen === 0 ? 1 : cycleLen, history };
@@ -339,10 +355,10 @@ function U(universeState) {
                     seenStates.set(stateString, step);
 
                     const nextStates = {};
-                    for (const ruleId of machine.rules) {
+                    for (const ruleId of uniqueRuleIds) {
                         const rule = ruleMap.get(ruleId);
                         if (rule) {
-                            const rhsValue = evaluateSentence(rule.rhs, sentenceStates);
+                            const rhsValue = evaluateSentence(rule.rhs, sentenceStates, sentenceMap);
                             nextStates[rule.lhs] = rhsValue;
                         }
                     }
@@ -354,104 +370,63 @@ function U(universeState) {
             // --- Visualization Logic ---
 
             function getHeatmapColor(value, maxValue) {
-                if (value === 1) return `rgb(0, 0, 255)`; 
-                if (value === 2) return `rgb(0, 255, 0)`; 
-                   if (value === 3) return `rgb(255, 0, 0)`; 
-                if (value === 4) return `rgb(255, 255, 0)`; 
-             
-                const hue = Math.max(0, 240 - ((value-2) / (maxValue-2)) * 240);
+                if (value === 0) return `rgb(100, 100, 100)`;
+                if (value === 1) return `rgb(0, 0, 255)`;
+                if (value === 2) return `rgb(0, 255, 0)`;
+                if (value === 3) return `rgb(255, 0, 0)`;
+                if (value === 4) return `rgb(255, 255, 0)`;
+                const hue = Math.max(0, 240 - ((value - 2) / (maxValue - 2)) * 240);
                 const f = (n, k = (n + hue / 60) % 6) => 0.5 - 0.4 * Math.max(Math.min(k, 4 - k, 1), -1);
-                return `rgb(${f(5)*255}, ${f(3)*255}, ${f(1)*255})`;
+                return `rgb(${f(5) * 255}, ${f(3) * 255}, ${f(1) * 255})`;
             }
 
             function formatSentenceAST(s) {
+                if (!s) return 'undefined';
                 if (s.type === 'atomic') return s.name;
                 if (s.type === 'operation') return `(S${s.args[0]} NOR S${s.args[1]})`;
                 return `S${s.id}`;
             }
             
-            // --- Interactive SVG Heatmap ---
-            function generateInteractiveHeatmap() {
+            // --- Heatmap Generation ---
+
+            function generateInteractiveHeatmap(runInterpreter) {
+                svg.innerHTML = ''; // Clear previous SVG content
                 const size = 600;
                 svg.setAttribute('viewBox', `0 0 ${size} ${size}`);
-                const gridSize = Math.ceil(Math.sqrt(HEATMAP_MAX_N)) + 3; 
+                const gridSize = Math.ceil(Math.sqrt(HEATMAP_MAX_N)) + 3;
                 const scale = size / gridSize;
                 const padding = scale / 2;
 
-                let gridLines = '';
-                for (let i = 0; i < gridSize; i++) {
-                    gridLines += `<line x1="${i * scale + padding}" y1="0" x2="${i * scale + padding}" y2="${size}" stroke="#d9d9d9" stroke-width="0.5" />`;
-                    gridLines += `<line x1="0" y1="${i * scale + padding}" x2="${size}" y2="${i * scale + padding}" stroke="#d9d9d9" stroke-width="0.5" />`;
-                }
-                svg.innerHTML = gridLines;
-
-                let universe = {
-                    S: [{ id: 0, type: 'atomic', name: 'p' }, { id: 1, type: 'atomic', name: 'q' }],
-                    R: [], M: []
-                };
-                
+                let universe = { S: [{ id: 0, type: 'atomic', name: 'p' }, { id: 1, type: 'atomic', name: 'q' }], R: [], M: [] };
                 let pointsData = [];
                 let universeHistory = [];
+
                 for (let n = 0; n <= HEATMAP_MAX_N; n++) {
                     const { i, j } = getCantorPair(n);
-                    while(universe.M.length <= i || universe.M.length <= j) {
-                        universe.M.push({id: universe.M.length, type: 'machine', rules: []});
+                    while (universe.M.length <= i || universe.M.length <= j) {
+                        universe.M.push({ id: universe.M.length, type: 'machine', rules: [] });
                     }
-                    
                     universeHistory.push(JSON.parse(JSON.stringify(universe)));
                     const nextUniverse = U_AST(universe);
                     if (!nextUniverse) continue;
                     universe = nextUniverse;
-
                     const machineId = universe.M.length - 1;
-                    const { cycleLength } = runMachineAndDetectCycle(universe, machineId, {0: 1});
-                    
-                    const p = { x: i * scale + padding, y: j * scale + padding };
-                    pointsData.push({ p, cycleLength, n, i, j });
-                }
-
-                for (let i = 1; i < pointsData.length; i++) {
-                    const p1 = pointsData[i-1].p;
-                    const p2 = pointsData[i].p;
-                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                    line.setAttribute('x1', p1.x);
-                    line.setAttribute('y1', p1.y);
-                    line.setAttribute('x2', p2.x);
-                    line.setAttribute('y2', p2.y);
-                    line.setAttribute('stroke', '#555555');
-                    line.setAttribute('stroke-width', '1.5');
-                    svg.appendChild(line);
+                    const { cycleLength } = runInterpreter(universe, machineId, { 0: 1 });
+                    pointsData.push({ p: { x: i * scale + padding, y: j * scale + padding }, cycleLength, n, i, j });
                 }
 
                 pointsData.forEach(data => {
-                    const { p, cycleLength, n, i, j } = data;
-                    const color = getHeatmapColor(cycleLength, MAX_SIMULATION_STEPS);
-
                     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                    circle.setAttribute('cx', p.x);
-                    circle.setAttribute('cy', p.y);
+                    circle.setAttribute('cx', data.p.x);
+                    circle.setAttribute('cy', data.p.y);
                     circle.setAttribute('r', 18);
-                    circle.setAttribute('fill', color);
+                    circle.setAttribute('fill', getHeatmapColor(data.cycleLength, MAX_SIMULATION_STEPS));
                     circle.style.cursor = 'pointer';
                     svg.appendChild(circle);
 
                     circle.addEventListener('mouseover', (e) => {
-                        const historicalUniverse = universeHistory[n];
-                        const s_i = historicalUniverse.S[i];
-                        const s_j = historicalUniverse.S[j];
-                        const m_i = historicalUniverse.M[i];
-                        const m_j = historicalUniverse.M[j];
-
-                        tooltip.innerHTML = `n=${n} (i=${i}, j=${j}) | Cycle: ${cycleLength || 'Halt'}\n`
-                                          + `----------------------------------\n`
-                                          + `S${i}: ${formatSentenceAST(s_i)}\n`
-                                          + `S${j}: ${formatSentenceAST(s_j)}\n`
-                                          + `M${i}: rules: [${m_i.rules.join(',')}]\n`
-                                          + `M${j}: rules: [${m_j.rules.join(',')}]\n`
-                                          + `----------------------------------\n`
-                                          + `R_new: S${i} := S${j}\n`
-                                          + `M_new: M${i} U M${j} U {R_new}`;
-
+                        const historicalUniverse = universeHistory[data.n];
+                        tooltip.innerHTML = `n=${data.n} (i=${data.i}, j=${data.j}) | Cycle: ${data.cycleLength || 'Halt'}`;
                         tooltip.style.left = `${e.clientX - svgContainer.getBoundingClientRect().left + 15}px`;
                         tooltip.style.top = `${e.clientY - svgContainer.getBoundingClientRect().top + 15}px`;
                         tooltip.style.visibility = 'visible';
@@ -464,8 +439,7 @@ function U(universeState) {
                 });
             }
 
-            // --- Pixel Canvas Heatmap (Async Version) ---
-            async function generatePixelHeatmap() {
+            async function generatePixelHeatmap(runInterpreter) {
                 const max_ij = Math.ceil(Math.sqrt(PIXEL_HEATMAP_MAX_N)) + 2;
                 pixelCanvas.width = max_ij;
                 pixelCanvas.height = max_ij;
@@ -473,49 +447,40 @@ function U(universeState) {
                 ctx.fillStyle = '#f0f0f0';
                 ctx.fillRect(0, 0, max_ij, max_ij);
 
-                let universe = {
-                    S: [{ id: 0, type: 'atomic', name: 'p' }, { id: 1, type: 'atomic', name: 'q' }],
-                    R: [], M: []
-                };
-
+                let universe = { S: [{ id: 0, type: 'atomic', name: 'p' }, { id: 1, type: 'atomic', name: 'q' }], R: [], M: [] };
                 let highestCycleFound = 0;
-                let nForHighestCycle = -1;
+                let logHTML = '';
+
                 const chunkSize = 200;
                 for (let n_start = 0; n_start < PIXEL_HEATMAP_MAX_N; n_start += chunkSize) {
                     const n_end = Math.min(n_start + chunkSize, PIXEL_HEATMAP_MAX_N);
                     for (let n = n_start; n < n_end; n++) {
                         const { i, j } = getCantorPair(n);
-                        while(universe.M.length <= i || universe.M.length <= j) {
-                            universe.M.push({id: universe.M.length, type: 'machine', rules: []});
+                        while (universe.M.length <= i || universe.M.length <= j) {
+                            universe.M.push({ id: universe.M.length, type: 'machine', rules: [] });
                         }
                         const nextUniverse = U_AST(universe);
                         if (!nextUniverse) continue;
                         universe = nextUniverse;
-
                         const machineId = universe.M.length - 1;
-                        const { cycleLength } = runMachineAndDetectCycle(universe, machineId, {0: 1});
-                        
+                        const { cycleLength } = runInterpreter(universe, machineId, { 0: 1 });
                         if (cycleLength > highestCycleFound) {
                             highestCycleFound = cycleLength;
-                            nForHighestCycle = n;
+                            logHTML += `<p class="text-green-400">*** New Highest Cycle Found: ${highestCycleFound} at n=${n} ***</p>`;
                         }
-
                         ctx.fillStyle = getHeatmapColor(cycleLength, MAX_SIMULATION_STEPS);
                         ctx.fillRect(i, j, 1, 1);
                     }
                     await new Promise(resolve => setTimeout(resolve, 0));
                 }
-                pixelOverlay.style.display = 'none';
-                console.log(`Highest cycle found in first ${PIXEL_HEATMAP_MAX_N} machines: ${highestCycleFound}`);
-                if (nForHighestCycle !== -1) {
-                    console.log(`The machine with the highest cycle was found at n = ${nForHighestCycle}`);
-                }
+                cycleLog.innerHTML = logHTML || '<p class="text-neutral-400">No new cycles found yet.</p>';
             }
 
-            // --- U.js Download Link ---
+            // --- U.js Download Link Setup ---
             function setupDownloadLink() {
                 const jsCode = `
 // U.js - A library for the Universal Construction Operator
+// This library includes both parallel and sequential machine interpreters.
 const U = (() => {
     function getCantorPair(n) {
         const w = Math.floor((Math.sqrt(8 * n + 1) - 1) / 2);
@@ -524,72 +489,129 @@ const U = (() => {
         const i = w - j;
         return { i, j };
     }
+
     function U_AST(universeState) {
         const n = universeState.R.length;
         let { S, R, M } = JSON.parse(JSON.stringify(universeState));
         const { i, j } = getCantorPair(n);
         if (i >= S.length || j >= S.length) return null;
+        
         const S_new = { id: S.length, type: 'operation', op: 'NOR', args: [S[i].id, S[j].id] };
         const R_new = { id: R.length, type: 'assignment', lhs: S[i].id, rhs: S[j].id };
-        let newMachineRules;
-        if (i >= M.length || j >= M.length) {
-            newMachineRules = [R_new.id];
-        } else {
-            newMachineRules = [...new Set([...M[i].rules, ...M[j].rules, R_new.id])];
-        }
+        
+        const rules_i = M[i]?.rules || [];
+        const rules_j = M[j]?.rules || [];
+        const newMachineRules = [...rules_i, ...rules_j, R_new.id];
         const M_new = { id: M.length, type: 'machine', rules: newMachineRules };
-        return { S: [...S, S_new], R: [...R, R_new], M: [...M, M_new] };
+        
+        S.push(S_new);
+        R.push(R_new);
+        M.push(M_new);
+        return { S, R, M };
     }
-    function runMachineAndDetectCycle(universe, machineId, initialStates = {}, maxSteps = 50) {
+
+    function evaluateSentence(sentenceId, currentStates, sentenceMap) {
+        const sentence = sentenceMap.get(sentenceId);
+        if (!sentence) return 0;
+        if (sentence.type === 'atomic') return currentStates[sentenceId] || 0;
+        if (sentence.type === 'operation' && sentence.op === 'NOR') {
+            const val1 = evaluateSentence(sentence.args[0], currentStates, sentenceMap);
+            const val2 = evaluateSentence(sentence.args[1], currentStates, sentenceMap);
+            return (val1 === 0 && val2 === 0) ? 1 : 0;
+        }
+        return 0;
+    }
+
+    function runMachineSequential(universe, machineId, initialStates = {}, maxSteps = 50) {
         const machine = universe.M.find(m => m.id === machineId);
-        if (!machine || machine.rules.length === 0) return { cycleLength: 0, history: [] };
+        if (!machine || machine.rules.length === 0) return { cycleLength: 0 };
+
         let sentenceStates = { ...initialStates };
         const sentenceMap = new Map(universe.S.map(s => [s.id, s]));
         const ruleMap = new Map(universe.R.map(r => [r.id, r]));
         const seenStates = new Map();
-        const history = [];
-        function evaluateSentence(sentenceId, currentStates) {
-            const sentence = sentenceMap.get(sentenceId);
-            if (!sentence) return 0;
-            if (sentence.type === 'atomic') return currentStates[sentenceId] || 0;
-            if (sentence.type === 'operation' && sentence.op === 'NOR') {
-                const val1 = evaluateSentence(sentence.args[0], currentStates);
-                const val2 = evaluateSentence(sentence.args[1], currentStates);
-                return (val1 === 0 && val2 === 0) ? 1 : 0;
-            }
-            return 0;
-        }
+        
         for (let step = 0; step < maxSteps; step++) {
             const stateString = JSON.stringify(Object.entries(sentenceStates).sort());
-            history.push(sentenceStates);
             if (seenStates.has(stateString)) {
                 const cycleLen = step - seenStates.get(stateString);
-                return { cycleLength: cycleLen === 0 ? 1 : cycleLen, history };
+                return { cycleLength: cycleLen === 0 ? 1 : cycleLen };
             }
             seenStates.set(stateString, step);
-            const nextStates = {};
+
             for (const ruleId of machine.rules) {
                 const rule = ruleMap.get(ruleId);
                 if (rule) {
-                    const rhsValue = evaluateSentence(rule.rhs, sentenceStates);
+                    const rhsValue = evaluateSentence(rule.rhs, sentenceStates, sentenceMap);
+                    sentenceStates[rule.lhs] = rhsValue;
+                }
+            }
+        }
+        return { cycleLength: maxSteps };
+    }
+
+    function runMachineParallel(universe, machineId, initialStates = {}, maxSteps = 50) {
+        const machine = universe.M.find(m => m.id === machineId);
+        if (!machine) return { cycleLength: 0 };
+
+        const uniqueRuleIds = [...new Set(machine.rules)];
+        if (uniqueRuleIds.length === 0) return { cycleLength: 0 };
+
+        let sentenceStates = { ...initialStates };
+        const sentenceMap = new Map(universe.S.map(s => [s.id, s]));
+        const ruleMap = new Map(universe.R.map(r => [r.id, r]));
+        const seenStates = new Map();
+
+        for (let step = 0; step < maxSteps; step++) {
+            const stateString = JSON.stringify(Object.entries(sentenceStates).sort());
+            if (seenStates.has(stateString)) {
+                const cycleLen = step - seenStates.get(stateString);
+                return { cycleLength: cycleLen === 0 ? 1 : cycleLen };
+            }
+            seenStates.set(stateString, step);
+
+            const nextStates = {};
+            for (const ruleId of uniqueRuleIds) {
+                const rule = ruleMap.get(ruleId);
+                if (rule) {
+                    const rhsValue = evaluateSentence(rule.rhs, sentenceStates, sentenceMap);
                     nextStates[rule.lhs] = rhsValue;
                 }
             }
             sentenceStates = { ...sentenceStates, ...nextStates };
         }
-        return { cycleLength: maxSteps, history };
+        return { cycleLength: maxSteps };
     }
-    return { getCantorPair, U_AST, runMachineAndDetectCycle };
+
+    return { 
+        getCantorPair, 
+        U_AST, 
+        runMachineSequential, 
+        runMachineParallel 
+    };
 })();
                 `;
                 const encodedJs = encodeURIComponent(jsCode.trim());
                 downloadLink.href = 'data:text/plain;charset=utf-8,' + encodedJs;
             }
 
-            // --- Initial Execution ---
-            generateInteractiveHeatmap();
-            generatePixelHeatmap();
-            setupDownloadLink();
+            // --- Main Execution Logic ---
+
+            function regenerateAll() {
+                const mode = executionModeSelect.value;
+                const interpreter = (mode === 'parallel') ? runMachineParallel : runMachineSequential;
+                
+                cycleLog.innerHTML = '<p class="text-amber-400">Searching for complex machines...</p>';
+
+                setTimeout(() => {
+                    generateInteractiveHeatmap(interpreter);
+                    generatePixelHeatmap(interpreter);
+                }, 10);
+            }
+
+            executionModeSelect.addEventListener('change', regenerateAll);
+            regenerateAll(); // Initial run on page load
+            setupDownloadLink(); // Set up the download link content
         });
     </script>
 
