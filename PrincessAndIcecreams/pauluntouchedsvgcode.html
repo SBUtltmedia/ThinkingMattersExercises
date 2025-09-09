@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ice Cream Flavor Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .flavor-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .flavor-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px;
+            border: 1px solid #eee;
+            transition: background-color 0.1s ease;
+        }
+        .flavor-item:hover {
+            background-color: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ice Cream Flavor Selector</h1>
+    <p>Click or drag to select/unselect multiple flavors. Drag in any direction to toggle items.</p>
+    <div id="flavorContainer" class="flavor-list"></div>
+
+    <div style="margin-top: 20px;">
+        <button onclick="logSelectedFlavors()">Log Selected Flavors</button>
+    </div>
+
+    <script>
+        class SVGCheckbox extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+                // Track if this checkbox has been visited during current drag operation
+                this._visitedDuringDrag = false;
+            }
+
+            connectedCallback() {
+                this.render();
+                this.setupEventListeners();
+            }
+
+            render() {
+                const container = document.createElement('div');
+                container.setAttribute('class', 'svg-checkbox-container');
+
+                this.nativeCheckbox = document.createElement('input');
+                this.nativeCheckbox.type = 'checkbox';
+                if (this.hasAttribute('name')) this.nativeCheckbox.name = this.getAttribute('name');
+                if (this.hasAttribute('value')) this.nativeCheckbox.value = this.getAttribute('value');
+                if (this.hasAttribute('checked')) this.nativeCheckbox.checked = true;
+                this.nativeCheckbox.style.display = 'none';
+               
+                this.svgCheckbox = this.createSVGCheckbox();
+
+                container.appendChild(this.nativeCheckbox);
+                container.appendChild(this.svgCheckbox);
+
+                const style = document.createElement('style');
+                style.textContent = `
+                    .svg-checkbox-container {
+                        display: inline-block;
+                        cursor: pointer;
+                        user-select: none;
+                        position: relative;
+                        touch-action: manipulation;
+                        -webkit-tap-highlight-color: transparent;
+                    }
+                    .svg-checkbox {
+                        transition: transform 0.1s ease;
+                    }
+                    .svg-checkbox:active {
+                        transform: scale(0.9);
+                    }
+                `;
+
+                this.shadowRoot.appendChild(style);
+                this.shadowRoot.appendChild(container);
+
+                this.updateVisualState();
+            }
+
+            createSVGCheckbox() {
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('class', 'svg-checkbox');
+                svg.setAttribute('width', '24');
+                svg.setAttribute('height', '24');
+                svg.setAttribute('viewBox', '0 0 24 24');
+
+                const box = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                box.setAttribute('x', '2');
+                box.setAttribute('y', '2');
+                box.setAttribute('width', '20');
+                box.setAttribute('height', '20');
+                box.setAttribute('rx', '3');
+                box.setAttribute('ry', '3');
+                box.setAttribute('fill', 'none');
+                box.setAttribute('stroke', '#000');
+                box.setAttribute('stroke-width', '2');
+
+                const checkmark = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                checkmark.setAttribute('d', 'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z');
+                checkmark.setAttribute('fill', '#000');
+                checkmark.style.display = 'none';
+
+                svg.appendChild(box);
+                svg.appendChild(checkmark);
+
+                return svg;
+            }
+
+            setupEventListeners() {
+                const container = this.shadowRoot.querySelector('.svg-checkbox-container');
+                const nativeCheckbox = this.shadowRoot.querySelector('input');
+
+                // Handle mousedown - start of drag
+                container.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    this.toggle();
+                   
+                    // Set this checkbox as the starting point of drag
+                    window.dragStartState = nativeCheckbox.checked;
+                    window.isDragging = true;
+                   
+                    // Mark as visited during this drag
+                    this._visitedDuringDrag = true;
+                   
+                    // Reset all checkboxes' visited status except this one
+                    document.querySelectorAll('svg-checkbox').forEach(checkbox => {
+                        if (checkbox !== this) {
+                            checkbox._visitedDuringDrag = false;
+                        }
+                    });
+                }, { passive: false });
+
+                // Handle mouseover during drag
+                container.addEventListener('mouseover', (e) => {
+                    if (window.isDragging && !this._visitedDuringDrag) {
+                        // Toggle this checkbox (don't just set it to match the initial state)
+                        this.toggle();
+                        // Mark as visited during this drag
+                        this._visitedDuringDrag = true;
+                    }
+                });
+
+                // Handle touch events
+                container.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    this.toggle();
+                   
+                    window.isDragging = true;
+                   
+                    // Mark as visited during this drag
+                    this._visitedDuringDrag = true;
+                   
+                    // Reset all checkboxes' visited status except this one
+                    document.querySelectorAll('svg-checkbox').forEach(checkbox => {
+                        if (checkbox !== this) {
+                            checkbox._visitedDuringDrag = false;
+                        }
+                    });
+                }, { passive: false });
+
+                container.addEventListener('touchmove', (e) => {
+                    if (window.isDragging) {
+                        // Find the checkbox under the touch point
+                        const touch = e.touches[0];
+                        const element = document.elementFromPoint(touch.clientX, touch.clientY);
+                       
+                        // If it's a checkbox that hasn't been visited in this drag operation
+                        if (element) {
+                            const checkboxElement = element.closest('svg-checkbox');
+                            if (checkboxElement && !checkboxElement._visitedDuringDrag) {
+                                checkboxElement.toggle();
+                                checkboxElement._visitedDuringDrag = true;
+                            }
+                        }
+                    }
+                }, { passive: false });
+            }
+
+            toggle() {
+                const nativeCheckbox = this.shadowRoot.querySelector('input');
+                nativeCheckbox.checked = !nativeCheckbox.checked;
+               
+                const changeEvent = new Event('change', { bubbles: true });
+                nativeCheckbox.dispatchEvent(changeEvent);
+               
+                this.updateVisualState();
+            }
+
+            updateVisualState() {
+                const nativeCheckbox = this.shadowRoot.querySelector('input');
+                const checkmark = this.shadowRoot.querySelector('path');
+                const box = this.shadowRoot.querySelector('rect');
+
+                if (nativeCheckbox.checked) {
+                    checkmark.style.display = 'block';
+                    box.setAttribute('fill', '#4CAF50');
+                    box.setAttribute('stroke', '#4CAF50');
+                    checkmark.setAttribute('fill', 'white');
+                } else {
+                    checkmark.style.display = 'none';
+                    box.setAttribute('fill', 'none');
+                    box.setAttribute('stroke', '#000');
+                }
+            }
+
+            get checked() {
+                return this.shadowRoot.querySelector('input').checked;
+            }
+
+            set checked(value) {
+                const nativeCheckbox = this.shadowRoot.querySelector('input');
+                nativeCheckbox.checked = value;
+                this.updateVisualState();
+            }
+
+            get value() {
+                return this.getAttribute('value');
+            }
+        }
+
+        // Define the custom element
+        customElements.define('svg-checkbox', SVGCheckbox);
+
+        // Stop dragging when mouse is released
+        document.addEventListener('mouseup', () => {
+            window.isDragging = false;
+        });
+
+        document.addEventListener('touchend', () => {
+            window.isDragging = false;
+        });
+
+        // Generate 32 ice cream flavors
+        const flavors = [
+            'Vanilla', 'Chocolate', 'Strawberry', 'Mint Chocolate Chip',
+            'Cookie Dough', 'Rocky Road', 'Butter Pecan', 'Pistachio',
+            'Salted Caramel', 'Coffee', 'Cookies and Cream', 'Chocolate Chip',
+            'Neapolitan', 'Chocolate Fudge Brownie', 'Birthday Cake', 'Maple Walnut',
+            'Coconut', 'Raspberry Ripple', 'Peanut Butter', 'Tiramisu',
+            'Green Tea', 'Banana', 'Blueberry', 'Cherry Garcia',
+            'Rum Raisin', 'Pralines and Cream', 'Lemon Sorbet', 'Peach',
+            'Hazelnut', 'Mango Sorbet', 'Stracciatella', 'Dark Chocolate'
+        ];
+
+        const container = document.getElementById('flavorContainer');
+
+        flavors.forEach((flavor, index) => {
+            const flavorItem = document.createElement('div');
+            flavorItem.className = 'flavor-item';
+
+            const checkbox = document.createElement('svg-checkbox');
+            checkbox.setAttribute('name', 'iceCreamFlavors');
+            checkbox.setAttribute('value', flavor);
+
+            const label = document.createElement('span');
+            label.textContent = flavor;
+
+            flavorItem.appendChild(checkbox);
+            flavorItem.appendChild(label);
+
+            container.appendChild(flavorItem);
+        });
+
+        function logSelectedFlavors() {
+            const selectedFlavors = Array.from(document.querySelectorAll('svg-checkbox'))
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+           
+            console.log('Selected Flavors:', selectedFlavors);
+            alert('Selected Flavors: ' + selectedFlavors.join(', '));
+        }
+    </script>
+</body>
+</html>

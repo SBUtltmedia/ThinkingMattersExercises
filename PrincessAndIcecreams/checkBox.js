@@ -93,7 +93,7 @@ export default class SVGCheckuse extends HTMLElement {
       }
 
       .cls-3 {
-        fill: #000;
+        fill: #0c0;
       }
 
         `;
@@ -281,21 +281,40 @@ export default class SVGCheckuse extends HTMLElement {
         //     use.setAttribute('fill', 'none');
         //     use.setAttribute('stroke', '#000');
         // }
+        const checkmark = this.shadowRoot.querySelector('use:last-of-type');                             
+        if (this.checked) {                                                                              
+            checkmark.classList.remove('hide_checkmark');                                                
+        } else {                                                                                         
+            checkmark.classList.add('hide_checkmark');                                                   
+        }         
     }
 
     get checked() {
-        return this.shadowRoot.querySelector('input').checked;
+        // return this.shadowRoot.querySelector('input').checked;
+        return this._checked;                                                                           
+
     }
 
     set checked(value) {
-        const nativeCheckuse = this.shadowRoot.querySelector('input');
-        nativeCheckuse.checked = value;
-        this.updateVisualState();
+        // const nativeCheckuse = this.shadowRoot.querySelector('input');
+        // nativeCheckuse.checked = value;
+        this._checked = !!value;                                                                         
+        if (this._checked) {                                                                             
+        this.setAttribute('checked', '');                                                            
+            } else {                                                                                         
+        this.removeAttribute('checked');                                                             
+        }                                                                                                
+        this.internals.setFormValue(this.checked ? this.value : null);   
+            this.updateVisualState();
     }
 
     get value() {
         return this.getAttribute('value');
     }
+
+    set value(val) {                                                                                     
+       this.setAttribute('value', val);                                                                 
+    }   
 }
 
 // Define the custom element

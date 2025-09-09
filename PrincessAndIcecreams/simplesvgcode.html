@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <title>Ice Cream Flavor Selector</title>
+    <script src="simplesvgcheckbox.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .flavor-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .flavor-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px;
+            border: 1px solid #eee;
+            transition: background-color 0.1s ease;
+        }
+        .flavor-item:hover {
+            background-color: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ice Cream Flavor Selector</h1>
+    <p>Click or drag to select/unselect multiple flavors. Drag in any direction to toggle items.</p>
+    <div id="flavorContainer" class="flavor-list"></div>
+    
+
+    <div style="margin-top: 20px;">
+        <button onclick="logSelectedFlavors()">Log Selected Flavors</button>
+    </div>
+
+    <script>
+
+        // Define the custom element
+        customElements.define('svg-checkbox', SVGCheckbox);
+
+        // Stop dragging when mouse is released
+        document.addEventListener('mouseup', () => {
+            window.isDragging = false;
+        });
+
+        document.addEventListener('touchend', () => {
+            window.isDragging = false;
+        });
+
+        // Generate 32 ice cream flavors
+        const flavors = [
+            'Vanilla', 'Chocolate', 'Strawberry', 'Mint Chocolate Chip',
+            'Cookie Dough', 'Rocky Road', 'Butter Pecan', 'Pistachio',
+            'Salted Caramel', 'Coffee', 'Cookies and Cream', 'Chocolate Chip',
+            'Neapolitan', 'Chocolate Fudge Brownie', 'Birthday Cake', 'Maple Walnut',
+            'Coconut', 'Raspberry Ripple', 'Peanut Butter', 'Tiramisu',
+            'Green Tea', 'Banana', 'Blueberry', 'Cherry Garcia',
+            'Rum Raisin', 'Pralines and Cream', 'Lemon Sorbet', 'Peach',
+            'Hazelnut', 'Mango Sorbet', 'Stracciatella', 'Dark Chocolate'
+        ];
+
+        const container = document.getElementById('flavorContainer');
+
+        flavors.forEach((flavor, index) => {
+            const flavorItem = document.createElement('div');
+            flavorItem.className = 'flavor-item';
+
+            const checkbox = document.createElement('svg-checkbox');
+            checkbox.setAttribute('name', 'iceCreamFlavors');
+            checkbox.setAttribute('value', flavor);
+
+            const label = document.createElement('span');
+            label.textContent = flavor;
+
+            flavorItem.appendChild(checkbox);
+            flavorItem.appendChild(label);
+
+            container.appendChild(flavorItem);
+        });
+
+        function logSelectedFlavors() {
+            const selectedFlavors = Array.from(document.querySelectorAll('svg-checkbox'))
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+           
+            console.log('Selected Flavors:', selectedFlavors);
+            alert('Selected Flavors: ' + selectedFlavors.join(', '));
+        }
+    </script>
+</body>
+</html>
