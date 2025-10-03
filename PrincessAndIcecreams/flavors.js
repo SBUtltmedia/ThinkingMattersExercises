@@ -213,9 +213,10 @@ function init(numberOfRooms){
 
 
         let svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svgElement.setAttribute("viewBox", "0 0 208 334");
+        svgElement.setAttribute("viewBox", "0 0 40 40");
         // svgElement.setAttribute("preserveAspectRatio","none")
-        svgElement.style.width = "7em";
+        svgElement.style.width = "2em";
+        svgElement.style.height = "2.5em";
         // svgElement.style.height = "100%"
         svgElement.style.setProperty("--filter-mode", "url(#grayscale)"); // Correct way
         // console.log(svgElement.style.getPropertyValue("--filter-mode"))
