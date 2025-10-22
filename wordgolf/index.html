@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="dialog.css">
+<head>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <!-- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> -->
+    <!-- <link rel="manifest" href="manifest.json"> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="ladder/all.js"></script>
+    <script src="script.js"></script>
+    <script src="resize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/intro.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/introjs.css">
+</head>
+
+<body>
+    <div id="screen">
+        <div id="top">
+            <div class="title">
+                WordGolf
+            </div>
+            <div id="tourButton">
+                <img src="images/questionmark.svg"/>
+            </div>
+        </div>
+
+            <div class="menu">
+                <div class="levels">
+                <div class="levels-title">
+                    <p>Levels</p>
+                </div>
+                </div>
+                <div class="definition"></div>
+            </div>
+            <div class="game-area">
+                <div class="header">
+                    <div id="score-container">
+                        <div id="par"></div>
+                        <div id="player-score"></div>
+                    </div>
+                    <div id="title"></div>
+                
+                </div>
+                <div id="history"></div>
+                <div id="picker"></div>
+                <div id="message"></div>
+                <div id="correct"></div>
+            </div>
+        
+    </div>
+    <script type="text/javascript">
+        function startIntro(){
+          var intro = introJs();
+            intro.setOptions({
+                steps: [
+                        {
+                            intro: 'Welcome to Wordgolf! In this game, your goal is to change the first capitalized word into the second in the title within a certain amount of attempts.'
+                        },
+                        {
+                            element: document.querySelector('#title'),
+                            intro: 'This is the title.',
+                            position: 'bottom'
+                        },
+                        {
+                            element: document.querySelector('#score-container'),
+                            intro: 'This shows how many turns you have played and the maximum number of attempts to complete the level.',
+                            position: 'bottom'
+                        },
+                        {
+                            element: document.querySelector('#history'),
+                            intro: 'This area displays the history of correct words you have entered so far.',
+                            position: 'bottom'
+                        },
+                        {
+                            element: document.querySelector('#picker'),
+                            intro: 'This is where you can change the letters to get one word closer to the goal!',
+                            position: 'bottom'
+                        },
+                        {
+                            element: document.querySelector('.levels'),
+                            intro: 'Here you can choose one of the many levels available to play!',
+                            position: 'left'
+                        },
+                        {
+                            intro: 'Click on the yellow question mark to bring this up again.'
+                        },
+                        ],
+              tooltipClass:"tooltip",
+              disableInteraction: "true"
+            }
+          );
+          intro.oncomplete(function() {
+            localStorage.setItem('doneTour', 'yeah!');
+          })
+
+          // add a flag when we exit
+          intro.onexit(function() {
+             localStorage.setItem('doneTour', 'yeah!');
+          });
+
+        //   and check for it when deciding whether to start.
+          window.addEventListener('load', ()=> {
+            var doneTour = localStorage.getItem('doneTour') === 'yeah!';
+            if (doneTour) return;
+            setTimeout(()=>intro.start(),500);
+          })
+          $("#tourButton").click(function(){
+            intro.start();
+          });
+          
+        };
+
+        // setTimeout(()=>startIntro(), 500);
+
+      startIntro();
+      </script>
+</body>
+
+</html>
