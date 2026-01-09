@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialogue System</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        body {
+            background-color: #222;
+            color: white;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #dialog {
+            position: relative;
+            left: unset;
+            width: 80%;
+            max-width: 800px;
+            height: auto;
+            min-height: 200px;
+            background-color: rgba(0, 0, 0, 0.9);
+            border: 2px solid #555;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+        #videoContainer {
+            width: 100%;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        video {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 5px;
+        }
+        .typed-out {
+            padding: 10px;
+            font-size: 1rem;
+            text-align: center;
+            min-height: 1.5em;
+        }
+        .optionContainer {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        button {
+            cursor: pointer;
+            background: #444;
+            color: white;
+            border: 1px solid #777;
+            padding: 10px;
+            margin: 5px 0;
+            text-align: left;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        button:hover {
+            background: #666;
+        }
+        /* Caption styling mimicking the original project */
+        ::cue {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div id="dialog">
+        <!-- Video and text will be injected here -->
+    </div>
+
+    <script src="js/dialogs.js"></script>
+    <script>
+        // Use the godel_0 dialogue by default as requested
+        const DEFAULT_CHARACTER = "godel_0";
+
+        function typeWriter(txt, i = 0, speed = 30, callback = () => {}) {
+            // We are using the video captions/typed-out div for text now, 
+            // but if we need a separate typewriter effect for non-video dialogs:
+            const container = document.querySelector(".typed-out");
+            if (!container) return;
+            
+            if (i < txt.length) {
+                container.innerHTML += txt.charAt(i);
+                i++;
+                setTimeout(() => typeWriter(txt, i, speed, callback), speed);
+            } else {
+                if (callback) callback();
+            }
+        }
+
+        function showVideo(npc, current) {
+            let videoContainer = document.querySelector('#videoContainer');
+            
+            if(!videoContainer) {
+                videoContainer = document.createElement("div");
+                videoContainer.id = "videoContainer";
+                // Insert at the top
+                document.getElementById("dialog").prepend(videoContainer);
+            } else {
+                videoContainer.innerHTML = ''; // Clear previous video
+            }
+
+            let video = document.createElement('video');
+            // Construct path: ./videos/godel_0_new/0_new.mp4
+            video.src = `./videos/${npc}_new/${current}_new.mp4`;
+            video.autoplay = true;
+            video.controls = true; // Added controls for usability
+            
+            let captions = document.createElement('track');
+            captions.default = true;
+            captions.src = `./captions/${npc}/${current}.vtt`;
+            captions.srclang = 'en';
+            captions.kind = 'captions';
+
+            video.append(captions);
+            videoContainer.append(video);
+
+            let captionsSpan = document.createElement("div");
+            captionsSpan.className = "typed-out";
+            videoContainer.append(captionsSpan);
+
+            return { video, captionsSpan };
+        }
+
+        function showCaptions() {
+            var video = document.querySelector('#videoContainer video');
+            var span1 = document.querySelector('.typed-out');
+            if (!video || !span1) return;
+            
+            // Clear text initially
+            span1.innerHTML = ''; 
+            
+            if (!video.textTracks || video.textTracks.length === 0) return;
+            
+            var track = video.textTracks[0];
+            track.mode = 'hidden'; // Hide default browser captions to use our custom div
+            
+            track.oncuechange = function(e) {
+                var cue = this.activeCues[0];
+                if (cue) {
+                    span1.innerHTML = '';
+                    span1.appendChild(cue.getCueAsHTML());
+                }
+            }
+        }
+
+        function displayOptions(npcId, currentStep, callback) {
+            let optionsContainer = document.querySelector(".optionContainer");
+            if (!optionsContainer) {
+                optionsContainer = document.createElement("div");
+                optionsContainer.className = "optionContainer";
+                document.getElementById("dialog").appendChild(optionsContainer);
+            }
+            optionsContainer.innerHTML = '';
+            
+            const dialogueData = dialogs[npcId][currentStep];
+            const options = dialogueData.options;
+
+            if (!options) {
+                const nextButton = document.createElement("button");
+                nextButton.textContent = dialogueData.next === "end" ? "End Conversation" : "Continue";
+                nextButton.onclick = () => callback(dialogueData.next || "end");
+                optionsContainer.appendChild(nextButton);
+                return;
+            }
+
+            options.forEach((option, index) => {
+                const button = document.createElement("button");
+                button.textContent = option.response;
+                button.onclick = () => callback(option.next);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        async function dialogueEngine(npcId) {
+            let current = 0;
+            
+            // Ensure dialog container is clean
+            document.getElementById("dialog").innerHTML = '';
+
+            while (current !== "end") {
+                const stepData = dialogs[npcId][current];
+                if (!stepData) {
+                    console.error("Missing dialogue step:", current);
+                    break;
+                }
+
+                // Show video and setup captions
+                showVideo(npcId, current);
+                showCaptions();
+
+                // Wait for video to end or user to manually skip?
+                // The original code didn't strictly wait for video end before showing options,
+                // but usually you want options available.
+                // We'll display options immediately below the video.
+                
+                // If we wanted to simulate the typewriter effect from the original text (fallback):
+                // await new Promise(resolve => typeWriter(stepData.text, 0, 30, resolve));
+
+                const nextStep = await new Promise(resolve => {
+                    displayOptions(npcId, current, resolve);
+                });
+
+                current = nextStep;
+            }
+            
+            document.getElementById("dialog").innerHTML = '<div class="typed-out">Conversation ended.</div>';
+        }
+
+        function addCharacter(characterID) {
+            if (dialogs && dialogs[characterID]) {
+                dialogueEngine(characterID);
+            } else {
+                console.error("Character not found or dialogs not loaded:", characterID);
+            }
+        }
+    </script>
+    <script>
+        // Start the Godel conversation
+        addCharacter("godel_0");
+    </script>
+</body>
+</html>
